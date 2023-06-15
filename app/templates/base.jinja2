@@ -1,0 +1,20 @@
+<html dir="ltr" lang="de-DE">
+<head>
+{% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>{% block title %}PsychOlympia{% endblock %}</title>
+
+    <link rel="icon" type="image/png" href="{{ url_for('main.favicon', size=32) }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ url_for('main.favicon', size=192) }}" sizes="192x192">
+{% endblock %}
+</head>
+<body>
+{% block body %}
+    {% block content %}
+    {% endblock %}
+{% endblock %}
+</body>
+</html>
