@@ -1,2 +1,8 @@
 Flask>=2.3.2
+Flask-SQLAlchemy>=3.0.3
+Flask-Migrate>=4.0.4
+Flask-Login>=0.6.2
+Flask-Principal>=0.4.0
 python-dotenv>=1.0.0
+psycopg2>=2.9.6
+click>=8.1.3
