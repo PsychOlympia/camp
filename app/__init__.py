@@ -3,6 +3,8 @@ from typing import Mapping
 from flask import Flask
 from dotenv import dotenv_values
 
+from .cli import cli_init_app
+
 
 def create_app(test_config: Mapping = None) -> Flask:
     app = Flask(__name__)
@@ -15,6 +17,9 @@ def create_app(test_config: Mapping = None) -> Flask:
 
     # Extensions
     initialize_extensions(app)
+
+    # CLI
+    cli_init_app(app)
 
     # Logging
     configure_logging(app)
@@ -40,24 +45,25 @@ def configure(app: Flask, test_config: Mapping) -> None:
 def register_blueprints(app: Flask) -> None:
     from .api import bp_api
     from .auth import bp_auth
-    from .cli import bp_psy
     from .main.views import bp_main
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
-    app.register_blueprint(bp_psy)
     app.register_blueprint(bp_api)
 
 
 def initialize_extensions(app: Flask) -> None:
     from .models import db, migrate
-    from .auth import login_manager, csrf, principal
+    from .auth import login_manager, csrf, bcrypt, principal
+    from .i18n import babel
 
     db.init_app(app)
     migrate.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
+    bcrypt.init_app(app)
     principal.init_app(app)
+    babel.init_app(app)
 
     with app.app_context():
         db.create_all()
