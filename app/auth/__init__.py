@@ -2,17 +2,21 @@ from __future__ import annotations
 
 from urllib.parse import urlparse
 
-from flask import Blueprint, redirect, url_for, request
+from flask import Blueprint, redirect, url_for, request, render_template, flash
+from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_principal import Principal, Permission, RoleNeed, identity_loaded, identity_changed
 from flask_wtf import CSRFProtect
+from flask_babel import gettext as _
 
 from ..models import db, User
+from .forms import LoginForm
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.login_message = 'Bitte melde dich an, um diese Seite zu sehen!'
 csrf = CSRFProtect()
+bcrypt = Bcrypt()
 principal = Principal()
 
 team_need = RoleNeed('team')
@@ -46,9 +50,19 @@ def load_user(user_id: str) -> User | None:
 
 @bp_auth.route('/login', methods=['GET', 'POST'], endpoint='login')
 def login():
-    user = User()
-    login_user(user)
-    return redirect(next_url(default=url_for('main.index')))  # , user=user.id)))  # TODO personal page after login
+    form = LoginForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = db.session.query(User).where(User.username == form.username.data).first()
+            if user is not None and bcrypt.check_password_hash(user.password_hash, form.password.data):
+                login_user(user)
+                # TODO redirect to a personal page after login?
+                return redirect(next_url(default=url_for('main.index')))
+            else:
+                flash(_('Either this user does not exist or the entered password was wrong!'), 'error')
+        else:
+            flash(_('The form contains invalid data!'), 'error')
+    return render_template('login.jinja2', form=form)
 
 
 @bp_auth.route('/logout', methods=['POST'], endpoint='logout')
