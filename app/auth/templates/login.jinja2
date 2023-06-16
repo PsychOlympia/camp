@@ -1,0 +1,45 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}Login - {{ super() }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+            margin: 0;
+        }
+
+        input {
+            flex-grow: 1
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: center; height: 100dvh; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+            <img src="{{ url_for('static', filename='img/psycholympia.png') }}" width="192" height="192" alt="{{ _('The PsychOlympia logo') }}">
+            <form action="{{ url_for('auth.login') }}" method="post">
+                {{ form.hidden_tag() }}
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        {{ form.username.label }}
+                        {{ form.username() }}
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        {{ form.password.label }}
+                        {{ form.password() }}
+                    </div>
+                    <button type="submit" style="margin: 20px 10px 0 20px; padding: 0.5rem; border-radius: 100px; border: 0 solid transparent; flex-grow: 1">{{ _('Login') }}</button>
+                </div>
+            </form>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 5px; align-items: center; text-align: center; margin: 0 20px; max-width: 500px;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <span class="{{ category }}">{{ message }}</span>
+            {% endfor %}
+        {% endwith %}
+        </div>
+    </div>
+{% endblock %}
