@@ -3,6 +3,7 @@ from typing import Mapping
 from flask import Flask
 from dotenv import dotenv_values
 
+from .api import api_init_app
 from .cli import cli_init_app
 
 
@@ -18,7 +19,8 @@ def create_app(test_config: Mapping = None) -> Flask:
     # Extensions
     initialize_extensions(app)
 
-    # CLI
+    # Interfaces
+    api_init_app(app)
     cli_init_app(app)
 
     # Logging
@@ -43,13 +45,11 @@ def configure(app: Flask, test_config: Mapping) -> None:
 
 
 def register_blueprints(app: Flask) -> None:
-    from .api import bp_api
     from .auth import bp_auth
     from .main.views import bp_main
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
-    app.register_blueprint(bp_api)
 
 
 def initialize_extensions(app: Flask) -> None:
