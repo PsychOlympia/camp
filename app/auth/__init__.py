@@ -48,10 +48,11 @@ def load_user(user_id: str) -> User | None:
 def login():
     user = User()
     login_user(user)
-    return redirect(next_url(default=url_for('main.index', user=user.id)))
+    return redirect(next_url(default=url_for('main.index')))  # , user=user.id)))  # TODO personal page after login
 
 
 @bp_auth.route('/logout', methods=['POST'], endpoint='logout')
 @login_required
 def logout():
     logout_user()
+    return redirect(url_for('main.index'))
