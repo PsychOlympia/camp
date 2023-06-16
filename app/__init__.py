@@ -3,8 +3,6 @@ from typing import Mapping
 from flask import Flask
 from dotenv import dotenv_values
 
-from .config import ProductionConfig, DevelopmentConfig, TestConfig
-
 
 def create_app(test_config: Mapping = None) -> Flask:
     app = Flask(__name__)
@@ -34,7 +32,7 @@ def configure(app: Flask, test_config: Mapping) -> None:
     }
 
     app.config.from_mapping(dotenv_values())
-    app.config.from_object(ProductionConfig)
+    app.config.from_object(app.config.get('CONFIG', 'app.config.ProductionConfig'))
     if isinstance(test_config, Mapping):
         app.config.from_mapping(test_config)
 
@@ -42,9 +40,11 @@ def configure(app: Flask, test_config: Mapping) -> None:
 def register_blueprints(app: Flask) -> None:
     from .main.views import bp_main
     from .auth import bp_auth
+    from .cli import bp_psy
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
+    app.register_blueprint(bp_psy)
 
 
 def initialize_extensions(app: Flask) -> None:
