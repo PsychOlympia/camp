@@ -49,9 +49,13 @@ def register_blueprints(app: Flask) -> None:
 
 def initialize_extensions(app: Flask) -> None:
     from .models import db, migrate
+    from .auth import login_manager, csrf, principal
 
     db.init_app(app)
     migrate.init_app(app)
+    login_manager.init_app(app)
+    csrf.init_app(app)
+    principal.init_app(app)
 
     with app.app_context():
         db.create_all()
