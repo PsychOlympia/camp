@@ -12,6 +12,8 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(unique=True)
+    password_hash: Mapped[str] = mapped_column()
 
 
 class Team(db.Model):
