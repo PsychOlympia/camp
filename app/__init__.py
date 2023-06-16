@@ -38,13 +38,15 @@ def configure(app: Flask, test_config: Mapping) -> None:
 
 
 def register_blueprints(app: Flask) -> None:
-    from .main.views import bp_main
+    from .api import bp_api
     from .auth import bp_auth
     from .cli import bp_psy
+    from .main.views import bp_main
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
     app.register_blueprint(bp_psy)
+    app.register_blueprint(bp_api)
 
 
 def initialize_extensions(app: Flask) -> None:
