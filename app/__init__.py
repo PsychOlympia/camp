@@ -45,7 +45,7 @@ def configure(app: Flask, test_config: Mapping) -> None:
 
 
 def register_blueprints(app: Flask) -> None:
-    from .auth import bp_auth
+    from .auth.views import bp_auth
     from .main.views import bp_main
 
     app.register_blueprint(bp_main)
