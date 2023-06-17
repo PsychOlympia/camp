@@ -63,7 +63,7 @@ def add_team(team_name: str):
 @click.pass_context
 def delete_team(ctx: Context, team_names: tuple[str], confirm: bool, reset_all: bool, delete_members: bool):
     if reset_all and (confirm or click.confirm(click.style(
-            f'Do you really want to delete every team?', fg='bright_red'
+            'Do you really want to delete every team?', fg='bright_red'
     ))):
         team_names = [team.name for team in db.session.query(Team).all()]
         confirm = True

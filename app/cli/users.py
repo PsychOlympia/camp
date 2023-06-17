@@ -96,7 +96,7 @@ def add_user(ctx: Context, username: str, password: str | None, team_name: str |
 )
 def delete_user(usernames: tuple[str], confirm: bool, reset_all: bool):
     if reset_all and (confirm or click.confirm(click.style(
-            f'Do you really want to delete every user?', fg='bright_red'
+            'Do you really want to delete every user?', fg='bright_red'
     ))):
         usernames = [user.username for user in db.session.query(User).all()]
         confirm = True
