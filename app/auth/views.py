@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, request, render_template, flash, current_app
 from flask_login import login_user, login_required, logout_user
-from flask_principal import Identity, identity_changed
+from flask_principal import Identity, identity_changed, AnonymousIdentity
 from flask_babel import gettext as _
 
 from ..models import db, User
@@ -32,4 +32,5 @@ def login():
 @login_required
 def logout():
     logout_user()
+    identity_changed.send(current_app, identity=AnonymousIdentity())
     return redirect(url_for('main.index'))
