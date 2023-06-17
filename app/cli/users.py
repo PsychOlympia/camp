@@ -4,6 +4,7 @@ import os
 from base64 import b85encode
 
 import click
+from click import Context
 
 from ..auth import bcrypt
 from ..models import db, User, Team
@@ -17,8 +18,7 @@ def users():
 @users.command('list', help='List all users')
 @click.option(
     '-t', '--teams', 'show_teams',
-    is_flag=True,
-    default=False,
+    is_flag=True, default=False,
     help='Also show the team (if any) for each user'
 )
 def list_users(show_teams: bool):
@@ -47,15 +47,25 @@ def list_users(show_teams: bool):
     type=str,
     help='Immediately add this user to a team'
 )
-def add_user(username: str, password: str | None, team_name: str | None):
+@click.option(
+    '-c', '--create', '--create-team', 'create_team',
+    is_flag=True, default=False,
+    help='If used with -t or --team creates a team if a team with that name does not exist'
+)
+@click.pass_context
+def add_user(ctx: Context, username: str, password: str | None, team_name: str | None, create_team: bool):
     if db.session.query(User).where(User.username == username).first() is not None:
         click.secho(f'A user with the username {username} already exists!', fg='bright_red')
         return
+    team = db.session.query(Team).where(Team.name == team_name).first()
+    if team is None and create_team:
+        from .teams import add_team
+        ctx.invoke(add_team, team_name=team_name)
+        team = db.session.query(Team).where(Team.name == team_name).first()
     if password is None:
         password = b85encode(os.urandom(9)).decode()
         click.secho(f'The random password for {username} is: {password}', fg='bright_blue')
     hashed_password = bcrypt.generate_password_hash(password).decode()
-    team = db.session.query(Team).where(Team.name == team_name).first()
     try:
         if team is None:
             db.session.add(User(username=username, password_hash=hashed_password))  # noqa
@@ -76,11 +86,25 @@ def add_user(username: str, password: str | None, team_name: str | None):
 @click.argument('usernames', nargs=-1, type=str)
 @click.option(
     '-y', '--confirm',
-    is_flag=True,
-    default=False,
+    is_flag=True, default=False,
     help='Skip the prompt asking to confirm the delete command'
 )
-def delete_user(usernames: tuple[str], confirm: bool):
+@click.option(
+    '-r', '--reset', '--reset-all', 'reset_all',
+    is_flag=True, default=False,
+    help='Reset the users database'
+)
+def delete_user(usernames: tuple[str], confirm: bool, reset_all: bool):
+    if reset_all and (confirm or click.confirm(click.style(
+            f'Do you really want to delete every user?', fg='bright_red'
+    ))):
+        usernames = [user.username for user in db.session.query(User).all()]
+        confirm = True
+
+    if len(usernames) <= 0:
+        click.secho('There are no users in the database!', fg='bright_red')
+        return
+
     for username in usernames:
         user = db.session.query(User).where(User.username == username).first()
         if user is None:
