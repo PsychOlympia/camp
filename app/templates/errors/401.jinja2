@@ -1,0 +1,17 @@
+{% extends 'error.jinja2' %}
+
+{% block title %}{{ _('Unauthorized') }} - {{ super() }}{% endblock %}
+
+{% block error_message %}
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h1>401 - {{ _('Unauthorized') }}</h1>
+        <p>{{ _('Seems like this page, and you are just not made for each other... 💔') }}</p>
+        <div>
+            <a href="{{ url_for('main.index') }}">{{ _('Go back home') }}</a>
+            <span>{{ _('or') }}</span>
+            <a href="{{ url_for('auth.login', next=request.full_path | urlencode ) }}">
+                {{ _('log in with an account that has access to this page.') }}
+            </a>
+        </div>
+    </div>
+{% endblock %}
