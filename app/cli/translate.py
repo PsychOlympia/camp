@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import sys
 import click
 
 from flask import current_app
@@ -53,7 +52,7 @@ def init_command(lang):
         Locale.parse(lang)
     except UnknownLocaleError:
         click.echo(f'Unknown locale: {lang}')
-        sys.exit(1)
+        return
     if (Path(domain) / lang / 'LC_MESSAGES').exists():
         click.confirm(
             text=f'A folder for the language {lang} already exists. Are you sure you want to initialize {lang}?',
