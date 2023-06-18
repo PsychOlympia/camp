@@ -13,11 +13,14 @@ from flask_babel import lazy_gettext as _l
 from ..models import db, User
 
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
-login_manager.login_message = _l('Please log in to visit this site!')
 csrf = CSRFProtect()
 bcrypt = Bcrypt()
 principal = Principal()
+
+login_manager.login_view = 'auth.login'
+login_manager.login_message = _l('Please log in to visit this site!')
+login_manager.refresh_view = 'auth.login'
+login_manager.needs_refresh_message = _l('Please reauthenticate to perform this action.')
 
 
 @unique
