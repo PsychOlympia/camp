@@ -7,7 +7,7 @@ from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import ForeignKey, Column, Integer
-from sqlalchemy.orm import Mapped, mapped_column, relationship, backref
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
 migrate = Migrate(db=db)
@@ -31,7 +31,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    alternative_id: Mapped[str] = mapped_column(unique=True, default_factory=uuid4)
+    # alternative_id: Mapped[str] = mapped_column(unique=True, default_factory=uuid4)
     username: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str] = mapped_column()
     team_id: Mapped[Union[int, None]] = mapped_column(ForeignKey('teams.id'))
@@ -39,7 +39,8 @@ class User(db.Model, UserMixin):
     roles: Mapped[list[Role]] = relationship('Role', secondary=user_role_table, backref='users')
 
     def get_id(self) -> str:
-        return self.alternative_id
+        # return str(self.alternative_id)
+        return str(self.id)
 
 
 class Team(db.Model):
