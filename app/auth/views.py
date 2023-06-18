@@ -17,7 +17,7 @@ def login():
         if form.validate_on_submit():
             user = db.session.query(User).where(User.username == form.username.data).first()
             if user is not None and bcrypt.check_password_hash(user.password_hash, form.password.data):
-                login_user(user)
+                login_user(user, remember=True)
                 identity_changed.send(current_app, identity=Identity(user.id))
                 # TODO redirect to a personal page after login?
                 return redirect(next_url(default=url_for('main.index')))
