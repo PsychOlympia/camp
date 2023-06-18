@@ -44,7 +44,6 @@ admin_permission = Permission(admin_need)
 
 @identity_loaded.connect
 def on_identity_loaded(sender, identity: Identity):
-    # Update the roles that a user can provide
     if current_user.is_authenticated:
         identity.provides.add(guest_need)
         for role in current_user.roles:
@@ -52,12 +51,11 @@ def on_identity_loaded(sender, identity: Identity):
                 current_app.logger.error(f'Unknown role {role.name} requested by user {current_user.id}')
                 continue
             identity.provides.add(RoleNeed(role.name))
-    # Save the user somewhere, so we only look it up once
     identity.user = current_user
 
 
 def next_url(default: str = None) -> str | None:
-    url = request.args.get('next')
+    url = request.form.get('next')
     if not url:
         return default
     parsed_url = urlparse(url)

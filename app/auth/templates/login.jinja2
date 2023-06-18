@@ -22,6 +22,9 @@
             <img src="{{ url_for('static', filename='img/psycholympia.png') }}" width="192" height="192" alt="{{ _('The PsychOlympia logo') }}">
             <form action="{{ url_for('auth.login') }}" method="post">
                 {{ form.hidden_tag() }}
+                {% if request.args.get('next') is not none %}
+                    <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+                {% endif %}
                 <div style="display: flex; flex-direction: column; gap: 5px;">
                     <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
                         {{ form.username.label }}
