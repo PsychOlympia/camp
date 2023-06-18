@@ -1,5 +1,16 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
-Hello PsychOlympia!
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h1>Hello PsychOlympia!</h1>
+        {% if current_user.is_authenticated %}
+            <p>Logged in as {{ current_user.username }}</p>
+            <form action="{{ url_for('auth.logout') }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Login</a>
+        {% endif %}
+    </div>
 {% endblock %}
