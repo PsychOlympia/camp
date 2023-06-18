@@ -21,4 +21,4 @@ class TestConfig(Config):
 
 
 class ProductionConfig(Config):
-    pass
+    SERVER_NAME = os.environ.get('SERVER_NAME')
