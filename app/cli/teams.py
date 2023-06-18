@@ -36,7 +36,7 @@ def add_team(team_name: str):
     try:
         db.session.add(Team(name=team_name))
         db.session.commit()
-        click.secho(f'Team {team_name} was successfully added to the database!', fg='bright_green')
+        click.secho(f'The team {team_name} was successfully added to the database!', fg='bright_green')
     except IntegrityError:
         click.secho(f'A team with the name {team_name} already exists!"', fg='bright_red')
     except Exception as e:
