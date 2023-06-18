@@ -2,6 +2,10 @@
     --accent-color: #57ac4f;
 }
 
+* {
+    font-family: "Roboto", sans-serif;
+}
+
 
 button, input {
     border: 1px solid black;
