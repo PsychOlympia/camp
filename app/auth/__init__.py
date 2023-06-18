@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from urllib.parse import urlparse
+from enum import Enum, unique
 
-from flask import request
+from flask import request, current_app
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
 from flask_principal import Principal, Permission, RoleNeed, identity_loaded, Identity
@@ -18,11 +19,21 @@ csrf = CSRFProtect()
 bcrypt = Bcrypt()
 principal = Principal()
 
-guest_need = RoleNeed('guest')
-team_need = RoleNeed('team')
-helper_need = RoleNeed('helper')
-orga_need = RoleNeed('orga')
-admin_need = RoleNeed('admin')
+
+@unique
+class RoleName(Enum):
+    GUEST = 'guest'
+    TEAM = 'team'
+    HELPER = 'helper'
+    ORGA = 'orga'
+    ADMIN = 'admin'
+
+
+guest_need = RoleNeed(RoleName.GUEST)
+team_need = RoleNeed(RoleName.TEAM)
+helper_need = RoleNeed(RoleName.HELPER)
+orga_need = RoleNeed(RoleName.ORGA)
+admin_need = RoleNeed(RoleName.ADMIN)
 
 guest_permission = Permission(guest_need, team_need, helper_need, orga_need, admin_need)
 team_permission = Permission(team_need, helper_need, orga_need, admin_need)
@@ -36,11 +47,11 @@ def on_identity_loaded(sender, identity: Identity):
     # Update the roles that a user can provide
     if current_user.is_authenticated:
         identity.provides.add(guest_need)
-        # TODO CRITICAL User.roles
-        """
         for role in current_user.roles:
+            if role.name not in map(lambda m: m.value, RoleName.__members__.values()):
+                current_app.logger.error(f'Unknown role {role.name} requested by user {current_user.id}')
+                continue
             identity.provides.add(RoleNeed(role.name))
-        """
     # Save the user somewhere, so we only look it up once
     identity.user = current_user
 
