@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Union
+from uuid import uuid4
 
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
@@ -30,11 +31,15 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    alternative_id: Mapped[str] = mapped_column(unique=True, default_factory=uuid4)
     username: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str] = mapped_column()
     team_id: Mapped[Union[int, None]] = mapped_column(ForeignKey('teams.id'))
     team: Mapped[Union['Team', None]] = relationship(foreign_keys=[team_id], back_populates='members')
     roles: Mapped[list[Role]] = relationship('Role', secondary=user_role_table, backref='users')
+
+    def get_id(self) -> str:
+        return self.alternative_id
 
 
 class Team(db.Model):
