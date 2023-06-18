@@ -57,7 +57,7 @@ def register_blueprints(app: Flask) -> None:
 def initialize_extensions(app: Flask) -> None:
     from .models import db, migrate
     from .auth import login_manager, csrf, bcrypt, principal
-    from .i18n import babel
+    from .i18n import babel, locale_selector, timezone_selector
 
     db.init_app(app)
     migrate.init_app(app)
@@ -65,7 +65,7 @@ def initialize_extensions(app: Flask) -> None:
     csrf.init_app(app)
     bcrypt.init_app(app)
     principal.init_app(app)
-    babel.init_app(app)
+    babel.init_app(app, locale_selector=locale_selector, timezone_selector=timezone_selector)
 
     with app.app_context():
         db.create_all()
