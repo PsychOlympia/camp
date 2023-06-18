@@ -1,6 +1,6 @@
 from typing import Mapping
 
-from flask import Flask
+from flask import Flask, render_template
 from dotenv import dotenv_values
 
 from .api import api_init_app
@@ -47,9 +47,11 @@ def configure(app: Flask, test_config: Mapping) -> None:
 def register_blueprints(app: Flask) -> None:
     from .auth.views import bp_auth
     from .main.views import bp_main
+    from .orga.views import bp_orga
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
+    app.register_blueprint(bp_orga)
 
 
 def initialize_extensions(app: Flask) -> None:
@@ -74,4 +76,6 @@ def configure_logging(app: Flask) -> None:
 
 
 def register_error_handlers(app: Flask) -> None:
-    pass
+    @app.errorhandler(401)
+    def handle_401(error):
+        return render_template('errors/401.jinja2')
