@@ -1,0 +1,7 @@
+{% extends 'dashboard.jinja2' %}
+
+{% block content %}
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <h3>{{ _('Hello %(username)s!', username=current_user.username) }}</h3>
+</div>
+{% endblock %}
