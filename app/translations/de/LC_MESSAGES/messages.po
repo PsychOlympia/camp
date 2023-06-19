@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.0.0\n"
+"Project-Id-Version:  0.0.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-19 12:21+0200\n"
+"POT-Creation-Date: 2023-06-19 18:11+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -34,11 +34,13 @@ msgstr "Benutzername"
 msgid "Password"
 msgstr "Passwort"
 
-#: app/auth/views.py:25
+#: app/auth/views.py:32
 msgid "Either this user does not exist or the entered password was wrong!"
-msgstr "Entweder dieser Benutzer existiert nicht oder das eingegebene Passwort war falsch!"
+msgstr ""
+"Entweder dieser Benutzer existiert nicht oder das eingegebene Passwort "
+"war falsch!"
 
-#: app/auth/views.py:27
+#: app/auth/views.py:34
 msgid "The form contains invalid data!"
 msgstr "Das Formular enthält ungültige Daten!"
 
@@ -57,6 +59,15 @@ msgstr "Anmelden"
 msgid "Hello %(username)s!"
 msgstr "Hallo %(username)s!"
 
+#: app/infopanel/templates/infopanel.jinja2:3
+#: app/infopanel/templates/infopanel.jinja2:7
+msgid "Infopanel"
+msgstr "Infopanel"
+
+#: app/main/templates/index.jinja2:3
+msgid "Home"
+msgstr "Startseite"
+
 #: app/templates/dashboard.jinja2:3
 msgid "Dashboard"
 msgstr "Dashboard"
@@ -67,7 +78,9 @@ msgstr "Nicht autorisiert"
 
 #: app/templates/errors/401.jinja2:8
 msgid "Seems like this page, and you are just not made for each other... 💔"
-msgstr "Es sieht so aus, als wären du und diese Seite einfach nicht füreinander bestimmt... 💔"
+msgstr ""
+"Es sieht so aus, als wären du und diese Seite einfach nicht füreinander "
+"bestimmt... 💔"
 
 #: app/templates/errors/401.jinja2:10
 msgid "Go back home"
@@ -79,5 +92,5 @@ msgstr "oder"
 
 #: app/templates/errors/401.jinja2:13
 msgid "log in with an account that has access to this page."
-msgstr "melde dich mit einem Account an, der Zugriff aus diese Seite hat."
+msgstr "melde dich mit einem Account an, der Zugriff auf diese Seite hat."
 
