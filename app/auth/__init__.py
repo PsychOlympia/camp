@@ -38,10 +38,10 @@ helper_need = RoleNeed(RoleName.HELPER.value)
 orga_need = RoleNeed(RoleName.ORGA.value)
 admin_need = RoleNeed(RoleName.ADMIN.value)
 
-guest_permission = Permission(guest_need, team_need, helper_need, orga_need, admin_need)
-team_permission = Permission(team_need, helper_need, orga_need, admin_need)
-helper_permission = Permission(helper_need, orga_need, admin_need)
-orga_permission = Permission(orga_need, admin_need)
+guest_permission = Permission(guest_need)
+team_permission = Permission(team_need)
+helper_permission = Permission(helper_need)
+orga_permission = Permission(orga_need)
 admin_permission = Permission(admin_need)
 
 
