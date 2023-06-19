@@ -18,13 +18,13 @@ def login():
             user = db.session.query(User).where(User.username == form.username.data).first()
             if user is not None and bcrypt.check_password_hash(user.password_hash, form.password.data):
                 login_user(user, remember=True)
-                identity_changed.send(current_app, identity=Identity(user.id))
+                identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))
                 # TODO redirect to a personal page after login?
                 return redirect(next_url(default=url_for('main.index')))
             else:
-                flash(_('Either this user does not exist or the entered password was wrong!'), 'error')
+                flash(_('Either this user does not exist or the entered password was wrong!'), 'danger')
         else:
-            flash(_('The form contains invalid data!'), 'error')
+            flash(_('The form contains invalid data!'), 'danger')
     return render_template('login.jinja2', form=form)
 
 

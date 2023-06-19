@@ -1,21 +1,68 @@
 :root {
-    --accent-color: #57ac4f;
+    /* adjusted colors from bs 5.3 */
+    --body-color: #212529;
+    --body-bg: #fff;
+    --secondary-color: rgba(33, 37, 41, 0.75);
+    --secondary-bg: #e9ecef;
+    --tertiary-color: rgba(33, 37, 41, 0.5);
+    --tertiary-bg: #f8f9fa;
+    --border-color: #dee2e6;
+
+    --primary: #57ac4f;
+    --primary-bg-subtle: #57ac4f;
+    --accent: #57ac4f;
+    --accent-bg-subtle: #57ac4f;
+
+    --success: #198754;
+    --success-bg-subtle: #d1e7dd;
+    --danger: #dc3545;
+    --danger-bg-subtle: #dc3545;
+    --warning: #ffc107;
+    --warning-bg-subtle: #fff3cd;
+    --info: #0dcaf0;
+    --info-bg-subtle: #cff4fc;
+
+    --light: #f8f9fa;
+    --light-bg-subtle: #fcfcfd;
+    --dark: #212529;
+    --dark-bg-subtle: #ced4da;
 }
 
 * {
     font-family: "Roboto", sans-serif;
 }
 
+body {
+    color: var(--body-color);
+    background-color: var(--body-bg);
+}
+
+.success {
+    color: var(--success);
+}
+
+.danger {
+    color: var(--danger)
+}
+
+.warning {
+    color: var(--warning);
+}
+
+.info {
+    color: var(--info)
+}
+
 
 button, input {
-    border: 1px solid black;
-    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
     outline: none;
     transition: border-color 300ms ease-in-out;
 }
 
 button:hover, button:focus, input:hover, input:focus {
-    border-color: var(--accent-color);
+    border-color: var(--accent);
     transition: border-color 300ms ease-in-out;
 }
 
@@ -26,4 +73,8 @@ button {
 
 .invisible-button {
     border-color: transparent;
+    background-color: transparent;
+    outline: none;
+    margin: 0;
+    padding: 0;
 }
