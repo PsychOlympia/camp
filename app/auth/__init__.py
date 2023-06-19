@@ -3,7 +3,7 @@ from __future__ import annotations
 from urllib.parse import urlparse
 from enum import Enum, unique
 
-from flask import request, current_app
+from flask import request, current_app, Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
 from flask_principal import Principal, Permission, RoleNeed, identity_loaded, Identity
@@ -32,11 +32,11 @@ class RoleName(Enum):
     ADMIN = 'admin'
 
 
-guest_need = RoleNeed(RoleName.GUEST)
-team_need = RoleNeed(RoleName.TEAM)
-helper_need = RoleNeed(RoleName.HELPER)
-orga_need = RoleNeed(RoleName.ORGA)
-admin_need = RoleNeed(RoleName.ADMIN)
+guest_need = RoleNeed(RoleName.GUEST.value)
+team_need = RoleNeed(RoleName.TEAM.value)
+helper_need = RoleNeed(RoleName.HELPER.value)
+orga_need = RoleNeed(RoleName.ORGA.value)
+admin_need = RoleNeed(RoleName.ADMIN.value)
 
 guest_permission = Permission(guest_need, team_need, helper_need, orga_need, admin_need)
 team_permission = Permission(team_need, helper_need, orga_need, admin_need)
@@ -46,7 +46,7 @@ admin_permission = Permission(admin_need)
 
 
 @identity_loaded.connect
-def on_identity_loaded(sender, identity: Identity):
+def on_identity_loaded(sender: Flask, identity: Identity):
     if current_user.is_authenticated:
         identity.provides.add(guest_need)
         for role in current_user.roles:
