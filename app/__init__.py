@@ -50,12 +50,14 @@ def register_blueprints(app: Flask) -> None:
     from .orga.views import bp_orga
     from .helper.views import bp_helper
     from .team.views import bp_team
+    from .infopanel.views import bp_infopanel
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
     app.register_blueprint(bp_orga)
     app.register_blueprint(bp_helper)
     app.register_blueprint(bp_team)
+    app.register_blueprint(bp_infopanel)
 
 
 def initialize_extensions(app: Flask) -> None:
