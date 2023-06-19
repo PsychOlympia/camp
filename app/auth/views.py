@@ -5,7 +5,7 @@ from flask_babel import gettext as _
 
 from ..models import db, User
 from .forms import LoginForm
-from . import bcrypt, next_url
+from . import bcrypt, next_url, RoleName
 
 bp_auth = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
 
@@ -19,8 +19,15 @@ def login():
             if user is not None and bcrypt.check_password_hash(user.password_hash, form.password.data):
                 login_user(user, remember=True)
                 identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))  # noqa
-                # TODO redirect to a personal page after login?
-                return redirect(next_url(default=url_for('main.index')))
+                default_url = url_for('main.index')
+                user_role_names = map(lambda role: role.name, user.roles)
+                if RoleName.TEAM.value in user_role_names:
+                    default_url = url_for('team.index')
+                if RoleName.HELPER.value in user_role_names:
+                    default_url = url_for('helper.index')
+                if RoleName.ORGA.value in user_role_names:
+                    default_url = url_for('orga.index')
+                return redirect(next_url(default=default_url))
             else:
                 flash(_('Either this user does not exist or the entered password was wrong!'), 'danger')
         else:
