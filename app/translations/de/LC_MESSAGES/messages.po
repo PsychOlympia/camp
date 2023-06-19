@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: 0.0.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-19 00:43+0200\n"
+"POT-Creation-Date: 2023-06-19 12:21+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -49,6 +49,17 @@ msgstr "Das PsychOlympia Logo"
 #: app/auth/templates/login.jinja2:37
 msgid "Login"
 msgstr "Anmelden"
+
+#: app/helper/templates/helper_dashboard.jinja2:5
+#: app/orga/templates/orga_dashboard.jinja2:5
+#: app/team/templates/team_dashboard.jinja2:5
+#, python-format
+msgid "Hello %(username)s!"
+msgstr "Hallo %(username)s!"
+
+#: app/templates/dashboard.jinja2:3
+msgid "Dashboard"
+msgstr "Dashboard"
 
 #: app/templates/errors/401.jinja2:3 app/templates/errors/401.jinja2:7
 msgid "Unauthorized"
