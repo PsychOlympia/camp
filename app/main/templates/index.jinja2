@@ -10,10 +10,16 @@
             <p>Has the following roles: {{ current_user.roles | map(attribute='name') | join(', ') }}</p>
             <form action="{{ url_for('auth.logout') }}" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button type="submit">Logout</button>
+                <button type="submit" style="display: flex; align-items: center; gap: 5px;">
+                    <span class="material-symbols-outlined">logout</span>
+                    Logout
+                </button>
             </form>
         {% else %}
-            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.login') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+                <span class="material-symbols-outlined">login</span>
+                Login
+            </a>
         {% endif %}
     </div>
 {% endblock %}
