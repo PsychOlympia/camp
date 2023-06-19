@@ -6,5 +6,5 @@
   src: local('Roboto'),
        local('Roboto Regular'),
        local('Roboto-Regular'),
-       url('/app/static/fonts/roboto-v30-latin-regular.woff2') format('woff2');
+       url('/static/fonts/roboto-v30-latin-regular.woff2') format('woff2');
 }
