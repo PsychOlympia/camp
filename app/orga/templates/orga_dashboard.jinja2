@@ -1,7 +1,9 @@
-{% extends 'base.jinja2' %}
+{% extends 'dashboard.jinja2' %}
 
-{% block title %}Orga - {{ super() }}{% endblock %}
+{% block title %}{{ _('Orga') }} - {{ super() }}{% endblock %}
 
 {% block content %}
-Hello Orga!
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <h3>{{ _('Hello %(username)s!', username=current_user.username) }}</h3>
+</div>
 {% endblock %}
