@@ -17,6 +17,7 @@ def translate():
 def update_command():
     _config_directory = current_app.config.get('BABEL_TRANSLATION_DIRECTORIES', 'translations').split(';')[0]  # noqa
     translations_directory = Path(current_app.root_path) / _config_directory
+    translations_directory.mkdir(exist_ok=True)
     domain = current_app.config.get('BABEL_DOMAIN', 'messages').split(';')[0]
 
     config_file = Path(current_app.config['BABEL_CONFIG_FILE'])
@@ -33,6 +34,7 @@ def update_command():
 def compile_command():
     _config_directory = current_app.config.get('BABEL_TRANSLATION_DIRECTORIES', 'translations').split(';')[0]
     translations_directory = Path(current_app.root_path) / _config_directory
+    translations_directory.mkdir(exist_ok=True)
 
     if os.system(f'pybabel compile -d "{translations_directory}"'):
         raise RuntimeError('compile command failed')
@@ -43,6 +45,7 @@ def compile_command():
 def init_command(lang):
     _config_directory = current_app.config.get('BABEL_TRANSLATION_DIRECTORIES', 'translations').split(';')[0]  # noqa
     translations_directory = Path(current_app.root_path) / _config_directory
+    translations_directory.mkdir(exist_ok=True)
     domain = current_app.config.get('BABEL_DOMAIN', 'messages').split(';')[0]
 
     config_file = Path(current_app.config['BABEL_CONFIG_FILE'])
