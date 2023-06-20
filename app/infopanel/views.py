@@ -9,7 +9,7 @@ bp_infopanel = Blueprint('infopanel', __name__, template_folder='templates', sta
 
 
 @bp_infopanel.route('/', methods=['GET'], endpoint='index')
-@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 @login_required
+@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def index():
     return render_template('infopanel.jinja2')

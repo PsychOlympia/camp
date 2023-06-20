@@ -9,7 +9,7 @@ bp_team = Blueprint('team', __name__, template_folder='templates', static_folder
 
 
 @bp_team.route('/', methods=['GET'], endpoint='index')
-@team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 @login_required
+@team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def index():
     return render_template('team_dashboard.jinja2')

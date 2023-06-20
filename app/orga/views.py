@@ -9,7 +9,7 @@ bp_orga = Blueprint('orga', __name__, template_folder='templates', static_folder
 
 
 @bp_orga.route('/', methods=['GET'], endpoint='index')
-@orga_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 @login_required
+@orga_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def index():
     return render_template('orga_dashboard.jinja2')
