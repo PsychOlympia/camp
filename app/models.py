@@ -33,6 +33,8 @@ class IsMapItem(Protocol):
     camp_location: tuple[float, float] | None
     country_location: tuple[float, float] | None
     logo: str | None
+    color: str | None
+    linkable: bool
 
 
 user_role_table = db.Table(
