@@ -30,6 +30,7 @@ class RoleName(Enum):
     HELPER = 'helper'
     ORGA = 'orga'
     ADMIN = 'admin'
+    ROOT = 'root'
 
 
 guest_need = RoleNeed(RoleName.GUEST.value)
@@ -37,12 +38,14 @@ team_need = RoleNeed(RoleName.TEAM.value)
 helper_need = RoleNeed(RoleName.HELPER.value)
 orga_need = RoleNeed(RoleName.ORGA.value)
 admin_need = RoleNeed(RoleName.ADMIN.value)
+root_need = RoleNeed(RoleName.ADMIN.value)
 
 guest_permission = Permission(guest_need)
 team_permission = Permission(team_need)
 helper_permission = Permission(helper_need)
 orga_permission = Permission(orga_need)
 admin_permission = Permission(admin_need)
+root_permission = Permission(root_need)
 
 
 @identity_loaded.connect
