@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.0.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-19 18:11+0200\n"
+"POT-Creation-Date: 2023-06-22 01:56+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -34,13 +34,13 @@ msgstr "Benutzername"
 msgid "Password"
 msgstr "Passwort"
 
-#: app/auth/views.py:32
+#: app/auth/views.py:33
 msgid "Either this user does not exist or the entered password was wrong!"
 msgstr ""
 "Entweder dieser Benutzer existiert nicht oder das eingegebene Passwort "
 "war falsch!"
 
-#: app/auth/views.py:34
+#: app/auth/views.py:35
 msgid "The form contains invalid data!"
 msgstr "Das Formular enthält ungültige Daten!"
 
@@ -64,13 +64,41 @@ msgstr "Hallo %(username)s!"
 msgid "Infopanel"
 msgstr "Infopanel"
 
+#: app/main/templates/camp_map.jinja2:3 app/main/templates/camp_map.jinja2:16
+msgid "Camp map"
+msgstr "Camp-Karte"
+
+#: app/main/templates/camp_map.jinja2:40 app/main/templates/team_map.jinja2:40
+#, python-format
+msgid "Position of %(item_name)s"
+msgstr "Position von %(item_name)s"
+
 #: app/main/templates/index.jinja2:3
 msgid "Home"
 msgstr "Startseite"
 
+#: app/main/templates/team_map.jinja2:3 app/main/templates/team_map.jinja2:16
+#: app/profile/templates/settings_team_map.jinja2:7
+#: app/profile/templates/settings_team_map.jinja2:20
+msgid "Team map"
+msgstr "Team-Karte"
+
 #: app/templates/dashboard.jinja2:3
 msgid "Dashboard"
 msgstr "Dashboard"
+
+#: app/templates/map.jinja2:8
+#, python-format
+msgid "Logo of %(item_name)s"
+msgstr "Logo von %(item_name)s!"
+
+#: app/templates/map.jinja2:12
+msgid "Go to profile"
+msgstr "Zum Profil"
+
+#: app/templates/map.jinja2:60
+msgid "Logo"
+msgstr "Logo"
 
 #: app/templates/errors/401.jinja2:3 app/templates/errors/401.jinja2:7
 msgid "Unauthorized"
