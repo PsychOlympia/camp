@@ -1,0 +1,71 @@
+{% extends 'base.jinja2' %}
+
+{% set MAP_ICON_SIZE = config.MAP_ICON_SIZE | default(22) | int %}
+
+{# | replace('\n', '') is needed for this to work as the popup content! #}
+{% macro map_popup(item_name, item_logo, link=true) -%}
+<div style="display: flex; flex-direction: row; gap: 20px; align-items: center;">
+    <img src="{{ item_logo }}" alt="{{ _('Logo of %(item_name)s', item_name=item_name) }}" style="height: {{ config.MAP_ICON_SIZE | int * 2 }}px; width: {{ config.MAP_ICON_SIZE | int * 2 }}px; ">
+    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+        <span style="font-size: 1.2em; font-weight: bold;">{{ item_name }}</span>
+        {% if link %}
+            <button>{{ _('Go to profile') }}</button>
+        {% endif %}
+    </div>
+</div>
+{%- endmacro map_popup %}
+
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='js/libs/leaflet/1.9.4/leaflet.css') }}"/>
+    <script src="{{ url_for('static', filename='js/libs/leaflet/1.9.4/leaflet.js') }}"></script>
+    <style>
+        .marker-pin {
+            width: {{ MAP_ICON_SIZE + 8}}px;
+            height: {{ MAP_ICON_SIZE + 8}}px;
+            border-radius: 50% 50% 50% 0;
+            background: var(--accent);
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -{{ ((MAP_ICON_SIZE + 8) / 2) | int}}px 0 0 -{{ ((MAP_ICON_SIZE + 8) / 2) | int}}px;
+        }
+
+        .marker-pin:after {
+            content: '';
+            width: {{ MAP_ICON_SIZE + 2 }}px;
+            height: {{ MAP_ICON_SIZE + 2 }}px;
+            margin: 3px 0 0 3px;
+            background: #fff;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .custom-div-icon img {
+            position: absolute;
+            width: {{ MAP_ICON_SIZE }}px;
+            height: {{ MAP_ICON_SIZE }}px;
+            left: 0;
+            right: 0;
+            margin: {{ (MAP_ICON_SIZE * 0.22 + 6) | int }}px auto;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function location_icon(imgSrc) {
+            return L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div class="marker-pin"></div><img src="${imgSrc}" alt="{{ _('Logo') }}">`,
+                iconSize: [{{ MAP_ICON_SIZE + 8}}, {{ ((MAP_ICON_SIZE + 8) * 1.414) | int}}],  {# * sqrt(2) #}
+                iconAnchor: [{{ ((MAP_ICON_SIZE + 8) / 2) | int }}, {{ ((MAP_ICON_SIZE + 8) * 1.414) | int}}],  {# * sqrt(2) #}
+                popupAnchor: [0, {{ (-MAP_ICON_SIZE * 1.5) | int}}]
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div id="map" style="width: 100%; height: 100%;"></div>
+{% endblock %}
