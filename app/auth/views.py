@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, request, render_template, flash, current_app
+from flask import Blueprint, redirect, url_for, request, render_template, flash, current_app, session
 from flask_login import login_user, login_required, logout_user
 from flask_principal import Identity, identity_changed, AnonymousIdentity
 from flask_babel import gettext as _
@@ -18,6 +18,7 @@ def login():
             user = db.session.query(User).where(User.username == form.username.data).first()
             if user is not None and bcrypt.check_password_hash(user.password_hash, form.password.data):
                 login_user(user, remember=True)
+                # session.permanent = True  # enable?
                 identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))  # noqa
                 default_url = url_for('main.index')
                 user_role_names = map(lambda role: role.name, user.roles)
