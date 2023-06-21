@@ -34,11 +34,11 @@ def init(ctx: Context):
     from .users import add_user
     ctx.invoke(add_user, username='root', user_roles=tuple(member.value for member in RoleName.__members__.values()))
     camp_location = serialize_coordinates((
-        current_app.config['CAMP_LOCATION_LAT'], current_app.config['CAMP_LOCATION_LON']
+        float(current_app.config['CAMP_LOCATION_LAT']), float(current_app.config['CAMP_LOCATION_LON'])
     ))
     db.session.add(PointOfInterest(
         name='PsychOlympia',
-        _camp_location=camp_location,
+        _camp_location=None,
         _country_location=camp_location,
         logo='psycholympia.png',
         linkable=False
@@ -48,4 +48,21 @@ def init(ctx: Context):
         click.secho("Added POI 'PsychOlympia' to the database.", fg='bright_green')
     except IntegrityError:
         click.secho("The database already contains the POI 'PsychOlympia'", fg='bright_red')
+        db.session.rollback()
+
+    db.session.add(PointOfInterest(
+        name='Infostand',
+        _camp_location=serialize_coordinates((
+            float(current_app.config['INFO_LOCATION_LAT']), float(current_app.config['INFO_LOCATION_LON'])
+        )),
+        _country_location=None,
+        logo='psycholympia.png',
+        linkable=False
+    ))
+    try:
+        db.session.commit()
+        click.secho("Added POI 'Infostand' to the database.", fg='bright_green')
+    except IntegrityError:
+        click.secho("The database already contains the POI 'Infostand'", fg='bright_red')
+        db.session.rollback()
     click.secho('Initialized database', fg='bright_green')
