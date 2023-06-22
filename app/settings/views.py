@@ -42,7 +42,7 @@ def set_location(place: str):
         return redirect(url_for('main.index'))
 
     if form.item_type.data not in ('team', 'poi'):
-        flash(_('Unknown item type'), 'danger')
+        flash(_('Unknown item type!'), 'danger')
         return redirect(url_for('main.index'))
 
     item = (
