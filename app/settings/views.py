@@ -75,7 +75,7 @@ def set_location(place: str):
                 return redirect(url_for('settings.index', team_name=form.item_name.data))
             else:
                 return redirect(url_for('main.index'))  # TODO adjust
-        flash(_('Invalid form data!'))
+        flash(_('Invalid form data!'), 'danger')
     if place == 'country':
         form.latitude.data, form.longitude.data = (
             (None, None) if item.country_location is None else item.country_location
