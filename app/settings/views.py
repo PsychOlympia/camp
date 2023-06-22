@@ -102,7 +102,7 @@ def delete_location(place: str):
     if place not in ('country', 'camp'):
         abort(HTTPStatus.NOT_FOUND)
 
-    form = DeleteMapLocationForm()
+    form = MapLocationForm()
     if form.item_type.data is None or form.item_name.data is None:  # noqa duplicate lines
         flash(_('Invalid form data!'), 'danger')
         return redirect(url_for('main.index'))
@@ -130,19 +130,13 @@ def delete_location(place: str):
     if type(item) is PointOfInterest and not orga_permission.can():
         raise PermissionDenied()
 
-    if form.validate_on_submit():
-        if place == 'country':
-            item.country_location = None
-        else:
-            item.camp_location = None
-        db.session.commit()
-        flash(_('Postion deleted!'), 'success')
-        if form.item_type.data == 'team':
-            return redirect(url_for('settings.index', team_name=form.item_name.data))
-        else:
-            return redirect(url_for('main.index'))  # TODO adjust
-    flash(_('Invalid form data!'))
-    return redirect(url_for(
-        '.set_country_location' if place == 'country' else '.set_camp_location',
-        item_type=form.item_type.data, item_name=form.item_name.data
-    ))
+    if place == 'country':
+        item.country_location = None
+    else:
+        item.camp_location = None
+    db.session.commit()
+    flash(_('Postion deleted!'), 'success')
+    if form.item_type.data == 'team':
+        return redirect(url_for('settings.index', team_name=form.item_name.data))
+    else:
+        return redirect(url_for('main.index'))  # TODO adjust
