@@ -1,0 +1,18 @@
+{% extends 'team_dashboard.jinja2' %}
+
+{% block title %}{{ _('Profile settings') }} - {{ super() }}{% endblock %}
+
+{% block content %}
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        {{ _('Settings for %(username)s', username=current_user.username) }}
+        {% if current_user.team is not none %}
+            <img src="{{ url_for('static', filename='uploads/' ~ (current_user.team.logo if current_user.team.logo is not none else 'default.png')) }}" alt="{{ _('Team logo') }}" style="width: 128px; height: 128px;">
+            <a href="{{ url_for('settings.set_camp_location', item_type='team', item_name=current_user.team.name) }}">
+                {{ _('Edit team location on the camp map') }}
+            </a>
+            <a href="{{ url_for('settings.set_country_location', item_type='team', item_name=current_user.team.name) }}">
+                {{ _('Edit team location on the country map') }}
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
