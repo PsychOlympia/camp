@@ -31,7 +31,7 @@ def init():
     click.secho('Downloading Maperitive ...', fg='bright_blue')
     try:
         if sys.platform not in ('win32', 'cgywin'):
-            pass  # TODO install dependencies
+            os.system('apt install libmono-winforms2.0-cil mono-devel')
         urllib.request.urlretrieve(
             'http://maperitive.net/download/Maperitive-latest.zip',
             zip_file,
