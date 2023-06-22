@@ -41,8 +41,8 @@
         }
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-        [{% for category, message in messages %}'<span class="{{ category }}">{{ message }}</span>'{% if not loop.last %}, {% endif %}{% endfor %}].forEach(content => {
-            showToast(content);
+        [{% for category, message in messages %}'<span class="{{ category }}">{{ message }}</span>'{% if not loop.last %}, {% endif %}{% endfor %}].forEach((content, index) => {
+            setTimeout(() => showToast(content), index * 350);
         })
         {% endwith %}
     </script>
