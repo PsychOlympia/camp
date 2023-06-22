@@ -61,6 +61,7 @@ class User(db.Model, UserMixin):
     team_id: Mapped[Union[int, None]] = mapped_column(ForeignKey('teams.id'))
     team: Mapped[Union['Team', None]] = relationship(foreign_keys=[team_id], back_populates='members')
     roles: Mapped[list[Role]] = relationship('Role', secondary=user_role_table, backref='users')
+    logo: Mapped[Union[str, None]] = mapped_column(default=None)
 
     def get_id(self) -> str:
         # return str(self.alternative_id)
