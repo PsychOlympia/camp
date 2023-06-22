@@ -66,6 +66,9 @@
             document.getElementById('location-form').latitude.value = event.target.getLatLng().lat
             document.getElementById('location-form').longitude.value = event.target.getLatLng().lng
         }).addTo(map);
+
+        document.getElementById('location-form').latitude.value = {{ item.camp_location[0] | default(config.CAMP_LOCATION_LAT) }};
+        document.getElementById('location-form').longitude.value = {{ item.camp_location[1] | default(config.CAMP_LOCATION_LON) }};
     </script>
 </div>
 {% endblock %}
