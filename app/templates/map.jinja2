@@ -49,15 +49,15 @@
             height: {{ MAP_ICON_SIZE }}px;
             left: 0;
             right: 0;
-            margin: {{ (MAP_ICON_SIZE * 0.22 + 6) | int }}px auto;
+            margin: {{ (MAP_ICON_SIZE * 0.22 + 5) | int }}px auto;
             text-align: center;
         }
     </style>
     <script>
-        function location_icon(imgSrc) {
+        function location_icon(imgSrc, color='') {
             return L.divIcon({
                 className: 'custom-div-icon',
-                html: `<div class="marker-pin"></div><img src="${imgSrc}" alt="{{ _('Logo') }}">`,
+                html: `<div class="marker-pin"${color === '' ? '': 'style="background: '+color+';"'}></div><img src="${imgSrc}" alt="{{ _('Logo') }}">`,
                 iconSize: [{{ MAP_ICON_SIZE + 8}}, {{ ((MAP_ICON_SIZE + 8) * 1.414) | int}}],  {# * sqrt(2) #}
                 iconAnchor: [{{ ((MAP_ICON_SIZE + 8) / 2) | int }}, {{ ((MAP_ICON_SIZE + 8) * 1.414) | int}}],  {# * sqrt(2) #}
                 popupAnchor: [0, {{ (-MAP_ICON_SIZE * 1.5) | int}}]
