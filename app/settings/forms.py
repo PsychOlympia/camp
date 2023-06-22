@@ -17,6 +17,11 @@ class MapLocationForm(FlaskForm):
     longitude = HiddenFloatField('longitude', validators=[DataRequired(), NumberRange(min=-180, max=180)])
 
 
+class DeleteMapLocationForm(FlaskForm):
+    item_type = HiddenField('type', validators=[DataRequired()])
+    item_name = HiddenField('name', validators=[DataRequired()])
+
+
 class FileUploadForm(FlaskForm):
     file = FileField(_l('Upload file'), validators=[
         FileRequired(),

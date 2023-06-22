@@ -1,4 +1,3 @@
-import sys
 from http import HTTPStatus
 
 from flask import Blueprint, request, redirect, url_for, render_template, flash, abort
@@ -6,7 +5,7 @@ from flask_login import login_required, current_user
 from flask_principal import PermissionDenied
 from flask_babel import gettext as _
 
-from .forms import MapLocationForm
+from .forms import MapLocationForm, DeleteMapLocationForm
 from ..auth import orga_permission
 from ..models import db, Team, PointOfInterest
 
@@ -37,7 +36,7 @@ def set_location(place: str):
     form.item_name.data = request.values.get('item_name')
     form.item_type.data = request.values.get('item_type')
 
-    if form.item_type.data is None or form.item_name.data is None:
+    if form.item_type.data is None or form.item_name.data is None:  # noqa duplicate lines
         flash(_('Invalid form data!'), 'danger')
         return redirect(url_for('main.index'))
 
@@ -76,12 +75,75 @@ def set_location(place: str):
                 return redirect(url_for('settings.index', team_name=form.item_name.data))
             else:
                 return redirect(url_for('main.index'))  # TODO adjust
-        flash('Form contains invalid values')
+        flash(_('Invalid form data!'))
     if place == 'country':
         form.latitude.data, form.longitude.data = (
             (None, None) if item.country_location is None else item.country_location
         )
-        return render_template('set_country_location_map.jinja2', item=item, form=form)
+        return render_template(
+            'set_country_location_map.jinja2', item=item, form=form, delete_form=DeleteMapLocationForm()
+        )
     else:
         form.latitude.data, form.longitude.data = ((None, None) if item.camp_location is None else item.camp_location)
-        return render_template('set_camp_location_map.jinja2', item=item, form=form)
+        return render_template(
+            'set_camp_location_map.jinja2', item=item, form=form, delete_form=DeleteMapLocationForm()
+        )
+
+
+@bp_profile_settings.route(
+    '/delete-camp-location', methods=['POST'], endpoint='delete_camp_location', defaults={'place': 'camp'}
+)
+@bp_profile_settings.route(
+    '/delete-country-location', methods=['POST'], endpoint='delete_country_location', defaults={'place': 'country'}
+)
+@login_required
+def delete_location(place: str):
+    place = place.lower()
+    if place not in ('country', 'camp'):
+        abort(HTTPStatus.NOT_FOUND)
+
+    form = DeleteMapLocationForm()
+    if form.item_type.data is None or form.item_name.data is None:  # noqa duplicate lines
+        flash(_('Invalid form data!'), 'danger')
+        return redirect(url_for('main.index'))
+
+    if form.item_type.data not in ('team', 'poi'):
+        flash(_('Unknown item type!'), 'danger')
+        return redirect(url_for('main.index'))
+
+    item = (
+        db.session.query(Team)
+        .where(Team.name == form.item_name.data)
+        .first()
+        if form.item_type.data == 'team'
+        else db.session.query(PointOfInterest)
+        .where(PointOfInterest.name == form.item_name.data)
+        .first()
+    )
+
+    if item is None:
+        flash(_('Item not found!'), 'danger')
+        return redirect(url_for('main.index'))
+
+    if type(item) is Team and current_user.team != item:
+        raise PermissionDenied()
+    if type(item) is PointOfInterest and not orga_permission.can():
+        raise PermissionDenied()
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            if place == 'country':
+                item.country_location = None
+            else:
+                item.camp_location = None
+            db.session.commit()
+            flash(_('Postion deleted!'), 'success')
+            if form.item_type.data == 'team':
+                return redirect(url_for('settings.index', team_name=form.item_name.data))
+            else:
+                return redirect(url_for('main.index'))  # TODO adjust
+        flash(_('Invalid form data!'))
+    return redirect(url_for(
+        '.set_country_location' if place == 'country' else '.set_camp_location',
+        item_type=form.item_type.data, item_name=form.item_name.data
+    ))
