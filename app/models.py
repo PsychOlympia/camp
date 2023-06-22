@@ -78,6 +78,7 @@ class PointOfInterest(db.Model):
     logo: Mapped[Union[str, None]] = mapped_column()
     color: Mapped[Union[str, None]] = mapped_column()
     linkable: Mapped[bool] = mapped_column(default=False)
+    category: Mapped[str] = mapped_column(default='point of interest')
 
     @hybrid_property
     def camp_location(self) -> tuple[float, float] | None:
@@ -107,6 +108,7 @@ class Team(db.Model):
     logo: Mapped[Union[str, None]] = mapped_column()
     color: Mapped[Union[str, None]] = mapped_column()
     linkable: Mapped[bool] = mapped_column(default=True)
+    category: Mapped[str] = mapped_column(default='team')
 
     @hybrid_property
     def camp_location(self) -> tuple[float, float] | None:
