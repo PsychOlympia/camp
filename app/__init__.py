@@ -2,6 +2,7 @@ from typing import Mapping
 
 from flask import Flask, render_template
 from dotenv import dotenv_values
+from flask_principal import PermissionDenied
 
 from .api import api_init_app
 from .cli import cli_init_app
@@ -51,6 +52,8 @@ def register_blueprints(app: Flask) -> None:
     from .helper.views import bp_helper
     from .team.views import bp_team
     from .infopanel.views import bp_infopanel
+    from .profile.views import bp_profile
+    from .settings.views import bp_profile_settings
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
@@ -58,6 +61,8 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(bp_helper)
     app.register_blueprint(bp_team)
     app.register_blueprint(bp_infopanel)
+    app.register_blueprint(bp_profile)
+    app.register_blueprint(bp_profile_settings)
 
 
 def initialize_extensions(app: Flask) -> None:
@@ -82,6 +87,7 @@ def configure_logging(app: Flask) -> None:
 
 
 def register_error_handlers(app: Flask) -> None:
+    @app.errorhandler(PermissionDenied)
     @app.errorhandler(401)
     def handle_401(error):
         return render_template('errors/401.jinja2')
