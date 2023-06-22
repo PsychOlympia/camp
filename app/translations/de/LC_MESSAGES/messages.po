@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.0.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-22 18:14+0200\n"
+"POT-Creation-Date: 2023-06-22 20:45+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -69,8 +69,8 @@ msgid "Camp map"
 msgstr "Camp-Karte"
 
 #: app/main/templates/camp_map.jinja2:40 app/main/templates/team_map.jinja2:40
-#: app/settings/templates/set_camp_location_map.jinja2:51
-#: app/settings/templates/set_country_location_map.jinja2:51
+#: app/settings/templates/set_camp_location_map.jinja2:57
+#: app/settings/templates/set_country_location_map.jinja2:57
 #, python-format
 msgid "Position of %(item_name)s"
 msgstr "Position von %(item_name)s"
@@ -84,33 +84,39 @@ msgid "Team map"
 msgstr "Team-Karte"
 
 #: app/profile/templates/profile.jinja2:3
+#: app/profile/templates/profile.jinja2:6
 #, python-format
 msgid "Profile of %(name)s"
 msgstr "Profil von %(name)s"
 
-#: app/settings/forms.py:21
+#: app/settings/forms.py:26
 msgid "Upload file"
 msgstr "Datei hochladen"
 
-#: app/settings/forms.py:23
+#: app/settings/forms.py:28
 msgid "Only images are allowed!"
 msgstr "Es sind nur Bilder erlaubt!"
 
-#: app/settings/views.py:41
+#: app/settings/views.py:40 app/settings/views.py:78 app/settings/views.py:107
+#: app/settings/views.py:145
 msgid "Invalid form data!"
 msgstr "Ungültige Formulardaten!"
 
-#: app/settings/views.py:45
+#: app/settings/views.py:44 app/settings/views.py:111
 msgid "Unknown item type!"
 msgstr "Unbekannter Itemtyp!"
 
-#: app/settings/views.py:59
+#: app/settings/views.py:58 app/settings/views.py:125
 msgid "Item not found!"
 msgstr "Item wurde nicht gefunden!"
 
-#: app/settings/views.py:74
+#: app/settings/views.py:73
 msgid "Postion updated!"
 msgstr "Position aktualisiert!"
+
+#: app/settings/views.py:140
+msgid "Postion deleted!"
+msgstr "Position gelöscht!"
 
 #: app/settings/templates/profile_settings.jinja2:3
 msgid "Profile settings"
@@ -119,7 +125,7 @@ msgstr "Profileinstellungen"
 #: app/settings/templates/profile_settings.jinja2:7
 #, python-format
 msgid "Settings for %(username)s"
-msgstr "Einstellungen für %(username)s!"
+msgstr "Einstellungen für %(username)s"
 
 #: app/settings/templates/profile_settings.jinja2:9
 msgid "Team logo"
@@ -142,6 +148,11 @@ msgstr "Standort auf der Camp-Karte aktualisieren"
 #: app/settings/templates/set_country_location_map.jinja2:27
 msgid "Update position"
 msgstr "Standort festlegen"
+
+#: app/settings/templates/set_camp_location_map.jinja2:33
+#: app/settings/templates/set_country_location_map.jinja2:33
+msgid "Delete from map"
+msgstr "Standort löschen"
 
 #: app/settings/templates/set_country_location_map.jinja2:9
 #: app/settings/templates/set_country_location_map.jinja2:22
