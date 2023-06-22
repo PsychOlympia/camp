@@ -5,7 +5,7 @@
 {# | replace('\n', '') is needed for this to work as the popup content! #}
 {% macro map_popup(item_name, item_logo, link=true) -%}
 <div style="display: flex; flex-direction: row; gap: 20px; align-items: center;">
-    <img src="{{ item_logo }}" alt="{{ _('Logo of %(item_name)s', item_name=item_name) }}" style="height: {{ config.MAP_ICON_SIZE | int * 2 }}px; width: {{ config.MAP_ICON_SIZE | int * 2 }}px; ">
+    <img src="{{ item_logo }}" alt="{{ _('Logo of %(item_name)s', item_name=item_name) }}" style="height: {{ config.MAP_ICON_SIZE | int * 2 }}px; width: {{ config.MAP_ICON_SIZE | int * 2 }}px; border-radius: 15px; border: 1px solid var(--accent);">
     <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
         <span style="font-size: 1.2em; font-weight: bold;">{{ item_name }}</span>
         {% if link %}
@@ -45,6 +45,7 @@
 
         .custom-div-icon img {
             position: absolute;
+            border-radius: 100vh;
             width: {{ MAP_ICON_SIZE }}px;
             height: {{ MAP_ICON_SIZE }}px;
             left: 0;
@@ -57,7 +58,7 @@
         function location_icon(imgSrc, color='') {
             return L.divIcon({
                 className: 'custom-div-icon',
-                html: `<div class="marker-pin"${color === '' ? '': 'style="background: '+color+';"'}></div><img src="${imgSrc}" alt="{{ _('Logo') }}">`,
+                html: `<div class="marker-pin"${color === '' ? '': 'style="background: '+color+';"'}></div><img src="${imgSrc}" alt="{{ _('Logo') }}"></div>`,
                 iconSize: [{{ MAP_ICON_SIZE + 8}}, {{ ((MAP_ICON_SIZE + 8) * 1.414) | int}}],  {# * sqrt(2) #}
                 iconAnchor: [{{ ((MAP_ICON_SIZE + 8) / 2) | int }}, {{ ((MAP_ICON_SIZE + 8) * 1.414) | int}}],  {# * sqrt(2) #}
                 popupAnchor: [0, {{ (-MAP_ICON_SIZE * 1.5) | int}}]
