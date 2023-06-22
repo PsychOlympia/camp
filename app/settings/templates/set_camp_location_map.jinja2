@@ -1,0 +1,63 @@
+{% extends 'map.jinja2' %}
+
+{% macro set_position_popup() -%}
+<div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+    <span style="font-size: 1.2em; font-weight: bold;">{{ item.name }}</span>
+</div>
+{%- endmacro %}
+
+{% block title %}{{ _('Update camp map position') }} - {{ super() }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh;">
+    <h3>{{ _('Update camp map position') }}</h3>
+    <div id="map" style="width: 100%; height: 100%;"></div>
+    <form id="location-form" action="{{ url_for('.set_camp_location') }}" method="post" style="margin-bottom: 0;">
+        {{ form.hidden_tag() }}
+        <button class="invisible-button" style="display: flex; flex-direction: row; gap: 10px; align-items: center; justify-content: center; color: var(--light); width: 100dvw; border-radius: 0; background-color: #4794ff; font-size: 1.5em; padding: 10px; cursor: pointer;">
+            <span class="material-symbols-outlined">home_pin</span>{{ _('Update position') }}
+        </button>
+    </form>
+    <script>
+        let bounds = new L.LatLngBounds(
+            new L.LatLng({{ config.CAMP_LOCATION_LAT | float - 5 }}, {{ config.CAMP_LOCATION_LON | float - 5}}),
+            new L.LatLng({{ config.CAMP_LOCATION_LAT | float + 5 }}, {{ config.CAMP_LOCATION_LON | float + 5}})
+        );
+        const map = L.map('map', {
+            maxBounds: bounds,
+            maxBoundsViscosity: 1.0
+        }).setView([{{ item.camp_location[0] | default(config.CAMP_LOCATION_LAT) }}, {{ item.camp_location[1] | default(config.CAMP_LOCATION_LON) }}], {{ config.CAMP_LOCATION_ZOOM | default(6) }});
+        L.tileLayer('{{ url_for('static', filename='maps/camp') }}/{z}/{x}/{y}.png', {
+            minZoom: {{ config.CAMP_LOCATION_MIN_ZOOM | default(0) }},
+            maxZoom: {{ config.CAMP_LOCATION_MAX_ZOOM | default(19) }},
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <span>PsychOlympia</span>'
+        }).addTo(map);
+
+        {% set item_logo = url_for('static', filename='uploads') ~ '/' ~ ('default.png' if item.logo is none else item.logo) %}
+        {% set item_name = item.name | striptags %}
+        L.marker(
+            [{{ item.camp_location[0] | default(config.CAMP_LOCATION_LAT) }}, {{ item.camp_location[1] | default(config.CAMP_LOCATION_LON) }}],
+            {
+                icon: location_icon_img('{{ item_logo }}'{% if item.color is not none %}, color='{{ item.color }}'{% endif %}),
+                title: '{{ _('Position of %(item_name)s', item_name=item_name) }}',
+                draggable: true
+            }
+        ).bindPopup(L.popup().setContent('{{ set_position_popup() | replace('\n', '') }}')).on('click', (event) => {
+            document.getElementById('location-form').latitude.value = event.latlng.lat
+            document.getElementById('location-form').longitude.value = event.latlng.lng
+        }).on('dragend', (event) => {
+            document.getElementById('location-form').latitude.value = event.target.getLatLng().lat
+            document.getElementById('location-form').longitude.value = event.target.getLatLng().lng
+        }).addTo(map);
+    </script>
+</div>
+{% endblock %}
