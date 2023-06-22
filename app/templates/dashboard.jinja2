@@ -3,9 +3,17 @@
 {% block title %}{{ _('Dashboard') }} - {{ super() }}{% endblock %}
 
 {% block body %}
-    <a href="{{ url_for('main.index') }}">
-        <span class="material-symbols-outlined">home</span>
-    </a>
+    <nav style="display: flex; gap: 10px;">
+        {% block nav_items %}
+            {% block nav_items_before %}{% endblock %}
+            <a href="{{ url_for('main.index') }}">
+                <span class="material-symbols-outlined">home</span>
+            </a>
+            {% block nav_items_between %}{% endblock %}
+            <div style="flex-grow: 1;"></div>
+            {% block nav_items_after %}{% endblock %}
+        {% endblock %}
+    </nav>
     {% block content %}
     {% endblock %}
 {% endblock %}
