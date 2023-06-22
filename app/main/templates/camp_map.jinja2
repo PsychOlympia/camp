@@ -1,5 +1,14 @@
 {% extends 'map.jinja2' %}
 
+{% macro parse_item(item) -%}
+{% set item_logo = url_for('static', filename='uploads') ~ '/' ~ ('default.png' if item.logo is none else item.logo) %}
+{% set item_name = item.name | striptags %}
+L.marker([{{ item.camp_location[0] }}, {{ item.camp_location[1] }}], {
+    icon: location_icon_img('{{ item_logo }}'{% if item.color is not none %}, color='{{ item.color }}'{% endif %}),
+    title: '{{ _('Position of %(item_name)s', item_name=item_name) }}'
+}).bindPopup(L.popup().setContent('{{ map_popup(item_name, item_logo, link=url_for('profile.index', team_name=item.name) if item.linkable else none) | replace('\n', '') }}'))
+{%- endmacro %}
+
 {% block title %}{{ _('Camp map') }} - {{ super() }}{% endblock %}
 
 {% block head %}
@@ -20,27 +29,28 @@
             new L.LatLng({{ config.CAMP_LOCATION_LAT | float - 1/120 }}, {{ config.CAMP_LOCATION_LON | float - 1/60}}),
             new L.LatLng({{ config.CAMP_LOCATION_LAT | float + 1/120 }}, {{ config.CAMP_LOCATION_LON | float + 1/60}})
         );
+        const teams = L.layerGroup([
+        {% for item in map_items if item.category == 'team' -%}
+            {{ parse_item(item) | replace('\n', '') }}{% if not loop.last %}, {% endif %}
+        {%- endfor %}
+        ]);
+        const pois = L.layerGroup([
+        {% for item in map_items if item.category == 'point of interest' -%}
+            {{ parse_item(item) | replace('\n', '') }}{% if not loop.last %}, {% endif %}
+        {%- endfor %}
+        ]);
+        const overlays = {'Teams': teams, 'Points of interest': pois}
         const map = L.map('map', {
             maxBounds: bounds,
-            maxBoundsViscosity: 1.0
+            maxBoundsViscosity: 1.0,
+            layers: [teams, pois]
         }).setView([{{ config.CAMP_LOCATION_LAT | default(0) }}, {{ config.CAMP_LOCATION_LON | default(0) }}], {{ config.CAMP_LOCATION_ZOOM | default(18) }});
         L.tileLayer('{{ url_for('static', filename='maps/camp') }}/{z}/{x}/{y}.png', {
             minZoom: {{ config.CAMP_LOCATION_MIN_ZOOM | default(17) }},
             maxZoom: {{ config.CAMP_LOCATION_MAX_ZOOM | default(19) }},
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <span>PsychOlympia</span>'
         }).addTo(map);
-
-        {% for item in map_items %}
-            {% set item_logo = url_for('static', filename='uploads') ~ '/' ~ ('default.png' if item.logo is none else item.logo) %}
-            {% set item_name = item.name | striptags %}
-            L.marker(
-                [{{ item.camp_location[0] }}, {{ item.camp_location[1] }}],
-                {
-                    icon: location_icon_img('{{ item_logo }}'{% if item.color is not none %}, color='{{ item.color }}'{% endif %}),
-                    title: '{{ _('Position of %(item_name)s', item_name=item_name) }}'
-                }
-            ).bindPopup(L.popup().setContent('{{ map_popup(item_name, item_logo, link=url_for('profile.index', team_name=item.name) if item.linkable else none) | replace('\n', '') }}')).addTo(map);
-        {% endfor %}
+        L.control.layers({}, overlays).addTo(map);
     </script>
 </div>
 {% endblock %}
