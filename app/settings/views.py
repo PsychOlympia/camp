@@ -5,7 +5,6 @@ from flask_login import login_required, current_user
 from flask_principal import PermissionDenied
 from flask_babel import gettext as _
 
-from .forms import MapLocationForm, DeleteMapLocationForm
 from ..auth import orga_permission
 from ..models import db, Team, PointOfInterest
 
