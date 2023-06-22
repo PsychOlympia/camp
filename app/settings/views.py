@@ -81,12 +81,12 @@ def set_location(place: str):
             (None, None) if item.country_location is None else item.country_location
         )
         return render_template(
-            'set_country_location_map.jinja2', item=item, form=form, delete_form=DeleteMapLocationForm()
+            'set_country_location_map.jinja2', item=item, form=form
         )
     else:
         form.latitude.data, form.longitude.data = ((None, None) if item.camp_location is None else item.camp_location)
         return render_template(
-            'set_camp_location_map.jinja2', item=item, form=form, delete_form=DeleteMapLocationForm()
+            'set_camp_location_map.jinja2', item=item, form=form
         )
 
 
@@ -130,19 +130,18 @@ def delete_location(place: str):
     if type(item) is PointOfInterest and not orga_permission.can():
         raise PermissionDenied()
 
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            if place == 'country':
-                item.country_location = None
-            else:
-                item.camp_location = None
-            db.session.commit()
-            flash(_('Postion deleted!'), 'success')
-            if form.item_type.data == 'team':
-                return redirect(url_for('settings.index', team_name=form.item_name.data))
-            else:
-                return redirect(url_for('main.index'))  # TODO adjust
-        flash(_('Invalid form data!'))
+    if form.validate_on_submit():
+        if place == 'country':
+            item.country_location = None
+        else:
+            item.camp_location = None
+        db.session.commit()
+        flash(_('Postion deleted!'), 'success')
+        if form.item_type.data == 'team':
+            return redirect(url_for('settings.index', team_name=form.item_name.data))
+        else:
+            return redirect(url_for('main.index'))  # TODO adjust
+    flash(_('Invalid form data!'))
     return redirect(url_for(
         '.set_country_location' if place == 'country' else '.set_camp_location',
         item_type=form.item_type.data, item_name=form.item_name.data

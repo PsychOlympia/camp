@@ -29,6 +29,8 @@
     </form>
     <form id="delete-form" action="{{ url_for('.delete_country_location') }}" method="post" style="margin-bottom: 0;">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        {{ form.item_type() }}
+        {{ form.item_name() }}
         <button class="invisible-button" type="submit" style="display: flex; flex-direction: row; gap: 10px; align-items: center; justify-content: center; color: var(--light); width: 100dvw; border-radius: 0; background-color: var(--danger); font-size: 1.5em; padding: 10px; cursor: pointer;">
             <span class="material-symbols-outlined">location_off</span>{{ _('Delete from map') }}
         </button>
