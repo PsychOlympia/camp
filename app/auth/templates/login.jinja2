@@ -38,12 +38,5 @@
                 </div>
             </form>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 5px; align-items: center; text-align: center; margin: 0 20px; max-width: 500px;">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% for category, message in messages %}
-                <span class="{{ category }}">{{ message }}</span>
-            {% endfor %}
-        {% endwith %}
-        </div>
     </div>
 {% endblock %}
