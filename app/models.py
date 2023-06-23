@@ -24,9 +24,9 @@ def serialize_coordinates(coordinates: tuple[float, float] | None) -> str | None
 
 
 def deserialize_coordinates(value: str | None) -> tuple[float, float] | None:
-    if value is None:
+    if value is None or (isinstance(value, str) and value.strip() == ''):
         return None
-    lat, lon = value.split(',')
+    lat, lon = map(lambda coordinate: coordinate.strip(), value.split(','))
     return float(lat), float(lon)
 
 
