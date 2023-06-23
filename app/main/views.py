@@ -28,7 +28,7 @@ def index():
 @bp_main.route('/team-map', methods=['GET'], endpoint='team_map')
 @login_required
 @team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
-def index():
+def team_map():
     map_items: list[IsMapItem] = (
         db.session.query(Team).where(Team._country_location != None).all()  # noqa
         + db.session.query(PointOfInterest).where(PointOfInterest._country_location != None).all()  # noqa
@@ -39,7 +39,7 @@ def index():
 @bp_main.route('/camp-map', methods=['GET'], endpoint='camp_map')
 @login_required
 @team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
-def index():
+def camp_map():
     map_items: list[IsMapItem] = (
         db.session.query(Team).where(Team._camp_location != None).all()  # noqa
         + db.session.query(PointOfInterest).where(PointOfInterest._camp_location != None).all()  # noqa

@@ -9,7 +9,9 @@ from .forms import MapLocationForm
 from ..auth import orga_permission
 from ..models import db, Team, PointOfInterest
 
-bp_profile_settings = Blueprint('settings', __name__, template_folder='templates', static_folder='static', url_prefix='/settings')
+bp_profile_settings = Blueprint(
+    'settings', __name__, template_folder='templates', static_folder='static', url_prefix='/settings'
+)
 
 
 @bp_profile_settings.route('/', methods=['GET'], endpoint='index')

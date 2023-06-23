@@ -79,7 +79,7 @@ def download(camp_only: bool, country_only: bool, eco: bool):
 
     if sys.platform in ('win32', 'cgywin'):
         os.chdir(maperitive_dir)
-        executable = f'Maperitive.Console.exe'
+        executable = 'Maperitive.Console.exe'
     else:
         executable = f'mono "{maperitive_dir / "Maperitive.Console.exe"}"'
 
