@@ -9,7 +9,7 @@
     <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
         <span style="font-size: 1.2em; font-weight: bold;">{{ item_name }}</span>
         {% if link is not none%}
-            <button onclick="window.location.href = `{{ link }}`;" style="cursor: pointer;">{{ _('Go to profile') }}</button>
+            <button onclick="window.location.href = `{{ link }}`;">{{ _('Go to profile') }}</button>
         {% endif %}
     </div>
 </div>

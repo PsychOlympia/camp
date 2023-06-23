@@ -68,6 +68,7 @@ button:hover, button:focus, input:hover, input:focus {
 
 button {
     border-radius: 100px;
+    cursor: pointer;
 }
 
 
