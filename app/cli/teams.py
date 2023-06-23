@@ -1,8 +1,10 @@
+import csv
+
 import click
 from click import Context
 from sqlalchemy.exc import IntegrityError
 
-from ..models import db, Team
+from ..models import db, Team, deserialize_coordinates, User, serialize_coordinates
 
 
 @click.group('teams', help='Manage teams')
@@ -93,3 +95,54 @@ def delete_team(ctx: Context, team_names: tuple[str], confirm: bool, reset_all: 
         db.session.delete(team)
         db.session.commit()
         click.secho(f'The team {team_name} has been deleted!', fg='bright_green')
+
+
+@teams.command(
+    'import',
+    short_help='Import teams from a CSV file',
+    help='Import teams from a CSV file. The CSV_FILE is the file to import teams from, '
+         'or in case of --template the template file path'
+)
+@click.argument('csv_file')
+@click.option(
+    '-t', '--template', 'template',
+    is_flag=True, default=False,
+    help='Do not import teams, but rather export a template CSV to fill with data'
+)
+def import_teams(csv_file: str, template: bool):
+    if not csv_file.lower().endswith('.csv'):
+        csv_file = f'{csv_file}.csv'
+    if template:
+        click.secho(f'Writing template to to {csv_file}', fg='bright_blue')
+        with open(csv_file, mode='w') as f:
+            writer = csv.writer(f)
+            writer.writerows([
+                ('Teamname', 'Team accent-color', 'Team category', 'Camp location', 'Country location', 'Team member 1 name', 'Team member 2 name', '...'),
+                ('Testteam', '#0000ff', 'team', '51.165,10.455278', None, 'user1', 'user2', 'user3', 'user4')
+            ])
+        return
+    with open(csv_file, mode='r') as f:
+        reader = csv.reader(f)
+        next(reader)  # Skip header
+        for line in reader:
+            if len(line) == 0:
+                continue
+            if len(line) < 5:
+                click.secho(f'Skipping line {reader.line_num}: Not enough values!')
+                continue
+            name, accent_color, category, camp_coordinates, country_coordinates, *member_names = line
+            if db.session.query(Team).where(Team.name == name.strip()).first() is not None:
+                click.secho(f'The team {name} already exists!', fg='bright_yellow')
+                continue
+            camp_coordinates = deserialize_coordinates(camp_coordinates)
+            country_coordinates = deserialize_coordinates(country_coordinates)
+            team = Team(
+                name=name.strip(),
+                _camp_location=serialize_coordinates(camp_coordinates),
+                _country_location=serialize_coordinates(country_coordinates),
+                color=None if accent_color.strip() == '' else accent_color.strip(),
+                category=None if category.strip() == '' else category.strip(),
+                members=db.session.query(User).where(User.username.in_(member_names)).all()
+            )
+            db.session.add(team)
+            db.session.commit()
