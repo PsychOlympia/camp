@@ -29,21 +29,20 @@ L.marker([{{ item.camp_location[0] }}, {{ item.camp_location[1] }}], {
             new L.LatLng({{ config.CAMP_LOCATION_LAT | float - 1/120 }}, {{ config.CAMP_LOCATION_LON | float - 1/60}}),
             new L.LatLng({{ config.CAMP_LOCATION_LAT | float + 1/120 }}, {{ config.CAMP_LOCATION_LON | float + 1/60}})
         );
-        const teams = L.layerGroup([
-        {% for item in map_items if item.category == 'team' -%}
-            {{ parse_item(item) | replace('\n', '') }}{% if not loop.last %}, {% endif %}
-        {%- endfor %}
-        ]);
-        const pois = L.layerGroup([
-        {% for item in map_items if item.category == 'point of interest' -%}
-            {{ parse_item(item) | replace('\n', '') }}{% if not loop.last %}, {% endif %}
-        {%- endfor %}
-        ]);
-        const overlays = {'Teams': teams, 'Points of interest': pois}
+        {% with categories = map_items | map(attribute='category') | unique | list %}
+        const overlays = {
+            {% for category in categories %}
+                '{{ _(category) }}': L.layerGroup([
+                    {% for item in map_items if item.category == category -%}
+                        {{ parse_item(item) | replace('\n', '') }}{% if not loop.last %}, {% endif %}
+                    {%- endfor %}]){% if not loop.last %}, {% endif %}
+            {% endfor %}
+        }
+        {% endwith %}
         const map = L.map('map', {
             maxBounds: bounds,
             maxBoundsViscosity: 1.0,
-            layers: [teams, pois]
+            layers: Object.values(overlays)
         }).setView([{{ config.CAMP_LOCATION_LAT | default(0) }}, {{ config.CAMP_LOCATION_LON | default(0) }}], {{ config.CAMP_LOCATION_ZOOM | default(18) }});
         L.tileLayer('{{ url_for('static', filename='maps/camp') }}/{z}/{x}/{y}.png', {
             minZoom: {{ config.CAMP_LOCATION_MIN_ZOOM | default(17) }},
