@@ -75,7 +75,7 @@ button {
     position: fixed;
     top: 40px;
     right: 0;
-    padding-right: 20px;
+    padding: 0 20px;
     overflow: hidden;
     z-index: 9999;
 }
@@ -89,6 +89,8 @@ button {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     transform: translateX(100%);
+    text-align: center;
+    max-width: 500px;
 }
 
 .toast.show {
