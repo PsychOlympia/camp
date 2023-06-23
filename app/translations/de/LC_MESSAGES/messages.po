@@ -1,7 +1,7 @@
 # German translations for camp.
 # Copyright (C) 2023 PsychOlympia
 # This file is distributed under the same license as the camp project.
-# Felix Znek <felix.zenk@web.de>, 2023.
+# Felix Zenk <felix.zenk@web.de>, 2023.
 #
 msgid ""
 msgstr ""
