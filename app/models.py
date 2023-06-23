@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from enum import Enum, unique
 from typing import Union, Protocol
 # from uuid import uuid4
 
 from flask_login import UserMixin
+from flask_babel import lazy_gettext as _l
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import ForeignKey, Column, Integer
@@ -35,6 +37,14 @@ class IsMapItem(Protocol):
     logo: str | None
     color: str | None
     linkable: bool
+
+
+@unique
+class Category(Enum):
+    TEAM = _l('team')
+    POINT_OF_INTEREST = _l('point of interest')
+    WORKSHOP = _l('workshop')
+    STATION = _l('station')
 
 
 user_role_table = db.Table(
@@ -78,7 +88,7 @@ class PointOfInterest(db.Model):
     logo: Mapped[Union[str, None]] = mapped_column()
     color: Mapped[Union[str, None]] = mapped_column()
     linkable: Mapped[bool] = mapped_column(default=False)
-    category: Mapped[str] = mapped_column(default='point of interest')
+    category: Mapped[str] = mapped_column(default=Category.POINT_OF_INTEREST.value)
 
     @hybrid_property
     def camp_location(self) -> tuple[float, float] | None:
@@ -108,7 +118,7 @@ class Team(db.Model):
     logo: Mapped[Union[str, None]] = mapped_column()
     color: Mapped[Union[str, None]] = mapped_column()
     linkable: Mapped[bool] = mapped_column(default=True)
-    category: Mapped[str] = mapped_column(default='team')
+    category: Mapped[str] = mapped_column(default=Category.TEAM.value)
 
     @hybrid_property
     def camp_location(self) -> tuple[float, float] | None:
