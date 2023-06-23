@@ -29,7 +29,7 @@ L.marker([{{ item.camp_location[0] }}, {{ item.camp_location[1] }}], {
             new L.LatLng({{ config.CAMP_LOCATION_LAT | float - 1/120 }}, {{ config.CAMP_LOCATION_LON | float - 1/60}}),
             new L.LatLng({{ config.CAMP_LOCATION_LAT | float + 1/120 }}, {{ config.CAMP_LOCATION_LON | float + 1/60}})
         );
-        {% with categories = map_items | map(attribute='category') | unique | list %}
+        {% with categories = map_items | map(attribute='category') | unique | sort %}
         const overlays = {
             {% for category in categories %}
                 '{{ _(category) }}': L.layerGroup([
