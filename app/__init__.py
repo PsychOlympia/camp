@@ -47,7 +47,8 @@ def configure(app: Flask, test_config: Mapping) -> None:
     # jinja variables
     @app.context_processor
     def global_variables():
-        return dict()
+        from .i18n import locale_selector
+        return dict(lang=locale_selector())
 
     # config
     app.config.from_mapping(dotenv_values())
