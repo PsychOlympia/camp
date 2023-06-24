@@ -17,7 +17,7 @@ def my_profile():
     return render_template('my_profile.jinja2')
 
 
-@bp_profile.route('/profile', methods=['GET'], endpoint='user_profile')
+@bp_profile.route('/profile', methods=['GET'], endpoint='user')
 @login_required
 @guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def user_profile():
@@ -29,10 +29,10 @@ def user_profile():
     if user is None:
         flash(_('The user %(username)s was not found!', username=name), 'danger')
         return redirect(url_for('main.index'))
-    return render_template('user_profile.jinja2', team=user)
+    return render_template('user_profile.jinja2', user=user)
 
 
-@bp_profile.route('/<string:team_name>', methods=['GET'], endpoint='view')
+@bp_profile.route('/<string:team_name>', methods=['GET'], endpoint='team')
 @login_required
 @team_permission.require(HTTPStatus.UNAUTHORIZED)
 def team_profile(team_name: str):

@@ -43,7 +43,7 @@
                     icon: location_icon_img('{{ item_logo }}'{% if item.color is not none %}, color='{{ item.color }}'{% endif %}),
                     title: '{{ _('Position of %(item_name)s', item_name=item_name) }}'
                 }
-            ).bindPopup(L.popup().setContent('{{ map_popup(item_name, item_logo, link=url_for('profile.view', team_name=item.name) if item.linkable else none) | replace('\n', '') }}')).addTo(map);
+            ).bindPopup(L.popup().setContent('{{ map_popup(item_name, item_logo, link=url_for('profile.team', team_name=item.name) if item.linkable else none) | replace('\n', '') }}')).addTo(map);
         {% endfor %}
     </script>
 </div>
