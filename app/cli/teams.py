@@ -131,18 +131,28 @@ def import_teams(csv_file: str, template: bool):
                 click.secho(f'Skipping line {reader.line_num}: Not enough values!')
                 continue
             name, accent_color, category, camp_coordinates, country_coordinates, *member_names = line
-            if db.session.query(Team).where(Team.name == name.strip()).first() is not None:
+            name = name.strip()
+            if db.session.query(Team).where(Team.name == name).first() is not None:
                 click.secho(f'The team {name} already exists!', fg='bright_yellow')
                 continue
             camp_coordinates = deserialize_coordinates(camp_coordinates)
             country_coordinates = deserialize_coordinates(country_coordinates)
+            members = db.session.query(User).where(User.username.in_(member_names)).all()
+            missing_members = set(member_names).difference(map(lambda m: m.username, members))
+            if len(missing_members) > 0:
+                click.secho(
+                    f'The following users do not exist and will not be added to {name}: '
+                    f'{", ".join(sorted(missing_members))}',
+                    fg='bright_yellow'
+                )
             team = Team(
-                name=name.strip(),
+                name=name,
                 _camp_location=serialize_coordinates(camp_coordinates),
                 _country_location=serialize_coordinates(country_coordinates),
                 color=None if accent_color.strip() == '' else accent_color.strip(),
                 category=None if category.strip() == '' else category.strip(),
-                members=db.session.query(User).where(User.username.in_(member_names)).all()
+                members=members
             )
             db.session.add(team)
             db.session.commit()
+            click.secho(f'Added team {name} with {len(members)} members.', fg='bright_green')
