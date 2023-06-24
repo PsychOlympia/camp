@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-24 18:56+0200\n"
+"POT-Creation-Date: 2023-06-24 19:43+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -134,46 +134,29 @@ msgstr "Datei hochladen"
 msgid "Only images are allowed!"
 msgstr "Es sind nur Bilder erlaubt!"
 
-#: app/settings/views.py:43 app/settings/views.py:81 app/settings/views.py:110
+#: app/settings/views.py:29
+msgid "You are not part of a team!"
+msgstr "Du bist keinem Team zugewiesen!"
+
+#: app/settings/views.py:53 app/settings/views.py:91 app/settings/views.py:120
 msgid "Invalid form data!"
 msgstr "Ungültige Formulardaten!"
 
-#: app/settings/views.py:47 app/settings/views.py:114
+#: app/settings/views.py:57 app/settings/views.py:124
 msgid "Unknown item type!"
 msgstr "Unbekannter Itemtyp!"
 
-#: app/settings/views.py:61 app/settings/views.py:128
+#: app/settings/views.py:71 app/settings/views.py:138
 msgid "Item not found!"
 msgstr "Item wurde nicht gefunden!"
 
-#: app/settings/views.py:76
+#: app/settings/views.py:86
 msgid "Postion updated!"
 msgstr "Position aktualisiert!"
 
-#: app/settings/views.py:141
+#: app/settings/views.py:151
 msgid "Postion deleted!"
 msgstr "Position gelöscht!"
-
-#: app/settings/templates/profile_settings.jinja2:3
-msgid "Profile settings"
-msgstr "Profileinstellungen"
-
-#: app/settings/templates/profile_settings.jinja2:7
-#, python-format
-msgid "Settings for %(username)s"
-msgstr "Einstellungen für %(username)s"
-
-#: app/settings/templates/profile_settings.jinja2:9
-msgid "Team logo"
-msgstr "Teamlogo"
-
-#: app/settings/templates/profile_settings.jinja2:11
-msgid "Edit team location on the camp map"
-msgstr "Team-Standort auf Camp-Karte bearbeiten"
-
-#: app/settings/templates/profile_settings.jinja2:14
-msgid "Edit team location on the team map"
-msgstr "Team-Standort auf Team-Karte bearbeiten"
 
 #: app/settings/templates/set_camp_location_map.jinja2:9
 #: app/settings/templates/set_camp_location_map.jinja2:26
@@ -195,19 +178,52 @@ msgstr "Standort löschen"
 msgid "Update team map position"
 msgstr "Standort auf der Team-Karte aktualisieren"
 
-#: app/templates/dashboard.jinja2:3
-msgid "Dashboard"
-msgstr "Dashboard"
+#: app/settings/templates/team_settings.jinja2:3
+msgid "Team profile settings"
+msgstr "Team-Profileinstellungen"
 
+#: app/settings/templates/team_settings.jinja2:7
+#: app/settings/templates/user_settings.jinja2:7
+#, python-format
+msgid "Settings for %(username)s"
+msgstr "Einstellungen für %(username)s"
+
+#: app/settings/templates/team_settings.jinja2:8
+#, python-format
+msgid "Team logo of %(team_name)s"
+msgstr "Team-Logo von %(team_name)s"
+
+#: app/settings/templates/team_settings.jinja2:10
+msgid "Edit team location on the camp map"
+msgstr "Team-Standort auf Camp-Karte bearbeiten"
+
+#: app/settings/templates/team_settings.jinja2:13
+msgid "Edit team location on the team map"
+msgstr "Team-Standort auf Team-Karte bearbeiten"
+
+#: app/settings/templates/team_settings.jinja2:16
+#, python-format
+msgid "View public team profile"
+msgstr "Öffentliches Team-Profil anschauen"
+
+#: app/settings/templates/user_settings.jinja2:3
+msgid "Profile settings"
+msgstr "Profileinstellungen"
+
+#: app/settings/templates/user_settings.jinja2:8
 #: app/templates/dashboard.jinja2:17 app/templates/dashboard.jinja2:36
 #, python-format
 msgid "Profile picture of %(name)s"
 msgstr "Profilbild von %(name)s"
 
+#: app/templates/dashboard.jinja2:3
+msgid "Dashboard"
+msgstr "Dashboard"
+
 #: app/templates/map.jinja2:8
 #, python-format
 msgid "Logo of %(item_name)s"
-msgstr "Logo von %(item_name)s!"
+msgstr "Logo von %(item_name)s"
 
 #: app/templates/map.jinja2:12
 msgid "Go to profile"
