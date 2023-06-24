@@ -5,8 +5,30 @@
 {% block content %}
 <div style="display: flex; flex-direction: column; align-items: center;">
     <h3>{{ _('Scoreboard') }}</h3>
-    <span class="material-symbols-outlined success">arrow_drop_up</span>
-    <span class="material-symbols-outlined">check_indeterminate_small</span>
-    <span class="material-symbols-outlined danger">arrow_drop_down</span>
+    {% if entries | length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <td>{{ _('#') }}</td>
+                    <td>{{ _('Score') }}</td>
+                    <td>{{ _('Team name') }}</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entry in entries %}
+                {% set trend_class = {'up': 'success', 'flat': '', 'down': 'danger'}.get(entry.trend, '') %}
+                {% set trend_icon = {'up': 'arrow_drop_up', 'flat': 'check_intermediate_small', 'down': 'arrow_drop_down'}.get(entry.trend, '') %}
+                {% set trend_icon = {'up': 'arrow_drop_up', 'flat': 'check_intermediate_small', 'down': 'arrow_drop_down'}.get(entry.trend, '') %}
+                <tr>
+                    <td>{{ loop.index }}<span class="material-symbols-outlined {{ trend_class }}">{{ trend_icon }}</span></td>
+                    <td>{{ entry.score }}</td>
+                    <td>{{ entry.team.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>{{ _('No active Scoreboard!') }}</h3>
+    {% endif %}
 </div>
 {% endblock %}
