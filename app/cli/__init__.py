@@ -6,6 +6,7 @@ from .teams import teams
 from .users import users
 from .maps import maps
 from .translate import translate
+from .point_of_interest import point_of_interest
 
 
 bp_psy = Blueprint('psy', __name__)
@@ -15,6 +16,7 @@ bp_psy.cli.add_command(scoreboard)
 bp_psy.cli.add_command(teams)
 bp_psy.cli.add_command(users)
 bp_psy.cli.add_command(maps)
+bp_psy.cli.add_command(scoreboard)
 
 
 def cli_init_app(app: Flask) -> None:
