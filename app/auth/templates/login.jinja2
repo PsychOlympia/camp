@@ -27,11 +27,11 @@
                 {% endif %}
                 <div style="display: flex; flex-direction: column; gap: 5px;">
                     <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                        {{ form.username.label }}
+                        <span class="material-symbols-outlined" title="{{ form.username.label.text }}">person</span>
                         {{ form.username() }}
                     </div>
                     <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                        {{ form.password.label }}
+                        <span class="material-symbols-outlined" title="{{ form.password.label.text }}">password</span>
                         {{ form.password() }}
                     </div>
                     <button type="submit" style="margin: 20px 10px 0 20px; flex-grow: 1">{{ _('Login') }}</button>
