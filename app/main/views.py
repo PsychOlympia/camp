@@ -3,7 +3,7 @@ from http import HTTPStatus
 from flask import Blueprint, render_template, Response
 from flask_login import login_required
 
-from ..auth import team_permission
+from ..auth import team_permission, guest_permission
 from ..models import db, Team, PointOfInterest, IsMapItem
 
 bp_main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
@@ -21,6 +21,8 @@ def robots():
 
 
 @bp_main.route('/', methods=['GET'], endpoint='index')
+@login_required
+@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def index():
     return render_template('index.jinja2')
 

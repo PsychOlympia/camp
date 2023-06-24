@@ -6,7 +6,7 @@ from flask_principal import PermissionDenied
 from flask_babel import gettext as _
 
 from .forms import MapLocationForm
-from ..auth import orga_permission
+from ..auth import orga_permission, guest_permission
 from ..models import db, Team, PointOfInterest
 
 bp_profile_settings = Blueprint(
@@ -16,6 +16,7 @@ bp_profile_settings = Blueprint(
 
 @bp_profile_settings.route('/', methods=['GET'], endpoint='index')
 @login_required
+@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def index():
     return render_template('profile_settings.jinja2')
 
