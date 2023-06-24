@@ -1,7 +1,7 @@
-{% extends 'base.jinja2' %}
+{% extends 'dashboard.jinja2' %}
 
-{% block title %}{{ _('Profile of %(name)s', name=team.name) }} - {{ super() }}{% endblock %}
+{% block title %}{{ _('Public profile of %(name)s', name=team.name) }} - {{ super() }}{% endblock %}
 
 {% block content %}
-<h2>{{ _('Profile of %(name)s', name=team.name) }}</h2>
+<h2>{{ _('Public profile of %(name)s', name=team.name) }}</h2>
 {% endblock %}
