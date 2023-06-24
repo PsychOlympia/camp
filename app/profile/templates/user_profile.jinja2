@@ -1,0 +1,7 @@
+{% extends 'dashboard.jinja2' %}
+
+{% block title %}{{ _('Public profile of %(name)s', name=user.username) }} - {{ super() }}{% endblock %}
+
+{% block content %}
+<h2>{{ _('Public profile of %(name)s', name=user.username) }}</h2>
+{% endblock %}
