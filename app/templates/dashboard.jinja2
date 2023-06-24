@@ -3,17 +3,41 @@
 {% block title %}{{ _('Dashboard') }} - {{ super() }}{% endblock %}
 
 {% block body %}
-    <nav style="display: flex; gap: 10px;">
-        {% block nav_items %}
-            {% block nav_items_before %}{% endblock %}
-            <a href="{{ url_for('main.index') }}">
-                <span class="material-symbols-outlined">home</span>
+    <nav class="navbar desktop-visible" style="gap: 10px; align-items: center;">
+        {% block nav_items_desktop %}
+            <a href="{{ url_for('main.index') }}" style="display: flex; justify-content: center; text-decoration: none;">
+                <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">home</span>
             </a>
-            {% block nav_items_between %}{% endblock %}
+            <a href="{{ dashboard_url() }}" style="display: flex; justify-content: center; text-decoration: none;">
+                <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">team_dashboard</span>
+            </a>
             <div style="flex-grow: 1;"></div>
-            {% block nav_items_after %}{% endblock %}
+            <a href="{{ url_for('profile.index') }}" style="display: flex; justify-content: center; text-decoration: none;">
+                {% if current_user.logo is not none %}
+                <img src="{{ url_for('static', filename='uploads/' ~ current_user.logo) }}" alt="{{ _('Profile picture of $(name)s', name=current_user.username) }}" style="height: 1em; width: 1em; border: 1px solid var(--accent); border-radius: 1em; background-color: white; padding: 3px;">
+                {% else %}
+                <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">account_circle</span>
+                {% endif %}
+            </a>
         {% endblock %}
     </nav>
     {% block content %}
     {% endblock %}
+    <nav class="navbar mobile-visible" style="align-items: center; justify-content: space-around; position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 0; background-color: var(--primary-bg-subtle); color: var(--primary); z-index: 1;">
+        {% block nav_items_mobile %}
+            <a href="{{ url_for('main.index') }}" style="display: flex; flex-grow: 1; justify-content: center; text-decoration: none;">
+                <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">home</span>
+            </a>
+            <a href="{{ dashboard_url() }}" style="display: flex; flex-grow: 1; justify-content: center; text-decoration: none;">
+                <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">team_dashboard</span>
+            </a>
+            <a href="{{ url_for('profile.index') }}" style="display: flex; flex-grow: 1; justify-content: center; text-decoration: none;">
+                {% if current_user.logo is not none %}
+                <img src="{{ url_for('static', filename='uploads/' ~ current_user.logo) }}" alt="{{ _('Profile picture of $(name)s', name=current_user.username) }}" style="height: 1em; width: 1em; border: 1px solid var(--accent); border-radius: 1em; background-color: white; padding: 3px;">
+                {% else %}
+                <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">account_circle</span>
+                {% endif %}
+            </a>
+        {% endblock %}
+    </nav>
 {% endblock %}
