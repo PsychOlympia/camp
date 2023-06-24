@@ -5,10 +5,13 @@ from flask_babel import Babel
 
 
 def locale_selector() -> str | None:
-    return request.accept_languages.best_match(
-        current_app.config['BABEL_SUPPORTED_LOCALES'],
-        current_app.config['BABEL_DEFAULT_LOCALE']
-    )
+    try:
+        return request.accept_languages.best_match(
+            current_app.config['BABEL_SUPPORTED_LOCALES'],
+            current_app.config['BABEL_DEFAULT_LOCALE']
+        )
+    except RuntimeError:
+        return current_app.config['BABEL_DEFAULT_LOCALE']
 
 
 def timezone_selector() -> str | None:
