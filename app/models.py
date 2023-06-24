@@ -47,6 +47,13 @@ class Category(Enum):
     STATION = _l('station')
 
 
+@unique
+class Trend(Enum):
+    UP = 'up'
+    FLAT = 'flat'
+    DOWN = 'down'
+
+
 user_role_table = db.Table(
     'user_roles',
     Column('user_id', Integer, ForeignKey('users.id')),
@@ -137,7 +144,19 @@ class Team(db.Model):
         self._country_location = serialize_coordinates(value)  # type: ignore
 
 
+class ScoreboardEntry(db.Model):
+    __tablename__ = 'scoreboard_entries'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    team_id: Mapped[int] = mapped_column(ForeignKey('teams.id'))
+    team: Mapped[Team] = relationship(foreign_keys=[team_id])
+    score: Mapped[int] = mapped_column(default=0)
+    trend: Mapped[Trend] = mapped_column(default=Trend.FLAT)
+
+
 class Scoreboard(db.Model):
     __tablename__ = 'scoreboard'
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    round: Mapped[int] = mapped_column()
+    entry_id: Mapped[int] = mapped_column(ForeignKey('scoreboard_entries.id'))
+    entries: Mapped[list['ScoreboardEntry']] = relationship(foreign_keys=[entry_id], uselist=True)
