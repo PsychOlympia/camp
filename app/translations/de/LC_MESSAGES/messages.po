@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-23 02:22+0200\n"
+"POT-Creation-Date: 2023-06-24 18:19+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -50,13 +50,13 @@ msgstr "Benutzername"
 msgid "Password"
 msgstr "Passwort"
 
-#: app/auth/views.py:33
+#: app/auth/views.py:25
 msgid "Either this user does not exist or the entered password was wrong!"
 msgstr ""
 "Entweder dieser Benutzer existiert nicht oder das eingegebene Passwort "
 "war falsch!"
 
-#: app/auth/views.py:35
+#: app/auth/views.py:27
 msgid "The form contains invalid data!"
 msgstr "Das Formular enthält ungültige Daten!"
 
@@ -70,7 +70,7 @@ msgstr "Anmelden"
 
 #: app/helper/templates/helper_dashboard.jinja2:5
 #: app/orga/templates/orga_dashboard.jinja2:5
-#: app/team/templates/team_dashboard.jinja2:15
+#: app/team/templates/team_dashboard.jinja2:5
 #, python-format
 msgid "Hello %(username)s!"
 msgstr "Hallo %(username)s!"
@@ -80,14 +80,14 @@ msgstr "Hallo %(username)s!"
 msgid "Infopanel"
 msgstr "Infopanel"
 
-#: app/main/templates/camp_map.jinja2:8 app/main/templates/team_map.jinja2:40
-#: app/settings/templates/set_camp_location_map.jinja2:59
-#: app/settings/templates/set_country_location_map.jinja2:59
+#: app/main/templates/camp_map.jinja2:8 app/main/templates/team_map.jinja2:44
+#: app/settings/templates/set_camp_location_map.jinja2:63
+#: app/settings/templates/set_country_location_map.jinja2:63
 #, python-format
 msgid "Position of %(item_name)s"
 msgstr "Position von %(item_name)s"
 
-#: app/main/templates/camp_map.jinja2:12 app/main/templates/camp_map.jinja2:25
+#: app/main/templates/camp_map.jinja2:12 app/main/templates/camp_map.jinja2:29
 msgid "Camp map"
 msgstr "Camp-Karte"
 
@@ -95,15 +95,30 @@ msgstr "Camp-Karte"
 msgid "Home"
 msgstr "Startseite"
 
-#: app/main/templates/team_map.jinja2:3 app/main/templates/team_map.jinja2:16
+#: app/main/templates/team_map.jinja2:3 app/main/templates/team_map.jinja2:20
 msgid "Team map"
 msgstr "Team-Karte"
+
+#: app/profile/views.py:26
+msgid "No team name provided!"
+msgstr "Kein Teamname angegeben!"
+
+#: app/profile/views.py:30
+#, python-format
+msgid "The team %(team_name)s was not found!"
+msgstr "Das Team %(team_name)s wurde nicht gefunden!"
+
+#: app/profile/templates/my_profile.jinja2:3
+#: app/profile/templates/my_profile.jinja2:6
+#, python-format
+msgid "Private profile view of %(name)s"
+msgstr "Privates Profil von %(name)s"
 
 #: app/profile/templates/profile.jinja2:3
 #: app/profile/templates/profile.jinja2:6
 #, python-format
-msgid "Profile of %(name)s"
-msgstr "Profil von %(name)s"
+msgid "Public profile of %(name)s"
+msgstr "Öffentliches Profil von %(name)s"
 
 #: app/settings/forms.py:21
 msgid "Upload file"
@@ -113,23 +128,23 @@ msgstr "Datei hochladen"
 msgid "Only images are allowed!"
 msgstr "Es sind nur Bilder erlaubt!"
 
-#: app/settings/views.py:40 app/settings/views.py:78 app/settings/views.py:107
+#: app/settings/views.py:43 app/settings/views.py:81 app/settings/views.py:110
 msgid "Invalid form data!"
 msgstr "Ungültige Formulardaten!"
 
-#: app/settings/views.py:44 app/settings/views.py:111
+#: app/settings/views.py:47 app/settings/views.py:114
 msgid "Unknown item type!"
 msgstr "Unbekannter Itemtyp!"
 
-#: app/settings/views.py:58 app/settings/views.py:125
+#: app/settings/views.py:61 app/settings/views.py:128
 msgid "Item not found!"
 msgstr "Item wurde nicht gefunden!"
 
-#: app/settings/views.py:73
+#: app/settings/views.py:76
 msgid "Postion updated!"
 msgstr "Position aktualisiert!"
 
-#: app/settings/views.py:138
+#: app/settings/views.py:141
 msgid "Postion deleted!"
 msgstr "Position gelöscht!"
 
@@ -155,28 +170,33 @@ msgid "Edit team location on the team map"
 msgstr "Team-Standort auf Team-Karte bearbeiten"
 
 #: app/settings/templates/set_camp_location_map.jinja2:9
-#: app/settings/templates/set_camp_location_map.jinja2:22
+#: app/settings/templates/set_camp_location_map.jinja2:26
 msgid "Update camp map position"
 msgstr "Standort auf der Camp-Karte aktualisieren"
 
-#: app/settings/templates/set_camp_location_map.jinja2:27
-#: app/settings/templates/set_country_location_map.jinja2:27
+#: app/settings/templates/set_camp_location_map.jinja2:31
+#: app/settings/templates/set_country_location_map.jinja2:31
 msgid "Update position"
 msgstr "Standort festlegen"
 
-#: app/settings/templates/set_camp_location_map.jinja2:35
-#: app/settings/templates/set_country_location_map.jinja2:35
+#: app/settings/templates/set_camp_location_map.jinja2:39
+#: app/settings/templates/set_country_location_map.jinja2:39
 msgid "Delete from map"
 msgstr "Standort löschen"
 
 #: app/settings/templates/set_country_location_map.jinja2:9
-#: app/settings/templates/set_country_location_map.jinja2:22
+#: app/settings/templates/set_country_location_map.jinja2:26
 msgid "Update team map position"
 msgstr "Standort auf der Team-Karte aktualisieren"
 
 #: app/templates/dashboard.jinja2:3
 msgid "Dashboard"
 msgstr "Dashboard"
+
+#: app/templates/dashboard.jinja2:17 app/templates/dashboard.jinja2:36
+#, python-format
+msgid "Profile picture of $(name)s"
+msgstr "Profilbild von %(name)s"
 
 #: app/templates/map.jinja2:8
 #, python-format
