@@ -5,6 +5,9 @@
     <h3>{{ _('Hello %(username)s!', username=current_user.username) }}</h3>
     <h4>Team-Dashboard</h4>
 
-    <a href="{{ url_for('settings.index') }}">Settings</a>  {# TODO move elsewhere? #}
+    <a href="{{ url_for('settings.team') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+        <span class="material-symbols-outlined">settings</span>
+        Team settings
+    </a>
 </div>
 {% endblock %}

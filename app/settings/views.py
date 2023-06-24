@@ -14,11 +14,21 @@ bp_profile_settings = Blueprint(
 )
 
 
-@bp_profile_settings.route('/', methods=['GET'], endpoint='index')
+@bp_profile_settings.route('/user', methods=['GET'], endpoint='user')
 @login_required
 @guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
-def index():
-    return render_template('profile_settings.jinja2')
+def user_settings():
+    return render_template('user_settings.jinja2')
+
+
+@bp_profile_settings.route('/team', methods=['GET'], endpoint='team')
+@login_required
+@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+def team_settings():
+    if current_user.team is None:
+        flash(_('You are not part of a team!'))
+        return redirect(url_for('main.index'))
+    return render_template('team_settings.jinja2')
 
 
 @bp_profile_settings.route(
@@ -75,7 +85,7 @@ def set_location(place: str):
             db.session.commit()
             flash(_('Postion updated!'), 'success')
             if form.item_type.data == 'team':
-                return redirect(url_for('settings.index', team_name=form.item_name.data))
+                return redirect(url_for('settings.team', team_name=form.item_name.data))
             else:
                 return redirect(url_for('main.index'))  # TODO adjust
         flash(_('Invalid form data!'), 'danger')
@@ -140,6 +150,6 @@ def delete_location(place: str):
     db.session.commit()
     flash(_('Postion deleted!'), 'success')
     if form.item_type.data == 'team':
-        return redirect(url_for('settings.index', team_name=form.item_name.data))
+        return redirect(url_for('settings.team', team_name=form.item_name.data))
     else:
         return redirect(url_for('main.index'))  # TODO adjust

@@ -1,0 +1,10 @@
+{% extends 'dashboard.jinja2' %}
+
+{% block title %}{{ _('Profile settings') }} - {{ super() }}{% endblock %}
+
+{% block content %}
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        {{ _('Settings for %(username)s', username=current_user.username) }}
+        <img src="{{ url_for('static', filename='uploads/' ~ (current_user.logo if current_user.logo is not none else 'default.png')) }}" alt="{{ _('Profile picture of %(name)s', name=current_user.username) }}" style="width: 128px; height: 128px; border-radius: 16px;">
+    </div>
+{% endblock %}
