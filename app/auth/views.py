@@ -5,7 +5,7 @@ from flask_babel import gettext as _
 
 from ..models import db, User
 from .forms import LoginForm
-from . import bcrypt, next_url, RoleName, get_dashboard_url
+from . import bcrypt, next_url, get_dashboard_url
 
 bp_auth = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
 

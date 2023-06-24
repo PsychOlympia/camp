@@ -117,7 +117,8 @@ def import_teams(csv_file: str, template: bool):
         with open(csv_file, mode='w') as f:
             writer = csv.writer(f, lineterminator='\n')
             writer.writerows([
-                ('Teamname', 'Team accent-color', 'Team category', 'Camp location', 'Country location', 'Team member 1 name', 'Team member 2 name', '...'),
+                ('Teamname', 'Team accent-color', 'Team category', 'Camp location', 'Country location',
+                 'Team member 1 name', 'Team member 2 name', '...'),
                 ('Testteam', '#0000ff', 'team', '51.165,10.455278', None, 'user1', 'user2', 'user3', 'user4')
             ])
         return
@@ -140,11 +141,13 @@ def import_teams(csv_file: str, template: bool):
             members = db.session.query(User).where(User.username.in_(member_names)).all()
             missing_members = set(member_names).difference(map(lambda m: m.username, members))
             if len(missing_members) > 0:
-                click.secho(
-                    f'The following users do not exist and will not be added to {name}: '
-                    f'{", ".join(sorted(missing_members))}',
+                click.secho(click.style(
+                    f'The following users do not exist and will not be added to {name}: ',
                     fg='bright_yellow'
-                )
+                ) + click.style(
+                    f'{", ".join(sorted(missing_members))}',
+                    fg='bright_red'
+                ))
             team = Team(
                 name=name,
                 _camp_location=serialize_coordinates(camp_coordinates),

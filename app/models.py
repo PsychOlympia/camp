@@ -5,7 +5,6 @@ from typing import Union, Protocol
 # from uuid import uuid4
 
 from flask_login import UserMixin
-from flask_babel import lazy_gettext as _l
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import ForeignKey, Column, Integer
