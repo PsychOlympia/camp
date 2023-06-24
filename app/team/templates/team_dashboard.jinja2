@@ -9,5 +9,9 @@
         <span class="material-symbols-outlined">settings</span>
         Team settings
     </a>
+    <a href="{{ url_for('scoreboard.index') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+        <span class="material-symbols-outlined">scoreboard</span>
+        {{ _('Scoreboard') }}
+    </a>
 </div>
 {% endblock %}
