@@ -14,7 +14,7 @@
             <div style="flex-grow: 1;"></div>
             <a href="{{ url_for('profile.my_profile') }}" style="display: flex; justify-content: center; text-decoration: none;">
                 {% if current_user.logo is not none %}
-                <img src="{{ url_for('static', filename='uploads/' ~ current_user.logo) }}" alt="{{ _('Profile picture of $(name)s', name=current_user.username) }}" style="height: 1em; width: 1em; border: 1px solid var(--accent); border-radius: 1em; background-color: white; padding: 3px;">
+                <img src="{{ url_for('static', filename='uploads/' ~ current_user.logo) }}" alt="{{ _('Profile picture of %(name)s', name=current_user.username) }}" style="height: 1em; width: 1em; border: 1px solid var(--accent); border-radius: 1em; background-color: white; padding: 3px;">
                 {% else %}
                 <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">account_circle</span>
                 {% endif %}
@@ -33,7 +33,7 @@
             </a>
             <a href="{{ url_for('profile.my_profile') }}" style="display: flex; flex-grow: 1; justify-content: center; text-decoration: none;">
                 {% if current_user.logo is not none %}
-                <img src="{{ url_for('static', filename='uploads/' ~ current_user.logo) }}" alt="{{ _('Profile picture of $(name)s', name=current_user.username) }}" style="height: 1em; width: 1em; border: 1px solid var(--accent); border-radius: 1em; background-color: white; padding: 3px;">
+                <img src="{{ url_for('static', filename='uploads/' ~ current_user.logo) }}" alt="{{ _('Profile picture of %(name)s', name=current_user.username) }}" style="height: 1em; width: 1em; border: 1px solid var(--accent); border-radius: 1em; background-color: white; padding: 3px;">
                 {% else %}
                 <span class="material-symbols-outlined" style="width: 1em; padding: 3px;">account_circle</span>
                 {% endif %}
