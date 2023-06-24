@@ -41,10 +41,10 @@ class IsMapItem(Protocol):
 
 @unique
 class Category(Enum):
-    TEAM = _l('team')
-    POINT_OF_INTEREST = _l('point of interest')
-    WORKSHOP = _l('workshop')
-    STATION = _l('station')
+    TEAM = 'team'
+    POINT_OF_INTEREST = 'point of interest'
+    WORKSHOP = 'workshop'
+    STATION = 'station'
 
 
 @unique
