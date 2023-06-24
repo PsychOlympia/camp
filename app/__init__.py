@@ -5,6 +5,7 @@ from dotenv import dotenv_values
 from flask_principal import PermissionDenied
 
 from .api import api_init_app
+from .auth import get_dashboard_url
 from .cli import cli_init_app
 
 
@@ -34,11 +35,21 @@ def create_app(test_config: Mapping = None) -> Flask:
 
 
 def configure(app: Flask, test_config: Mapping) -> None:
+    # jinja options
     app.jinja_options = {
         'trim_blocks': True,
         'lstrip_blocks': True
     }
 
+    # jinja functions
+    app.add_template_global(get_dashboard_url, 'dashboard_url')
+
+    # jinja variables
+    @app.context_processor
+    def global_variables():
+        return dict()
+
+    # config
     app.config.from_mapping(dotenv_values())
     app.config.from_object(app.config.get('CONFIG', 'app.config.ProductionConfig'))
     if isinstance(test_config, Mapping):

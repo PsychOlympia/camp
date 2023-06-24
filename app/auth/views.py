@@ -5,7 +5,7 @@ from flask_babel import gettext as _
 
 from ..models import db, User
 from .forms import LoginForm
-from . import bcrypt, next_url, RoleName
+from . import bcrypt, next_url, RoleName, get_dashboard_url
 
 bp_auth = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
 
@@ -20,15 +20,7 @@ def login():
                 login_user(user, remember=True)
                 # session.permanent = True  # enable?
                 identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))  # noqa
-                default_url = url_for('main.index')
-                user_role_names = map(lambda role: role.name, user.roles)
-                if RoleName.TEAM.value in user_role_names:
-                    default_url = url_for('team.index')
-                if RoleName.HELPER.value in user_role_names:
-                    default_url = url_for('helper.index')
-                if RoleName.ORGA.value in user_role_names:
-                    default_url = url_for('orga.index')
-                return redirect(next_url(default=default_url))
+                return redirect(next_url(default=get_dashboard_url()))
             else:
                 flash(_('Either this user does not exist or the entered password was wrong!'), 'danger')
         else:
