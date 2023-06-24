@@ -14,6 +14,10 @@
         body {
             margin: 0;
         }
+
+        .navbar.desktop-visible {
+            margin: 8px;
+        }
     </style>
 {% endblock %}
 
@@ -50,7 +54,7 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <span>PsychOlympia</span>'
         }).addTo(map);
 
-        {% set item_logo = url_for('static', filename='uploads/' ~ ('default.png' if item.logo is none else item.logo) %}
+        {% set item_logo = url_for('static', filename='uploads/' ~ ('default.png' if item.logo is none else item.logo)) %}
         {% set item_name = item.name | striptags %}
         L.marker(
             [{{ item.country_location[0] | default(config.COUNTRY_LOCATION_LAT) }}, {{ item.country_location[1] | default(config.COUNTRY_LOCATION_LON) }}],

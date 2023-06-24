@@ -9,7 +9,7 @@
     --border-color: #dee2e6;
 
     --primary: #57ac4f;
-    --primary-bg-subtle: #57ac4f;
+    --primary-bg-subtle: #abe0a5;
     --accent: #57ac4f;
     --accent-bg-subtle: #57ac4f;
 
@@ -71,6 +71,10 @@ button {
     cursor: pointer;
 }
 
+a, a:visited {
+    color: initial;
+}
+
 
 #toast-container {
     position: fixed;
@@ -130,4 +134,27 @@ button {
     outline: none;
     margin: 0;
     padding: 0;
+}
+
+
+.navbar.desktop-visible > a:hover > span, .navbar.desktop-visible > a:hover > img {
+    scale: 1.1;
+}
+
+.desktop-visible {
+    display: flex;
+}
+
+.mobile-visible {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .mobile-visible {
+        display: flex;
+    }
+
+    .desktop-visible {
+        display: none;
+    }
 }

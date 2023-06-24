@@ -8,6 +8,10 @@
         body {
             margin: 0;
         }
+
+        .navbar.desktop-visible {
+            margin: 8px;
+        }
     </style>
 {% endblock %}
 
@@ -31,7 +35,7 @@
         }).addTo(map);
 
         {% for item in map_items %}
-            {% set item_logo = url_for('static', filename='uploads') ~ '/' ~ ('default.png' if item.logo is none else item.logo) %}
+            {% set item_logo = url_for('static', filename='uploads/' ~ ('default.png' if item.logo is none else item.logo)) %}
             {% set item_name = item.name | striptags %}
             L.marker(
                 [{{ item.country_location[0] }}, {{ item.country_location[1] }}],
@@ -39,7 +43,7 @@
                     icon: location_icon_img('{{ item_logo }}'{% if item.color is not none %}, color='{{ item.color }}'{% endif %}),
                     title: '{{ _('Position of %(item_name)s', item_name=item_name) }}'
                 }
-            ).bindPopup(L.popup().setContent('{{ map_popup(item_name, item_logo, link=url_for('profile.index', team_name=item.name) if item.linkable else none) | replace('\n', '') }}')).addTo(map);
+            ).bindPopup(L.popup().setContent('{{ map_popup(item_name, item_logo, link=url_for('profile.view', team_name=item.name) if item.linkable else none) | replace('\n', '') }}')).addTo(map);
         {% endfor %}
     </script>
 </div>
