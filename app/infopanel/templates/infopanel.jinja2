@@ -2,8 +2,145 @@
 
 {% block title %}{{ _('Infopanel') }} - {{ super() }}{% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .tab-container {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tab {
+            display: none;
+            flex-grow: 1;
+        }
+
+        .active-tab {
+            display: flex;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            flex-grow: 1;
+            background-color: var(--primary-bg-subtle);
+            z-index: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-grow: 1;
+            padding-left: 10%;
+            border: solid transparent;
+            border-width: thin thin thin thick;
+            transition: border-color 1s ease-in-out;
+        }
+
+        .active-menu-item {
+            border-color: var(--secondary-color);
+            transition: border-color 1s ease-in-out;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-<div style="display: flex; flex-direction: column; align-items: center;">
-    <h1>{{ _('Infopanel') }}</h1>
+<div style="display: flex; height: 100dvh; flex-direction: row;">
+    <div class="menu-container">
+        <div class="menu-item" data-time="5000">
+            <span class="material-symbols-outlined">camping</span>
+            {{ _('Camp map') }}
+        </div>
+        <div class="menu-item" data-time="4000">
+            <span class="material-symbols-outlined">sunny</span>
+            {{ _('Weather') }}
+        </div>
+        <div class="menu-item" data-time="3000">
+            <span class="material-symbols-outlined">calendar_month</span>
+            {{ _('Upcoming events') }}
+        </div>
+        <div class="menu-item" data-time="2000">
+            <span class="material-symbols-outlined">paid</span>
+            {{ _('Sponsored content') }}
+        </div>
+        <div class="menu-item" data-time="1000">
+            <span class="material-symbols-outlined">scoreboard</span>
+            {{ _('Scoreboard') }}
+        </div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 7;">
+        <h1 style="flex-shrink: 1;">{{ _('Infopanel') }}</h1>
+        <div class="tab-container">
+            <div class="tab">
+                {{ _('Camp map') }}
+            </div>
+            <div class="tab">
+                {{ _('Weather') }}
+            </div>
+            <div class="tab">
+                {{ _('Upcoming events') }}
+            </div>
+            <div class="tab">
+                {{ _('Sponsored content') }}
+            </div>
+            <div class="tab">
+                {{ _('Scoreboard') }}
+            </div>
+        </div>
+    </div>
+    <script>
+        const menuItems = document.querySelectorAll('.menu-item');
+        const tabs = document.querySelectorAll('.tab');
+        const tabFunctions = {0: refreshCampMap, 1: refreshWeather, 2: refreshSchedule, 3: refreshSponsoredContent, 4: refreshScoreboard};
+        let activeTabIndex = menuItems.length - 1;
+        let nextTabIndex = 0;
+
+        tabFunctions[nextTabIndex](menuItems[nextTabIndex]);
+
+        function switchTabs() {
+            menuItems[activeTabIndex].classList.remove('active-menu-item');
+            tabs[activeTabIndex].classList.remove('active-tab');
+            activeTabIndex = (activeTabIndex + 1) % menuItems.length;
+            menuItems[activeTabIndex].classList.add('active-menu-item');
+            tabs[activeTabIndex].classList.add('active-tab');
+            nextTabIndex = (activeTabIndex + 1) % menuItems.length;
+
+            let thisTab = menuItems[activeTabIndex];
+            let nextTab = menuItems[nextTabIndex];
+
+            tabFunctions[nextTabIndex](nextTab);
+            setTimeout(switchTabs, thisTab.attributes['data-time'].value);
+        }
+
+        setTimeout(switchTabs, 0);
+
+        function refreshCampMap(item) {
+            console.log('Refresh camp map');
+        }
+
+        function refreshWeather(item) {
+            console.log('Refresh weather');
+        }
+
+        function refreshSchedule(item) {
+            console.log('Refresh schedule');
+        }
+
+        function refreshSponsoredContent(item) {
+            console.log('Refresh sponsored content');
+        }
+
+        function refreshScoreboard(item) {
+            console.log('Refresh scoreboard');
+        }
+    </script>
 </div>
 {% endblock %}
