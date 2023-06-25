@@ -9,6 +9,14 @@
             margin: 0;
         }
 
+        .infopanel-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 7;
+        }
+
         .tab-container {
             display: flex;
             flex-grow: 1;
@@ -41,13 +49,41 @@
             flex-grow: 1;
             padding-left: 10%;
             border: solid transparent;
-            border-width: thin thin thin thick;
+            border-width: thin thick;
             transition: border-color 1s ease-in-out;
+            cursor: pointer;
+        }
+
+        .menu-item-title {
+            font-size: 1.2em;
         }
 
         .active-menu-item {
-            border-color: var(--secondary-color);
+            border-color: transparent transparent transparent var(--secondary-color);
             transition: border-color 1s ease-in-out;
+        }
+
+        #resume-button {
+            display: none;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 3em;
+            height: 3em;
+            padding: 10px;
+            background-color: var(--primary-bg-subtle);
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .menu-item {
+                padding: 0;
+                justify-content: center;
+                border-width: thin thick;
+            }
         }
     </style>
 {% endblock %}
@@ -55,28 +91,28 @@
 {% block content %}
 <div style="display: flex; height: 100dvh; flex-direction: row;">
     <div class="menu-container">
-        <div class="menu-item" data-time="5000">
+        <div class="menu-item" data-time="5000" onclick="stopAndSwitchTab(0);">
             <span class="material-symbols-outlined">camping</span>
-            {{ _('Camp map') }}
+            <span class="desktop-visible menu-item-title">{{ _('Camp map') }}</span>
         </div>
-        <div class="menu-item" data-time="4000">
+        <div class="menu-item" data-time="4000" onclick="stopAndSwitchTab(1);">
             <span class="material-symbols-outlined">sunny</span>
-            {{ _('Weather') }}
+            <span class="desktop-visible menu-item-title">{{ _('Weather') }}</span>
         </div>
-        <div class="menu-item" data-time="3000">
+        <div class="menu-item" data-time="3000" onclick="stopAndSwitchTab(2);">
             <span class="material-symbols-outlined">calendar_month</span>
-            {{ _('Upcoming events') }}
+            <span class="desktop-visible menu-item-title">{{ _('Upcoming events') }}</span>
         </div>
-        <div class="menu-item" data-time="2000">
+        <div class="menu-item" data-time="2000" onclick="stopAndSwitchTab(3);">
             <span class="material-symbols-outlined">paid</span>
-            {{ _('Sponsored content') }}
+            <span class="desktop-visible menu-item-title">{{ _('Sponsored content') }}</span>
         </div>
-        <div class="menu-item" data-time="1000">
+        <div class="menu-item" data-time="1000" onclick="stopAndSwitchTab(4);">
             <span class="material-symbols-outlined">scoreboard</span>
-            {{ _('Scoreboard') }}
+            <span class="desktop-visible menu-item-title">{{ _('Scoreboard') }}</span>
         </div>
     </div>
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 7;">
+    <div class="infopanel-content">
         <h1 style="flex-shrink: 1;">{{ _('Infopanel') }}</h1>
         <div class="tab-container">
             <div class="tab">
@@ -96,6 +132,9 @@
             </div>
         </div>
     </div>
+    <button id="resume-button" onclick="resumeAutoSwitching();">
+        <span class="material-symbols-outlined" title="{{ _('Resume auto switching') }}">resume</span>
+    </button>
     <script>
         const menuItems = document.querySelectorAll('.menu-item');
         const tabs = document.querySelectorAll('.tab');
@@ -106,21 +145,11 @@
         tabFunctions[nextTabIndex](menuItems[nextTabIndex]);
 
         function switchTabs() {
-            menuItems[activeTabIndex].classList.remove('active-menu-item');
-            tabs[activeTabIndex].classList.remove('active-tab');
-            activeTabIndex = (activeTabIndex + 1) % menuItems.length;
-            menuItems[activeTabIndex].classList.add('active-menu-item');
-            tabs[activeTabIndex].classList.add('active-tab');
-            nextTabIndex = (activeTabIndex + 1) % menuItems.length;
-
-            let thisTab = menuItems[activeTabIndex];
-            let nextTab = menuItems[nextTabIndex];
-
-            tabFunctions[nextTabIndex](nextTab);
-            setTimeout(switchTabs, thisTab.attributes['data-time'].value);
+            switchTab((activeTabIndex + 1) % menuItems.length);
+            scheduleId = setTimeout(switchTabs, menuItems[activeTabIndex].attributes['data-time'].value);
         }
 
-        setTimeout(switchTabs, 0);
+        let scheduleId = setTimeout(switchTabs, 0);
 
         function refreshCampMap(item) {
             console.log('Refresh camp map');
@@ -140,6 +169,31 @@
 
         function refreshScoreboard(item) {
             console.log('Refresh scoreboard');
+        }
+
+        function switchTab(index) {
+            menuItems[activeTabIndex].classList.remove('active-menu-item');
+            tabs[activeTabIndex].classList.remove('active-tab');
+            activeTabIndex = index;
+            menuItems[activeTabIndex].classList.add('active-menu-item');
+            tabs[activeTabIndex].classList.add('active-tab');
+
+            nextTabIndex = (activeTabIndex + 1) % menuItems.length;
+
+            let nextTab = menuItems[nextTabIndex];
+
+            tabFunctions[nextTabIndex](nextTab);
+        }
+
+        function stopAndSwitchTab(index) {
+            clearTimeout(scheduleId);
+            switchTab(index);
+            document.getElementById('resume-button').style.display = 'flex';
+        }
+
+        function resumeAutoSwitching() {
+            scheduleId = setTimeout(switchTabs, 0);
+            document.getElementById('resume-button').style.display = 'none';
         }
     </script>
 </div>
