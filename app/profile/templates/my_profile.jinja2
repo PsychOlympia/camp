@@ -20,6 +20,9 @@
         <a href="{{ url_for('settings.user') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
             <span class="material-symbols-outlined">settings</span>User settings
         </a>
+        <a href="{{ url_for('infopanel.index') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+            <span class="material-symbols-outlined">info</span>Infopanel
+        </a>
     </div>
     <form action="{{ url_for('auth.logout') }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
