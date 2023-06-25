@@ -16,7 +16,7 @@ bp_psy.cli.add_command(scoreboard)
 bp_psy.cli.add_command(teams)
 bp_psy.cli.add_command(users)
 bp_psy.cli.add_command(maps)
-bp_psy.cli.add_command(scoreboard)
+bp_psy.cli.add_command(point_of_interest)
 
 
 def cli_init_app(app: Flask) -> None:
