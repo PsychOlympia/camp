@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-24 19:43+0200\n"
+"POT-Creation-Date: 2023-06-26 12:47+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -17,22 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
-
-#: app/models.py:44
-msgid "team"
-msgstr "Team"
-
-#: app/models.py:45
-msgid "point of interest"
-msgstr "Point of interest"
-
-#: app/models.py:46
-msgid "workshop"
-msgstr "Workshop"
-
-#: app/models.py:47
-msgid "station"
-msgstr "Station"
 
 #: app/auth/__init__.py:21
 msgid "Please log in to visit this site!"
@@ -76,9 +60,42 @@ msgid "Hello %(username)s!"
 msgstr "Hallo %(username)s!"
 
 #: app/infopanel/templates/infopanel.jinja2:3
-#: app/infopanel/templates/infopanel.jinja2:7
+#: app/infopanel/templates/infopanel.jinja2:116
 msgid "Infopanel"
 msgstr "Infopanel"
+
+#: app/infopanel/templates/infopanel.jinja2:96
+#: app/infopanel/templates/infopanel.jinja2:119
+#: app/main/templates/camp_map.jinja2:12 app/main/templates/camp_map.jinja2:29
+msgid "Camp map"
+msgstr "Camp-Karte"
+
+#: app/infopanel/templates/infopanel.jinja2:100
+#: app/infopanel/templates/infopanel.jinja2:122
+msgid "Weather"
+msgstr "Wetter"
+
+#: app/infopanel/templates/infopanel.jinja2:104
+#: app/infopanel/templates/infopanel.jinja2:125
+msgid "Upcoming events"
+msgstr "Nächste Termine"
+
+#: app/infopanel/templates/infopanel.jinja2:108
+#: app/infopanel/templates/infopanel.jinja2:128
+msgid "Sponsored content"
+msgstr "Gesponsorter Inhalt"
+
+#: app/infopanel/templates/infopanel.jinja2:112
+#: app/infopanel/templates/infopanel.jinja2:131
+#: app/scoreboard/templates/scoreboard.jinja2:3
+#: app/scoreboard/templates/scoreboard.jinja2:7
+#: app/team/templates/team_dashboard.jinja2:14
+msgid "Scoreboard"
+msgstr "Bestenliste"
+
+#: app/infopanel/templates/infopanel.jinja2:136
+msgid "Resume auto switching"
+msgstr "Automatischen Wechsel fortsetzen"
 
 #: app/main/templates/camp_map.jinja2:8 app/main/templates/team_map.jinja2:44
 #: app/settings/templates/set_camp_location_map.jinja2:63
@@ -86,10 +103,6 @@ msgstr "Infopanel"
 #, python-format
 msgid "Position of %(item_name)s"
 msgstr "Position von %(item_name)s"
-
-#: app/main/templates/camp_map.jinja2:12 app/main/templates/camp_map.jinja2:29
-msgid "Camp map"
-msgstr "Camp-Karte"
 
 #: app/main/templates/index.jinja2:3
 msgid "Home"
@@ -125,6 +138,22 @@ msgstr "Öffentliches Team-Profil von %(name)s"
 #, python-format
 msgid "Public profile of %(name)s"
 msgstr "Öffentliches Profil von %(name)s"
+
+#: app/scoreboard/templates/scoreboard.jinja2:12
+msgid "#"
+msgstr "#"
+
+#: app/scoreboard/templates/scoreboard.jinja2:13
+msgid "Score"
+msgstr "Punkte"
+
+#: app/scoreboard/templates/scoreboard.jinja2:14
+msgid "Team name"
+msgstr "Teamname"
+
+#: app/scoreboard/templates/scoreboard.jinja2:31
+msgid "No active Scoreboard!"
+msgstr "Keine aktive Bestenliste!"
 
 #: app/settings/forms.py:21
 msgid "Upload file"
@@ -202,7 +231,6 @@ msgid "Edit team location on the team map"
 msgstr "Team-Standort auf Team-Karte bearbeiten"
 
 #: app/settings/templates/team_settings.jinja2:16
-#, python-format
 msgid "View public team profile"
 msgstr "Öffentliches Team-Profil anschauen"
 
@@ -254,4 +282,20 @@ msgstr "oder"
 #: app/templates/errors/401.jinja2:13
 msgid "log in with an account that has access to this page."
 msgstr "melde dich mit einem Account an, der Zugriff auf diese Seite hat."
+
+#: app/translations/additional_lazy_translations.jinja2:5
+msgid "team"
+msgstr "Team"
+
+#: app/translations/additional_lazy_translations.jinja2:6
+msgid "point of interest"
+msgstr "Point of interest"
+
+#: app/translations/additional_lazy_translations.jinja2:7
+msgid "workshop"
+msgstr "Workshop"
+
+#: app/translations/additional_lazy_translations.jinja2:8
+msgid "station"
+msgstr "Station"
 
