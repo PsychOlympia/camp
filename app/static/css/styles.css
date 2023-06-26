@@ -82,6 +82,9 @@ a, a:visited {
     right: 0;
     padding: 0 20px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
     z-index: 9999;
 }
 
@@ -95,6 +98,7 @@ a, a:visited {
     transition: opacity 0.3s ease-in-out;
     transform: translateX(100%);
     text-align: center;
+    width: fit-content;
     max-width: 500px;
 }
 
