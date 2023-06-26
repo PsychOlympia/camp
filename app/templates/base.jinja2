@@ -22,12 +22,19 @@
     {% endblock %}
     <div id="toast-container"></div>
     <script>
-        function showToast(content) {
+        function newToast(message, category='message') {
+            let toast = document.createElement('span')
+            toast.classList.add(category)
+            toast.textContent = message
+            return toast
+        }
+
+        function showToast(element) {
             const toastContainer = document.getElementById("toast-container");
 
             let toast = document.createElement("div");
             toast.className = "toast show";
-            toast.innerHTML = content;
+            toast.appendChild(element);
 
             toastContainer.insertBefore(toast, toastContainer.firstChild);
 
@@ -42,7 +49,7 @@
         }
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-        [{% for category, message in messages %}'<span class="{{ category }}">{{ message }}</span>'{% if not loop.last %}, {% endif %}{% endfor %}].forEach((content, index) => {
+        [{% for category, message in messages %}newToast('{{ message }}', '{{ category }}'){% if not loop.last %}, {% endif %}{% endfor %}].forEach((content, index) => {
             setTimeout(() => showToast(content), index * 350);
         })
         {% endwith %}
