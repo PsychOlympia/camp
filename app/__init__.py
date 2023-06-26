@@ -69,6 +69,7 @@ def register_blueprints(app: Flask) -> None:
     from .profile.views import bp_profile
     from .settings.views import bp_profile_settings
     from .scoreboard.views import bp_scoreboard
+    from .uploads.views import bp_uploads
 
     app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
@@ -79,6 +80,7 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(bp_profile)
     app.register_blueprint(bp_profile_settings)
     app.register_blueprint(bp_scoreboard)
+    app.register_blueprint(bp_uploads)
 
 
 def initialize_extensions(app: Flask) -> None:
