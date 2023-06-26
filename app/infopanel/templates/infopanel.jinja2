@@ -20,17 +20,32 @@
         .tab-container {
             display: flex;
             flex-grow: 1;
-            align-items: center;
+            width: 100%;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .tab {
-            display: none;
-            flex-grow: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: transform 1s cubic-bezier(0.72, 0.1, 0.27, 1);
+            transform: translateX(100%);
         }
 
         .active-tab {
-            display: flex;
+            opacity: 1;
+            z-index: 1;
+            transform: translateX(0);
+        }
+
+        .tab.previous {
+            transform: translateX(-100%);
+            transition: transform 1s cubic-bezier(0.72, 0.1, 0.27, 1);
         }
 
         .menu-container {
@@ -39,19 +54,27 @@
             justify-content: space-around;
             flex-grow: 1;
             background-color: var(--primary-bg-subtle);
-            z-index: 1;
+            z-index: 10;
         }
 
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 20px;
             flex-grow: 1;
             padding-left: 10%;
             border: solid transparent;
             border-width: thin thick;
             transition: border-color 1s ease-in-out;
             cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: var(--accent-bg-subtle);
+        }
+
+        .menu-item:hover > span {
+            scale: 1.1;
         }
 
         .menu-item-title {
@@ -75,7 +98,7 @@
             border-radius: 5px;
             align-items: center;
             justify-content: center;
-            z-index: 2;
+            z-index: 20;
         }
 
         @media (max-width: 768px) {
@@ -91,11 +114,11 @@
 {% block content %}
 <div style="display: flex; height: 100dvh; flex-direction: row;">
     <div class="menu-container">
-        <div class="menu-item" data-time="5000" onclick="stopAndSwitchTab(0);">
+        <div class="menu-item" data-time="3000" onclick="stopAndSwitchTab(0);">
             <span class="material-symbols-outlined">camping</span>
             <span class="desktop-visible menu-item-title">{{ _('Camp map') }}</span>
         </div>
-        <div class="menu-item" data-time="4000" onclick="stopAndSwitchTab(1);">
+        <div class="menu-item" data-time="3000" onclick="stopAndSwitchTab(1);">
             <span class="material-symbols-outlined">sunny</span>
             <span class="desktop-visible menu-item-title">{{ _('Weather') }}</span>
         </div>
@@ -103,32 +126,43 @@
             <span class="material-symbols-outlined">calendar_month</span>
             <span class="desktop-visible menu-item-title">{{ _('Upcoming events') }}</span>
         </div>
-        <div class="menu-item" data-time="2000" onclick="stopAndSwitchTab(3);">
+        <div class="menu-item" data-time="3000" onclick="stopAndSwitchTab(3);">
             <span class="material-symbols-outlined">paid</span>
             <span class="desktop-visible menu-item-title">{{ _('Sponsored content') }}</span>
         </div>
-        <div class="menu-item" data-time="1000" onclick="stopAndSwitchTab(4);">
+        <div class="menu-item" data-time="3000" onclick="stopAndSwitchTab(4);">
             <span class="material-symbols-outlined">scoreboard</span>
             <span class="desktop-visible menu-item-title">{{ _('Scoreboard') }}</span>
         </div>
     </div>
     <div class="infopanel-content">
-        <h1 style="flex-shrink: 1;">{{ _('Infopanel') }}</h1>
         <div class="tab-container">
-            <div class="tab">
-                {{ _('Camp map') }}
+            <div class="tab" style="background-color: blue">
+                <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: var(--light); font-size: 2em;">{{ _('Camp map') }}</span>
+                </div>
             </div>
-            <div class="tab">
-                {{ _('Weather') }}
+            <div class="tab" style="background-color: green">
+                <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: var(--light); font-size: 2em;">{{ _('Weather') }}</span>
+                </div>
             </div>
-            <div class="tab">
-                {{ _('Upcoming events') }}
+            <div class="tab" style="background-color: orange">
+                <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: var(--light); font-size: 2em;">{{ _('Upcoming events') }}</span>
+                </div>
             </div>
-            <div class="tab">
-                {{ _('Sponsored content') }}
+            <div class="tab" style="background-color: red">
+
+                <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: var(--light); font-size: 2em;">{{ _('Sponsored content') }}</span>
+                </div>
             </div>
-            <div class="tab">
-                {{ _('Scoreboard') }}
+            <div class="tab" style="background-color: gray">
+
+                <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: var(--light); font-size: 2em;">{{ _('Scoreboard') }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -140,55 +174,79 @@
         const tabs = document.querySelectorAll('.tab');
         const tabFunctions = {0: refreshCampMap, 1: refreshWeather, 2: refreshSchedule, 3: refreshSponsoredContent, 4: refreshScoreboard};
         let activeTabIndex = menuItems.length - 1;
-        let nextTabIndex = 0;
-
-        tabFunctions[nextTabIndex](menuItems[nextTabIndex]);
+        tabFunctions[0](menuItems[0]);
 
         function switchTabs() {
             switchTab((activeTabIndex + 1) % menuItems.length);
             scheduleId = setTimeout(switchTabs, menuItems[activeTabIndex].attributes['data-time'].value);
+            activeTabIndex = (activeTabIndex + 1) % menuItems.length;
         }
 
         let scheduleId = setTimeout(switchTabs, 0);
 
-        function refreshCampMap(item) {
-            console.log('Refresh camp map');
-        }
+        function refreshCampMap(item) {}
 
-        function refreshWeather(item) {
-            console.log('Refresh weather');
-        }
+        function refreshWeather(item) {}
 
-        function refreshSchedule(item) {
-            console.log('Refresh schedule');
-        }
+        function refreshSchedule(item) {}
 
-        function refreshSponsoredContent(item) {
-            console.log('Refresh sponsored content');
-        }
+        function refreshSponsoredContent(item) {}
 
-        function refreshScoreboard(item) {
-            console.log('Refresh scoreboard');
-        }
+        function refreshScoreboard(item) {}
 
         function switchTab(index) {
+            if (index === activeTabIndex) return;
+
             menuItems[activeTabIndex].classList.remove('active-menu-item');
-            tabs[activeTabIndex].classList.remove('active-tab');
-            activeTabIndex = index;
-            menuItems[activeTabIndex].classList.add('active-menu-item');
-            tabs[activeTabIndex].classList.add('active-tab');
+            tabs[activeTabIndex].classList.add('previous');
 
-            nextTabIndex = (activeTabIndex + 1) % menuItems.length;
+            menuItems[index].classList.add('active-menu-item');
+            tabs[index].classList.add('active-tab');
 
+            let nextTabIndex = (activeTabIndex + 1) % menuItems.length;
             let nextTab = menuItems[nextTabIndex];
+            nextTab.classList.add('next');
+
+            setTimeout(() => {
+                tabs.forEach((tab, idx) => {
+                    tab.classList.remove('previous')
+                    if (idx !== activeTabIndex) {
+                        tab.classList.remove('active-tab');
+                    }
+                });
+            }, 1000);
 
             tabFunctions[nextTabIndex](nextTab);
         }
 
         function stopAndSwitchTab(index) {
             clearTimeout(scheduleId);
-            switchTab(index);
             document.getElementById('resume-button').style.display = 'flex';
+            tabFunctions[index](tabs[index]);
+            if (index === activeTabIndex) {
+                return
+            }
+            tabs.forEach((tab, idx) => {
+                tab.classList.remove('previous', 'active-tab')
+            });
+            tabs[activeTabIndex].classList.add('previous', 'active-tab')
+            activeTabIndex = index;
+            setTimeout(() => {
+                tabs.forEach((tab, idx) => {
+                    if (idx !== activeTabIndex) {
+                        tab.classList.remove('active-tab');
+                    }
+                    tab.classList.remove('previous')
+                })
+            }, 1000)
+
+
+            menuItems.forEach((item, idx) => {
+                item.classList.remove('active-menu-item');
+            })
+            menuItems[index].classList.add('active-menu-item');
+            tabs[index].classList.add('active-tab');
+            switchTab(index);
         }
 
         function resumeAutoSwitching() {
