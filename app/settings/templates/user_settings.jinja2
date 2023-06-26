@@ -5,6 +5,19 @@
 {% block content %}
     <div style="display: flex; flex-direction: column; gap: 10px;">
         {{ _('Settings for %(username)s', username=current_user.username) }}
-        <img src="{{ url_for('static', filename='uploads/' ~ (current_user.logo if current_user.logo is not none else 'default.png')) }}" alt="{{ _('Profile picture of %(name)s', name=current_user.username) }}" style="width: 128px; height: 128px; border-radius: 16px;">
+        <img src="{{ url_for('upload.user', filename=current_user.logo) if current_user.logo is not none else url_for('static', filename='img/missing.png') }}" alt="{{ _('Profile picture of %(name)s', name=current_user.username) }}" style="width: 128px; height: 128px; border-radius: 16px;">
+        <form id="update-profile-picture" action="{{ url_for('settings.update_user_profile_picture') }}" method="post" enctype="multipart/form-data">
+            {{ file_upload_form.hidden_tag() }}
+            {{ file_upload_form.file_upload() }}
+            <button>Update</button>
+        </form>
+        <form id="delete-profile-picture" action="{{ url_for('settings.delete_user_profile_picture') }}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button>Delete</button>
+        </form>
+        <div>
+            <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-profile-picture')">Bild aktualisieren</button>
+            <button style="background-color: var(--danger-bg-subtle)">Bild löschen</button>
+        </div>
     </div>
 {% endblock %}

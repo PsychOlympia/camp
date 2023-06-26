@@ -83,6 +83,10 @@ class User(db.Model, UserMixin):
         # return str(self.alternative_id)
         return str(self.id)
 
+    @property
+    def type(self):
+        return self.__class__.__name__.lower()
+
 
 class PointOfInterest(db.Model):
     __tablename__ = 'pois'
@@ -111,6 +115,10 @@ class PointOfInterest(db.Model):
     @country_location.setter
     def country_location(self, value: tuple[float, float] | None) -> None:
         self._country_location = serialize_coordinates(value)  # type: ignore
+
+    @property
+    def type(self):
+        return self.__class__.__name__.lower()
 
 
 class Team(db.Model):
@@ -141,6 +149,10 @@ class Team(db.Model):
     @country_location.setter
     def country_location(self, value: tuple[float, float] | None) -> None:
         self._country_location = serialize_coordinates(value)  # type: ignore
+
+    @property
+    def type(self):
+        return self.__class__.__name__.lower()
 
 
 class ScoreboardEntry(db.Model):

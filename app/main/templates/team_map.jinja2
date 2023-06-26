@@ -35,7 +35,7 @@
         }).addTo(map);
 
         {% for item in map_items %}
-            {% set item_logo = url_for('static', filename='uploads/' ~ ('default.png' if item.logo is none else item.logo)) %}
+            {% set item_logo = url_for('static', filename='img/missing') if item.logo is none else (url_for('upload.' ~ item.type, filename=item.logo)) %}
             {% set item_name = item.name | striptags %}
             L.marker(
                 [{{ item.country_location[0] }}, {{ item.country_location[1] }}],

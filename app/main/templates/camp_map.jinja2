@@ -1,7 +1,7 @@
 {% extends 'map.jinja2' %}
 
 {% macro parse_item(item) -%}
-{% set item_logo = url_for('static', filename='uploads/') ~ ('default.png' if item.logo is none else item.logo) %}
+{% set item_logo = url_for('static', filename='img/missing') if item.logo is none else (url_for('upload.' ~ item.type, filename=item.logo)) %}
 {% set item_name = item.name | striptags %}
 L.marker([{{ item.camp_location[0] }}, {{ item.camp_location[1] }}], {
     icon: location_icon_img('{{ item_logo }}'{% if item.color is not none %}, color='{{ item.color }}'{% endif %}),
