@@ -18,7 +18,7 @@ class MapLocationForm(FlaskForm):
 
 
 class FileUploadForm(FlaskForm):
-    file = FileField(_l('Upload file'), validators=[
+    file_upload = FileField(_l('Upload file'), validators=[
         FileRequired(),
-        FileAllowed(['jpeg', 'jpg', 'png', 'heic', 'webp'], _l('Only images are allowed!'))
+        FileAllowed(['image/*'], _l('Only images are allowed!'))
     ])
