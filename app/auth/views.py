@@ -33,4 +33,5 @@ def login():
 def logout():
     logout_user()
     identity_changed.send(current_app, identity=AnonymousIdentity())
+    flash(_('Successfully logged out!'), 'success')
     return redirect(url_for('main.index'))

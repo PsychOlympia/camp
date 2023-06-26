@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-26 12:47+0200\n"
+"POT-Creation-Date: 2023-06-26 17:10+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -44,6 +44,10 @@ msgstr ""
 msgid "The form contains invalid data!"
 msgstr "Das Formular enthält ungültige Daten!"
 
+#: app/auth/views.py:36
+msgid "Successfully logged out!"
+msgstr "Erfolgreich ausgeloggt!"
+
 #: app/auth/templates/login.jinja2:22
 msgid "The PsychOlympia logo"
 msgstr "Das PsychOlympia Logo"
@@ -60,40 +64,39 @@ msgid "Hello %(username)s!"
 msgstr "Hallo %(username)s!"
 
 #: app/infopanel/templates/infopanel.jinja2:3
-#: app/infopanel/templates/infopanel.jinja2:116
 msgid "Infopanel"
 msgstr "Infopanel"
 
-#: app/infopanel/templates/infopanel.jinja2:96
 #: app/infopanel/templates/infopanel.jinja2:119
+#: app/infopanel/templates/infopanel.jinja2:142
 #: app/main/templates/camp_map.jinja2:12 app/main/templates/camp_map.jinja2:29
 msgid "Camp map"
 msgstr "Camp-Karte"
 
-#: app/infopanel/templates/infopanel.jinja2:100
-#: app/infopanel/templates/infopanel.jinja2:122
+#: app/infopanel/templates/infopanel.jinja2:123
+#: app/infopanel/templates/infopanel.jinja2:147
 msgid "Weather"
 msgstr "Wetter"
 
-#: app/infopanel/templates/infopanel.jinja2:104
-#: app/infopanel/templates/infopanel.jinja2:125
+#: app/infopanel/templates/infopanel.jinja2:127
+#: app/infopanel/templates/infopanel.jinja2:152
 msgid "Upcoming events"
 msgstr "Nächste Termine"
 
-#: app/infopanel/templates/infopanel.jinja2:108
-#: app/infopanel/templates/infopanel.jinja2:128
+#: app/infopanel/templates/infopanel.jinja2:131
+#: app/infopanel/templates/infopanel.jinja2:158
 msgid "Sponsored content"
 msgstr "Gesponsorter Inhalt"
 
-#: app/infopanel/templates/infopanel.jinja2:112
-#: app/infopanel/templates/infopanel.jinja2:131
+#: app/infopanel/templates/infopanel.jinja2:135
+#: app/infopanel/templates/infopanel.jinja2:164
 #: app/scoreboard/templates/scoreboard.jinja2:3
 #: app/scoreboard/templates/scoreboard.jinja2:7
 #: app/team/templates/team_dashboard.jinja2:14
 msgid "Scoreboard"
 msgstr "Bestenliste"
 
-#: app/infopanel/templates/infopanel.jinja2:136
+#: app/infopanel/templates/infopanel.jinja2:170
 msgid "Resume auto switching"
 msgstr "Automatischen Wechsel fortsetzen"
 
