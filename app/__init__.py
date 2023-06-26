@@ -1,8 +1,10 @@
+from http import HTTPStatus
 from typing import Mapping
 
-from flask import Flask, render_template
-from dotenv import dotenv_values
+from flask import Flask, render_template, flash, request, url_for, redirect
 from flask_principal import PermissionDenied
+from flask_babel import gettext as _
+from dotenv import dotenv_values
 
 from .api import api_init_app
 from .auth import get_dashboard_url
@@ -102,6 +104,11 @@ def configure_logging(app: Flask) -> None:
 
 def register_error_handlers(app: Flask) -> None:
     @app.errorhandler(PermissionDenied)
-    @app.errorhandler(401)
+    @app.errorhandler(HTTPStatus.UNAUTHORIZED)
     def handle_401(error):
         return render_template('errors/401.jinja2')
+
+    @app.errorhandler(HTTPStatus.REQUEST_ENTITY_TOO_LARGE)
+    def too_large(e):
+        flash(_('This file is too large!'), 'danger')
+        return redirect(url_for(request.endpoint))
