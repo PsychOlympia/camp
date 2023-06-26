@@ -40,7 +40,7 @@ def team_settings():
     defaults={'place': 'country'}
 )
 @login_required
-def set_location(place: str):
+def set_location(place: str):  # noqa
     place = place.lower()
     if place not in ('country', 'camp'):
         abort(HTTPStatus.NOT_FOUND)
