@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-26 17:10+0200\n"
+"POT-Creation-Date: 2023-06-26 17:44+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -64,8 +64,9 @@ msgid "Hello %(username)s!"
 msgstr "Hallo %(username)s!"
 
 #: app/infopanel/templates/infopanel.jinja2:3
+#: app/profile/templates/my_profile.jinja2:27
 msgid "Infopanel"
-msgstr "Infopanel"
+msgstr "Informationstafel"
 
 #: app/infopanel/templates/infopanel.jinja2:119
 #: app/infopanel/templates/infopanel.jinja2:142
@@ -129,6 +130,11 @@ msgstr "Der Benutzer %(username)s wurde nicht gefunden!"
 #, python-format
 msgid "Private profile view of %(name)s"
 msgstr "Privates Profil von %(name)s"
+
+#: app/profile/templates/my_profile.jinja2:23
+#: app/settings/templates/user_settings.jinja2:3
+msgid "Profile settings"
+msgstr "Profileinstellungen"
 
 #: app/profile/templates/team_profile.jinja2:3
 #: app/profile/templates/team_profile.jinja2:6
@@ -236,10 +242,6 @@ msgstr "Team-Standort auf Team-Karte bearbeiten"
 #: app/settings/templates/team_settings.jinja2:16
 msgid "View public team profile"
 msgstr "Öffentliches Team-Profil anschauen"
-
-#: app/settings/templates/user_settings.jinja2:3
-msgid "Profile settings"
-msgstr "Profileinstellungen"
 
 #: app/settings/templates/user_settings.jinja2:8
 #: app/templates/dashboard.jinja2:17 app/templates/dashboard.jinja2:36

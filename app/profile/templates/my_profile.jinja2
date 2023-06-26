@@ -17,12 +17,16 @@
                 <span>None</span>
             {% endif %}
         </p>
-        <a href="{{ url_for('settings.user') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
-            <span class="material-symbols-outlined">settings</span>User settings
-        </a>
-        <a href="{{ url_for('infopanel.index') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
-            <span class="material-symbols-outlined">info</span>Infopanel
-        </a>
+        <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+            <a href="{{ url_for('settings.user') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+                <span class="material-symbols-outlined">settings</span>
+                <span>{{ _('Profile settings') }}</span>
+            </a>
+            <a href="{{ url_for('infopanel.index') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+                <span class="material-symbols-outlined">info</span>
+                <span>{{ _('Infopanel') }}</span>
+            </a>
+        </div>
     </div>
     <form action="{{ url_for('auth.logout') }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
