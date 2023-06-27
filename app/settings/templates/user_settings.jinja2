@@ -2,22 +2,117 @@
 
 {% block title %}{{ _('Profile settings') }} - {{ super() }}{% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <style>
+        #preview {
+            position: relative;
+            cursor: pointer;
+            height: 128px;
+            width: 128px;
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+        }
+
+        #upload-overlay {
+            position: absolute;
+            border-radius: 15px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #upload-overlay>span {
+            font-size: 48px;
+        }
+
+        #upload-overlay:hover {
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        #file_upload {
+            display: none;
+        }
+
+        @media (pointer: coarse) {
+            #upload-overlay {
+                opacity: 1;
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <div style="display: flex; flex-direction: column; gap: 10px;">
         {{ _('Settings for %(username)s', username=current_user.username) }}
-        <img src="{{ url_for('upload.user', filename=current_user.logo) if current_user.logo is not none else url_for('static', filename='img/missing.png') }}" alt="{{ _('Profile picture of %(name)s', name=current_user.username) }}" style="width: 128px; height: 128px; border-radius: 16px;">
-        <form id="update-profile-picture" action="{{ url_for('settings.update_user_profile_picture') }}" method="post" enctype="multipart/form-data">
-            {{ file_upload_form.hidden_tag() }}
-            {{ file_upload_form.file_upload() }}
-            <button>Update</button>
-        </form>
-        <form id="delete-profile-picture" action="{{ url_for('settings.delete_user_profile_picture') }}" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button>Delete</button>
-        </form>
-        <div>
-            <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-profile-picture')">Bild aktualisieren</button>
-            <button style="background-color: var(--danger-bg-subtle)">Bild löschen</button>
+        <div id="preview">
+            <div id="upload-overlay">
+                <span class="material-symbols-outlined">upload</span>
+            </div>
+            <img id="preview-img" src="{{ url_for('upload.user', filename=current_user.logo) if current_user.logo is not none else url_for('static', filename='img/missing.png') }}" alt="{{ _('Profile picture of %(name)s', name=current_user.username) }}" style="width: 100%; height: 100%; border-radius: 16px;">
+            <form id="update-profile-picture" action="{{ url_for('settings.update_user_profile_picture') }}" method="post" enctype="multipart/form-data">
+                {{ file_upload_form.hidden_tag() }}
+                {{ file_upload_form.file_upload() }}
+            </form>
+            <form id="delete-profile-picture" action="{{ url_for('settings.delete_user_profile_picture') }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            </form>
         </div>
+        <div>
+            <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-profile-picture').submit()">Bild aktualisieren</button>
+            <button style="background-color: var(--danger-bg-subtle)" onclick="document.getElementById('delete-profile-picture').submit()">Bild löschen</button>
+        </div>
+        <script>
+            const fileUpload = document.getElementById('file-upload-container')
+            const preview = document.getElementById('preview')
+            const previewImg = document.getElementById('preview-img')
+            const input = document.getElementById('file_upload')
+
+            preview.addEventListener('dragover', (e) => {
+                e.preventDefault()
+                preview.classList.add('dragover')
+            })
+
+            preview.addEventListener('dragleave', (e) => {
+                e.preventDefault()
+                preview.classList.remove('dragover')
+            })
+
+            preview.addEventListener('drop', (e) => {
+                e.preventDefault()
+                preview.classList.remove('dragover')
+                handleFiles(e.dataTransfer.files)
+            })
+
+            input.addEventListener('change', (e) => {
+                handleFiles(e.target.files)
+            })
+
+            preview.addEventListener('click', (e) => {
+                input.click()
+            })
+
+            function handleFiles(files) {
+                const file = files[0];
+                const reader = new FileReader()
+
+                input.files = files;
+
+                reader.onload = (event) => {
+                    previewImg.src = event.target.result
+                }
+
+                reader.readAsDataURL(file);
+            }
+        </script>
     </div>
 {% endblock %}
