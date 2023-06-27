@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from pathlib import Path
 
-from flask import Blueprint, send_from_directory, flash, send_file
+from flask import Blueprint, send_from_directory, current_app
 from flask_login import login_required
 
 from app.auth import guest_permission
@@ -27,9 +27,7 @@ def get_poi_upload_directory() -> Path:
 def user_upload(filename: str):
     user_upload_directory = get_user_upload_directory()
     user_upload_directory.mkdir(parents=True, exist_ok=True)
-    flash(f'{user_upload_directory / filename} : {(user_upload_directory / filename).exists()}')
-    return send_file(user_upload_directory / filename)
-    # return send_from_directory(directory=user_upload_directory, path=filename)
+    return send_from_directory(directory=user_upload_directory.relative_to(Path(current_app.root_path)), path=filename)
 
 
 @bp_uploads.route('/teams/<string:filename>', methods=['GET'], endpoint='team')
@@ -38,7 +36,7 @@ def user_upload(filename: str):
 def team_upload(filename: str):
     team_upload_directory = get_team_upload_directory()
     team_upload_directory.mkdir(parents=True, exist_ok=True)
-    return send_from_directory(directory=team_upload_directory, path=filename)
+    return send_from_directory(directory=team_upload_directory.relative_to(Path(current_app.root_path)), path=filename)
 
 
 @bp_uploads.route('/point-of-interest/<string:filename>', methods=['GET'], endpoint='pointofinterest')
@@ -47,4 +45,4 @@ def team_upload(filename: str):
 def team_upload(filename: str):
     poi_upload_directory = get_poi_upload_directory()
     poi_upload_directory.mkdir(parents=True, exist_ok=True)
-    return send_from_directory(directory=poi_upload_directory, path=filename)
+    return send_from_directory(directory=poi_upload_directory.relative_to(Path(current_app.root_path)), path=filename)
