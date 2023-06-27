@@ -1,5 +1,7 @@
 {% extends 'dashboard.jinja2' %}
 
+{% set accent_color = current_user.team.color if current_user.team.color is not none else 'var(--accent)' %}
+
 {% block title %}{{ _('Team profile settings') }} - {{ super() }}{% endblock %}
 
 {% block head %}
@@ -10,7 +12,7 @@
             cursor: pointer;
             height: 128px;
             width: 128px;
-            border: 1px solid var(--accent);
+            border: 1px solid {{ accent_color }};
             border-radius: 16px;
         }
 
@@ -115,6 +117,21 @@
                     reader.readAsDataURL(file);
                 }
             </script>
+        </div>
+        <div id="color-settings">
+            <div>
+                <form id="update-accent-color" action="{{ url_for('settings.update_team_accent_color') }}" method="post" style="display: flex; align-items: center; gap: 5px;">
+                    {{ color_picker_form.hidden_tag() }}
+                    {{ color_picker_form.color() }} {{ color_picker_form.color.label }}
+                </form>
+                <form id="update-accent-color" action="{{ url_for('settings.delete_team_accent_color') }}" method="post" style="display: flex; align-items: center; gap: 5px;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                </form>
+            </div>
+            <div>
+                <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-accent-color').submit()">{{ _('Update accent color') }}</button>
+                <button style="background-color: var(--danger-bg-subtle)" onclick="document.getElementById('delete-accent-color').submit()">{{ _('Delete accent color') }}</button>
+            </div>
         </div>
         <a href="{{ url_for('settings.set_camp_location', item_type='team', item_name=current_user.team.name) }}">
             {{ _('Edit team location on the camp map') }}

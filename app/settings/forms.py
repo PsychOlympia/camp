@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import HiddenField, FloatField
+from wtforms import HiddenField, FloatField, StringField
 from wtforms.validators import DataRequired, NumberRange
 from flask_babel import lazy_gettext as _l
-from wtforms.widgets import HiddenInput
+from wtforms.widgets import HiddenInput, ColorInput
 
 
 class HiddenFloatField(FloatField):
@@ -22,3 +22,7 @@ class FileUploadForm(FlaskForm):
         FileRequired(),
         FileAllowed(['image/*'], _l('Only images are allowed!'))
     ])
+
+
+class ColorPickerForm(FlaskForm):
+    color = StringField(_l('Team accent color'), validators=[DataRequired()], widget=ColorInput())

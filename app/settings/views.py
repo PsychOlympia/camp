@@ -7,7 +7,7 @@ from flask_login import login_required, current_user
 from flask_principal import PermissionDenied
 from flask_babel import gettext as _
 
-from .forms import MapLocationForm, FileUploadForm
+from .forms import MapLocationForm, FileUploadForm, ColorPickerForm
 from ..auth import orga_permission, guest_permission, team_permission
 from ..models import db, Team, PointOfInterest, User
 from ..uploads import get_user_upload_directory, get_team_upload_directory
@@ -38,6 +38,10 @@ def update_user_profile_picture():
 
     if file_upload_form.file_upload.data is None:
         flash(_('No file provided!'), 'danger')
+        return redirect(url_for('.user'))
+
+    if not file_upload_form.validate_on_submit():
+        flash(_('Invalid form data!'), 'danger')
         return redirect(url_for('.user'))
 
     data = file_upload_form.file_upload.data.stream.read()
@@ -78,8 +82,11 @@ def team_settings():
         flash(_('You are not part of a team!'))
         return redirect(url_for('main.index'))
 
-    file_upload_form = FileUploadForm()
-    return render_template('team_settings.jinja2', file_upload_form=file_upload_form)
+    return render_template(
+        'team_settings.jinja2',
+        file_upload_form=FileUploadForm(),
+        color_picker_form=ColorPickerForm()
+    )
 
 
 @bp_profile_settings.route(
@@ -95,6 +102,10 @@ def update_team_profile_picture():
 
     if file_upload_form.file_upload.data is None:
         flash(_('No file provided!'), 'danger')
+        return redirect(url_for('.team'))
+
+    if not file_upload_form.validate_on_submit():
+        flash(_('Invalid form data!'), 'danger')
         return redirect(url_for('.team'))
 
     data = file_upload_form.file_upload.data.stream.read()
@@ -124,6 +135,40 @@ def delete_team_profile_picture():
     current_user.team.logo = None
     db.session.commit()
     flash(_('Profile picture deleted!'), 'success')
+    return redirect(url_for('.team'))
+
+
+@bp_profile_settings.route(
+    '/team/update-accent-color', methods=['POST'], endpoint='update_team_accent_color'
+)
+@login_required
+@team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+def update_team_accent_color():
+    color_picker_form = ColorPickerForm()
+
+    if not color_picker_form.validate_on_submit():
+        flash(_('Invalid form data!'), 'danger')
+        return redirect(url_for('.team'))
+
+    current_user.team.color = color_picker_form.color.data
+    db.session.commit()
+    flash(_('Updated team accent color!'), 'success')
+    return redirect(url_for('.team'))
+
+
+@bp_profile_settings.route(
+    '/team/delete-accent-color', methods=['POST'], endpoint='delete_team_accent_color'
+)
+@login_required
+@team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+def update_team_accent_color():
+    if current_user.team.color is None:
+        flash(_('Your team does not have an accent color!'), 'danger')
+        return redirect(url_for('.team'))
+
+    current_user.team.color = None
+    db.session.commit()
+    flash(_('Deleted team accent color!'), 'success')
     return redirect(url_for('.team'))
 
 
