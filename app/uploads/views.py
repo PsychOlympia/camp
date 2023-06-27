@@ -63,7 +63,7 @@ def poi_upload(filename: str):
     )
 
 
-@bp_uploads.route('/temp/<string:filename>', methods=['GET'], endpoint='pointofinterest')
+@bp_uploads.route('/temp/<string:filename>', methods=['GET'], endpoint='temp')
 @login_required
 @guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def temp_upload(filename: str):
