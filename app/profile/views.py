@@ -32,11 +32,11 @@ def user_profile():
     return render_template('user_profile.jinja2', user=user)
 
 
-@bp_profile.route('/<string:team_name>', methods=['GET'], endpoint='team')
+@bp_profile.route('/<string:name>', methods=['GET'], endpoint='team')
 @login_required
 @team_permission.require(HTTPStatus.UNAUTHORIZED)
-def team_profile(team_name: str):
-    team = db.session.query(Team).where(Team.name == team_name).first()
+def team_profile(name: str):
+    team = db.session.query(Team).where(Team.name == name).first()
     if team is None:
         abort(HTTPStatus.NOT_FOUND)
     return render_template('team_profile.jinja2', team=team)
