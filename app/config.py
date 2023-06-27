@@ -14,7 +14,7 @@ class Config:
     BABEL_SUPPORTED_LOCALES = (sorted([BABEL_DEFAULT_LOCALE] + os.listdir('app/translations')))
     BABEL_CONFIG_FILE = 'babel.cfg'
     MAP_ICON_SIZE = 32
-    MAX_CONTENT_LENGTH = 1 * 1024 ** 2
+    MAX_CONTENT_LENGTH = 10 * 1024 ** 2
 
 
 class DevelopmentConfig(Config):
