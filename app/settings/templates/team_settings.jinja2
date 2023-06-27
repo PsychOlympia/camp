@@ -139,7 +139,7 @@
         <a href="{{ url_for('settings.set_country_location', item_type='team', item_name=current_user.team.name) }}">
             {{ _('Edit team location on the team map') }}
         </a>
-        <a href="{{ url_for('profile.team', team_name=current_user.team.name) }}">
+        <a href="{{ url_for('profile.team', name=current_user.team.name) }}">
             {{ _('View public team profile') }}
         </a>
     </div>
