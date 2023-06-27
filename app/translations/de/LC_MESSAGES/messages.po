@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-27 12:33+0200\n"
+"POT-Creation-Date: 2023-06-27 13:07+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -146,6 +146,12 @@ msgstr "Profileinstellungen"
 msgid "Public team profile of %(name)s"
 msgstr "Öffentliches Team-Profil von %(name)s"
 
+#: app/profile/templates/team_profile.jinja2:8
+#: app/settings/templates/team_settings.jinja2:62
+#, python-format
+msgid "Team logo of %(team_name)s"
+msgstr "Team-Logo von %(team_name)s"
+
 #: app/profile/templates/user_profile.jinja2:3
 #: app/profile/templates/user_profile.jinja2:6
 #, python-format
@@ -176,43 +182,48 @@ msgstr "Datei hochladen"
 msgid "Only images are allowed!"
 msgstr "Es sind nur Bilder erlaubt!"
 
-#: app/settings/views.py:38
+#: app/settings/views.py:40 app/settings/views.py:97
 msgid "No file provided!"
 msgstr "Keine Datei angegeben!"
 
-#: app/settings/views.py:48
+#: app/settings/views.py:52 app/settings/views.py:111
 msgid "Profile picture updated!"
 msgstr "Profilbild aktualisiert!"
 
-#: app/settings/views.py:57
+#: app/settings/views.py:61
 msgid "You don't have a profile picture!"
 msgstr "Du hast kein Profilbild!"
 
-#: app/settings/views.py:63
+#: app/settings/views.py:69 app/settings/views.py:126
 msgid "Profile picture deleted!"
 msgstr "Profilbild gelöscht!"
 
-#: app/settings/views.py:72
+#: app/settings/views.py:78
 msgid "You are not part of a team!"
 msgstr "Du bist keinem Team zugewiesen!"
 
-#: app/settings/views.py:96 app/settings/views.py:134 app/settings/views.py:163
+#: app/settings/views.py:120
+msgid "Your team does not have a profile picture!"
+msgstr "Dein Team hat kein Profilbild!"
+
+#: app/settings/views.py:149 app/settings/views.py:187
+#: app/settings/views.py:216
 msgid "Invalid form data!"
 msgstr "Ungültige Formulardaten!"
 
-#: app/settings/views.py:100 app/settings/views.py:167
+#: app/settings/views.py:153 app/settings/views.py:220
 msgid "Unknown item type!"
 msgstr "Unbekannter Itemtyp!"
 
-#: app/settings/views.py:114 app/settings/views.py:181
+#: app/settings/views.py:167 app/settings/views.py:234
 msgid "Item not found!"
 msgstr "Item wurde nicht gefunden!"
 
-#: app/settings/views.py:129
+#: app/settings/views.py:182
 msgid "Postion updated!"
 msgstr "Position aktualisiert!"
 
-#: app/settings/views.py:194
+#: app/settings/views.py:247
 msgid "Postion deleted!"
 msgstr "Position gelöscht!"
 
@@ -237,29 +248,35 @@ msgid "Update team map position"
 msgstr "Standort auf der Team-Karte aktualisieren"
 
 #: app/settings/templates/team_settings.jinja2:3
+#: app/team/templates/team_dashboard.jinja2:10
 msgid "Team profile settings"
 msgstr "Team-Profileinstellungen"
 
-#: app/settings/templates/team_settings.jinja2:7
+#: app/settings/templates/team_settings.jinja2:56
 #: app/settings/templates/user_settings.jinja2:56
 #, python-format
 msgid "Settings for %(username)s"
 msgstr "Einstellungen für %(username)s"
 
-#: app/settings/templates/team_settings.jinja2:8
-#, python-format
-msgid "Team logo of %(team_name)s"
-msgstr "Team-Logo von %(team_name)s"
+#: app/settings/templates/team_settings.jinja2:72
+#: app/settings/templates/user_settings.jinja2:71
+msgid "Update picture"
+msgstr "Bild aktualisieren"
 
-#: app/settings/templates/team_settings.jinja2:10
+#: app/settings/templates/team_settings.jinja2:73
+#: app/settings/templates/user_settings.jinja2:72
+msgid "Delete picture"
+msgstr "Bild löschen"
+
+#: app/settings/templates/team_settings.jinja2:120
 msgid "Edit team location on the camp map"
 msgstr "Team-Standort auf Camp-Karte bearbeiten"
 
-#: app/settings/templates/team_settings.jinja2:13
+#: app/settings/templates/team_settings.jinja2:123
 msgid "Edit team location on the team map"
 msgstr "Team-Standort auf Team-Karte bearbeiten"
 
-#: app/settings/templates/team_settings.jinja2:16
+#: app/settings/templates/team_settings.jinja2:126
 msgid "View public team profile"
 msgstr "Öffentliches Team-Profil anschauen"
 
@@ -268,14 +285,6 @@ msgstr "Öffentliches Team-Profil anschauen"
 #, python-format
 msgid "Profile picture of %(name)s"
 msgstr "Profilbild von %(name)s"
-
-#: app/settings/templates/user_settings.jinja2:71
-msgid "Update picture"
-msgstr "Bild aktualisieren"
-
-#: app/settings/templates/user_settings.jinja2:72
-msgid "Delete picture"
-msgstr "Bild löschen"
 
 #: app/templates/map.jinja2:8
 #, python-format
