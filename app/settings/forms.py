@@ -25,4 +25,4 @@ class FileUploadForm(FlaskForm):
 
 
 class ColorPickerForm(FlaskForm):
-    color = StringField(_l('Team accent color'), validators=[DataRequired()], widget=ColorInput())
+    color = StringField(_l('Team accent color'), validators=[DataRequired()], render_kw={'data-coloris': ''})

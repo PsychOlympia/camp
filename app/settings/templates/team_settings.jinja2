@@ -6,6 +6,8 @@
 
 {% block head %}
     {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='js/libs/Coloris/0.20.0/coloris.min.css') }}" />
+    <script src="{{ url_for('static', filename='js/libs/Coloris/0.20.0/coloris.min.js') }}"></script>
     <style>
         #preview {
             position: relative;
@@ -41,11 +43,11 @@
             transition: opacity 0.3s;
         }
 
-        #file_upload {
+        #file_upload, #color {
             display: none;
         }
 
-        @media (pointer: coarse) {
+        @media not (pointer: fine) {
             #upload-overlay {
                 opacity: 1;
             }
@@ -56,7 +58,7 @@
 {% block content %}
     <div style="display: flex; flex-direction: column; gap: 10px;">
         {{ _('Settings for %(username)s', username=current_user.team.name) }}
-        <div id="picture-settings">
+        <div id="picture-settings" style="display: flex; gap: 10px; align-items: center;">
             <div id="preview">
                 <div id="upload-overlay">
                     <span class="material-symbols-outlined">upload</span>
@@ -70,9 +72,13 @@
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 </form>
             </div>
-            <div>
-                <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-profile-picture').submit()">{{ _('Update picture') }}</button>
-                <button style="background-color: var(--danger-bg-subtle)" onclick="document.getElementById('delete-profile-picture').submit()">{{ _('Delete picture') }}</button>
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <button class="icon-button" style="background-color: var(--success-bg-subtle); width: 3em; height: 3em;" onclick="document.getElementById('update-profile-picture').submit()" title="{{ _('Update picture') }}">
+                    <span class="material-symbols-outlined">done</span>
+                </button>
+                <button class="icon-button" style="background-color: var(--danger-bg-subtle); width: 3em; height: 3em;" onclick="document.getElementById('delete-profile-picture').submit()" title="{{ _('Delete picture') }}">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
             </div>
             <script>
                 const fileUpload = document.getElementById('file-upload-container')
@@ -118,20 +124,45 @@
                 }
             </script>
         </div>
-        <div id="color-settings">
-            <div>
-                <form id="update-accent-color" action="{{ url_for('settings.update_team_accent_color') }}" method="post" style="display: flex; align-items: center; gap: 5px;">
-                    {{ color_picker_form.hidden_tag() }}
-                    {{ color_picker_form.color() }} {{ color_picker_form.color.label }}
-                </form>
-                <form id="update-accent-color" action="{{ url_for('settings.delete_team_accent_color') }}" method="post" style="display: flex; align-items: center; gap: 5px;">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                </form>
+        <div id="color-settings" style="display: flex; gap: 10px; align-items: center;">
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <div id="color-preview" style="width: 100%; height: 3em; background-color: {{ accent_color }}; cursor: pointer;"></div>
+                <div style="display: flex; flex-direction: row; gap: 5px;">
+                    <form id="update-accent-color" action="{{ url_for('settings.update_team_accent_color') }}" method="post" style="display: flex; align-items: center; gap: 5px;">
+                        {{ color_picker_form.hidden_tag() }}
+                        {{ color_picker_form.color() }} {{ color_picker_form.color.label }}
+                    </form>
+                    <form id="delete-accent-color" action="{{ url_for('settings.delete_team_accent_color') }}" method="post" style="display: flex; align-items: center; gap: 5px;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    </form>
+                    <div style="display: flex; flex-direction: row; align-items: center; gap: 5px;">
+                        <button class="icon-button" style="background-color: var(--success-bg-subtle); width: 3em; height: 3em;" onclick="document.getElementById('update-accent-color').submit()" title="{{ _('Update accent color') }}">
+                            <span class="material-symbols-outlined">done</span>
+                        </button>
+                        <button class="icon-button" style="background-color: var(--danger-bg-subtle); width: 3em; height: 3em;" onclick="document.getElementById('delete-accent-color').submit()" title="{{ _('Delete accent color') }}">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div>
-                <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-accent-color').submit()">{{ _('Update accent color') }}</button>
-                <button style="background-color: var(--danger-bg-subtle)" onclick="document.getElementById('delete-accent-color').submit()">{{ _('Delete accent color') }}</button>
-            </div>
+            <script>
+                const colorPicker = document.getElementById('color')
+                const colorPreview = document.getElementById('color-preview')
+
+                colorPicker.addEventListener('input', (e) => {
+                    colorPreview.style.backgroundColor = colorPicker.value
+                })
+
+                colorPreview.addEventListener('click', (e) => {
+                    colorPicker.click()
+                })
+
+                let elem = document.createElement('div')
+                elem.style.color = '{{ accent_color }}'
+                document.documentElement.appendChild(elem)
+                colorPicker.value = getComputedStyle(elem).color;
+                document.documentElement.removeChild(elem)
+            </script>
         </div>
         <a href="{{ url_for('settings.set_camp_location', item_type='team', item_name=current_user.team.name) }}">
             {{ _('Edit team location on the camp map') }}
