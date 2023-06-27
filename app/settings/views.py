@@ -2,15 +2,15 @@ import hashlib
 from http import HTTPStatus
 from pathlib import Path
 
-from flask import Blueprint, request, redirect, url_for, render_template, flash, abort, current_app
+from flask import Blueprint, request, redirect, url_for, render_template, flash, abort
 from flask_login import login_required, current_user
 from flask_principal import PermissionDenied
 from flask_babel import gettext as _
 
 from .forms import MapLocationForm, FileUploadForm
-from ..auth import orga_permission, guest_permission
+from ..auth import orga_permission, guest_permission, team_permission
 from ..models import db, Team, PointOfInterest, User
-from ..uploads import get_user_upload_directory
+from ..uploads import get_user_upload_directory, get_team_upload_directory
 
 bp_profile_settings = Blueprint(
     'settings', __name__, template_folder='templates', static_folder='static', url_prefix='/settings'
@@ -25,7 +25,9 @@ def user_settings():
     return render_template('user_settings.jinja2', file_upload_form=file_upload_form)
 
 
-@bp_profile_settings.route('/user/update-profile-picture', methods=['GET', 'POST'], endpoint='update_user_profile_picture')
+@bp_profile_settings.route(
+    '/user/update-profile-picture', methods=['GET', 'POST'], endpoint='update_user_profile_picture'
+)
 @login_required
 @guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def update_user_profile_picture():
@@ -43,6 +45,8 @@ def update_user_profile_picture():
     filename = f'{content_hash}{Path(file_upload_form.file_upload.data.filename).suffix}'
     with open(get_user_upload_directory() / filename, mode='wb') as f:
         f.write(data)
+    if len(db.session.query(User).where(User.logo == current_user.logo).all()) == 1:  # overwriting current logo
+        (get_user_upload_directory() / current_user.logo).unlink(missing_ok=True)
     current_user.logo = filename
     db.session.commit()
     flash(_('Profile picture updated!'), 'success')
@@ -56,22 +60,71 @@ def delete_user_profile_picture():
     if current_user.logo is None:
         flash(_("You don't have a profile picture!"), 'danger')
         return redirect(url_for('.user'))
-    if len(db.session.query(User).where(User.logo == current_user.logo).all()) <= 1:  # no refs remaining
+    if current_user.logo is not None and len(
+            db.session.query(User).where(User.logo == current_user.logo).all()
+    ) <= 1:  # no refs remaining
         (get_user_upload_directory() / current_user.logo).unlink(missing_ok=True)
     current_user.logo = None
     db.session.commit()
-    flash(_('Profile picture deleted'), 'success')
+    flash(_('Profile picture deleted!'), 'success')
     return redirect(url_for('.user'))
 
 
 @bp_profile_settings.route('/team', methods=['GET'], endpoint='team')
 @login_required
-@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+@team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def team_settings():
     if current_user.team is None:
         flash(_('You are not part of a team!'))
         return redirect(url_for('main.index'))
-    return render_template('team_settings.jinja2')
+
+    file_upload_form = FileUploadForm()
+    return render_template('team_settings.jinja2', file_upload_form=file_upload_form)
+
+
+@bp_profile_settings.route(
+    '/team/update-profile-picture', methods=['GET', 'POST'], endpoint='update_team_profile_picture'
+)
+@login_required
+@team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+def update_team_profile_picture():
+    if request.method == 'GET':
+        return redirect(url_for('.team'))
+
+    file_upload_form = FileUploadForm()
+
+    if file_upload_form.file_upload.data is None:
+        flash(_('No file provided!'), 'danger')
+        return redirect(url_for('.team'))
+
+    data = file_upload_form.file_upload.data.stream.read()
+    content_hash = hashlib.sha3_256(data).hexdigest()
+    filename = f'{content_hash}{Path(file_upload_form.file_upload.data.filename).suffix}'
+    with open(get_team_upload_directory() / filename, mode='wb') as f:
+        f.write(data)
+    if current_user.team.logo is not None and len(
+            db.session.query(Team).where(Team.logo == current_user.team.logo).all()
+    ) == 1:  # overwriting current logo
+        (get_team_upload_directory() / current_user.team.logo).unlink(missing_ok=True)
+    current_user.team.logo = filename
+    db.session.commit()
+    flash(_('Profile picture updated!'), 'success')
+    return redirect(url_for('.team'))
+
+
+@bp_profile_settings.route('/team/delete-profile-picture', methods=['POST'], endpoint='delete_team_profile_picture')
+@login_required
+@team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+def delete_team_profile_picture():
+    if current_user.team.logo is None:
+        flash(_("Your team does not have a profile picture!"), 'danger')
+        return redirect(url_for('.team'))
+    if len(db.session.query(Team).where(Team.logo == current_user.team.logo).all()) <= 1:  # no refs remaining
+        (get_team_upload_directory() / current_user.team.logo).unlink(missing_ok=True)
+    current_user.team.logo = None
+    db.session.commit()
+    flash(_('Profile picture deleted!'), 'success')
+    return redirect(url_for('.team'))
 
 
 @bp_profile_settings.route(
