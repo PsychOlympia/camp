@@ -57,8 +57,9 @@ def delete_user_profile_picture():
         flash(_("You don't have a profile picture!"), 'danger')
         return redirect(url_for('.user'))
     if len(db.session.query(User).where(User.logo == current_user.logo).all()) <= 1:  # no refs remaining
-        (current_app.config['UPLOAD_PATH'] / 'users' / current_user.logo).unlink(missing_ok=True)
+        (get_user_upload_directory() / current_user.logo).unlink(missing_ok=True)
     current_user.logo = None
+    db.session.commit()
     flash(_('Profile picture deleted'), 'success')
     return redirect(url_for('.user'))
 
