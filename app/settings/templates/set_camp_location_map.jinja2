@@ -54,9 +54,9 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <span>PsychOlympia</span>'
         }).addTo(map);
 
-        {% set item_logo = url_for('static', filename='img/missing') if item.logo is none else (url_for('upload.' ~ item.type, filename=item.logo)) %}
+        {% set item_logo = url_for('static', filename='img/missing.png') if item.logo is none else (url_for('upload.' ~ item.type, filename=item.logo)) %}
         {% set item_name = item.name | striptags %}
-        L.marker(
+        let marker = L.marker(
             [{{ item.camp_location[0] | default(config.CAMP_LOCATION_LAT) }}, {{ item.camp_location[1] | default(config.CAMP_LOCATION_LON) }}],
             {
                 icon: location_icon_img('{{ item_logo }}'{% if item.color is not none %}, color='{{ item.color }}'{% endif %}),
@@ -70,6 +70,10 @@
             document.getElementById('location-form').latitude.value = event.target.getLatLng().lat
             document.getElementById('location-form').longitude.value = event.target.getLatLng().lng
         }).addTo(map);
+
+        map.on('click', (e) => {
+            marker.setLatLng(e.latlng)
+        })
 
         document.getElementById('location-form').latitude.value = {{ item.camp_location[0] | default(config.CAMP_LOCATION_LAT) }};
         document.getElementById('location-form').longitude.value = {{ item.camp_location[1] | default(config.CAMP_LOCATION_LON) }};
