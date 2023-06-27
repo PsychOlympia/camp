@@ -68,8 +68,8 @@
             </form>
         </div>
         <div>
-            <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-profile-picture').submit()">Bild aktualisieren</button>
-            <button style="background-color: var(--danger-bg-subtle)" onclick="document.getElementById('delete-profile-picture').submit()">Bild löschen</button>
+            <button style="background-color: var(--success-bg-subtle)" onclick="document.getElementById('update-profile-picture').submit()">{{ _('Update picture') }}</button>
+            <button style="background-color: var(--danger-bg-subtle)" onclick="document.getElementById('delete-profile-picture').submit()">{{ _('Delete picture') }}</button>
         </div>
         <script>
             const fileUpload = document.getElementById('file-upload-container')

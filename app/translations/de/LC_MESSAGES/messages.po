@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-26 17:44+0200\n"
+"POT-Creation-Date: 2023-06-27 12:33+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
+
+#: app/__init__.py:115
+msgid "This file is too large!"
+msgstr "Diese Datei ist zu groß!"
 
 #: app/auth/__init__.py:21
 msgid "Please log in to visit this site!"
@@ -68,36 +72,36 @@ msgstr "Hallo %(username)s!"
 msgid "Infopanel"
 msgstr "Informationstafel"
 
-#: app/infopanel/templates/infopanel.jinja2:119
-#: app/infopanel/templates/infopanel.jinja2:142
+#: app/infopanel/templates/infopanel.jinja2:120
+#: app/infopanel/templates/infopanel.jinja2:143
 #: app/main/templates/camp_map.jinja2:12 app/main/templates/camp_map.jinja2:29
 msgid "Camp map"
 msgstr "Camp-Karte"
 
-#: app/infopanel/templates/infopanel.jinja2:123
-#: app/infopanel/templates/infopanel.jinja2:147
+#: app/infopanel/templates/infopanel.jinja2:124
+#: app/infopanel/templates/infopanel.jinja2:148
 msgid "Weather"
 msgstr "Wetter"
 
-#: app/infopanel/templates/infopanel.jinja2:127
-#: app/infopanel/templates/infopanel.jinja2:152
+#: app/infopanel/templates/infopanel.jinja2:128
+#: app/infopanel/templates/infopanel.jinja2:153
 msgid "Upcoming events"
 msgstr "Nächste Termine"
 
-#: app/infopanel/templates/infopanel.jinja2:131
-#: app/infopanel/templates/infopanel.jinja2:158
+#: app/infopanel/templates/infopanel.jinja2:132
+#: app/infopanel/templates/infopanel.jinja2:159
 msgid "Sponsored content"
 msgstr "Gesponsorter Inhalt"
 
-#: app/infopanel/templates/infopanel.jinja2:135
-#: app/infopanel/templates/infopanel.jinja2:164
+#: app/infopanel/templates/infopanel.jinja2:136
+#: app/infopanel/templates/infopanel.jinja2:165
 #: app/scoreboard/templates/scoreboard.jinja2:3
 #: app/scoreboard/templates/scoreboard.jinja2:7
 #: app/team/templates/team_dashboard.jinja2:14
 msgid "Scoreboard"
 msgstr "Bestenliste"
 
-#: app/infopanel/templates/infopanel.jinja2:170
+#: app/infopanel/templates/infopanel.jinja2:171
 msgid "Resume auto switching"
 msgstr "Automatischen Wechsel fortsetzen"
 
@@ -172,27 +176,43 @@ msgstr "Datei hochladen"
 msgid "Only images are allowed!"
 msgstr "Es sind nur Bilder erlaubt!"
 
-#: app/settings/views.py:29
+#: app/settings/views.py:38
+msgid "No file provided!"
+msgstr "Keine Datei angegeben!"
+
+#: app/settings/views.py:48
+msgid "Profile picture updated!"
+msgstr "Profilbild aktualisiert!"
+
+#: app/settings/views.py:57
+msgid "You don't have a profile picture!"
+msgstr "Du hast kein Profilbild!"
+
+#: app/settings/views.py:63
+msgid "Profile picture deleted!"
+msgstr "Profilbild gelöscht!"
+
+#: app/settings/views.py:72
 msgid "You are not part of a team!"
 msgstr "Du bist keinem Team zugewiesen!"
 
-#: app/settings/views.py:53 app/settings/views.py:91 app/settings/views.py:120
+#: app/settings/views.py:96 app/settings/views.py:134 app/settings/views.py:163
 msgid "Invalid form data!"
 msgstr "Ungültige Formulardaten!"
 
-#: app/settings/views.py:57 app/settings/views.py:124
+#: app/settings/views.py:100 app/settings/views.py:167
 msgid "Unknown item type!"
 msgstr "Unbekannter Itemtyp!"
 
-#: app/settings/views.py:71 app/settings/views.py:138
+#: app/settings/views.py:114 app/settings/views.py:181
 msgid "Item not found!"
 msgstr "Item wurde nicht gefunden!"
 
-#: app/settings/views.py:86
+#: app/settings/views.py:129
 msgid "Postion updated!"
 msgstr "Position aktualisiert!"
 
-#: app/settings/views.py:151
+#: app/settings/views.py:194
 msgid "Postion deleted!"
 msgstr "Position gelöscht!"
 
@@ -221,7 +241,7 @@ msgid "Team profile settings"
 msgstr "Team-Profileinstellungen"
 
 #: app/settings/templates/team_settings.jinja2:7
-#: app/settings/templates/user_settings.jinja2:7
+#: app/settings/templates/user_settings.jinja2:56
 #, python-format
 msgid "Settings for %(username)s"
 msgstr "Einstellungen für %(username)s"
@@ -243,15 +263,19 @@ msgstr "Team-Standort auf Team-Karte bearbeiten"
 msgid "View public team profile"
 msgstr "Öffentliches Team-Profil anschauen"
 
-#: app/settings/templates/user_settings.jinja2:8
-#: app/templates/dashboard.jinja2:17 app/templates/dashboard.jinja2:36
+#: app/settings/templates/user_settings.jinja2:61
+#: app/templates/dashboard.jinja2:15 app/templates/dashboard.jinja2:34
 #, python-format
 msgid "Profile picture of %(name)s"
 msgstr "Profilbild von %(name)s"
 
-#: app/templates/dashboard.jinja2:3
-msgid "Dashboard"
-msgstr "Dashboard"
+#: app/settings/templates/user_settings.jinja2:71
+msgid "Update picture"
+msgstr "Bild aktualisieren"
+
+#: app/settings/templates/user_settings.jinja2:72
+msgid "Delete picture"
+msgstr "Bild löschen"
 
 #: app/templates/map.jinja2:8
 #, python-format
