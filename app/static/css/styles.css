@@ -141,6 +141,13 @@ a, a:visited {
     padding: 0;
 }
 
+.icon-button {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .navbar.desktop-visible > a:hover > span, .navbar.desktop-visible > a:hover > img {
     scale: 1.1;
