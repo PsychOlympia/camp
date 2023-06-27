@@ -3,7 +3,7 @@ from __future__ import annotations
 from urllib.parse import urlparse
 from enum import Enum, unique
 
-from flask import request, current_app, Flask, url_for
+from flask import request, current_app, Flask, url_for, flash
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
 from flask_principal import Principal, Permission, RoleNeed, identity_loaded, Identity
@@ -52,10 +52,10 @@ def get_dashboard_url():
     role_names = list(map(lambda role: role.name, current_user.roles))
     if RoleName.ORGA.value in role_names:
         return url_for('orga.index')
-    if RoleName.TEAM.value in role_names:
-        return url_for('team.index')
     if RoleName.HELPER.value in role_names:
         return url_for('helper.index')
+    if RoleName.TEAM.value in role_names:
+        return url_for('team.index')
     return url_for('main.index')
 
 
