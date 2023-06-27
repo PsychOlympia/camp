@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-27 13:07+0200\n"
+"POT-Creation-Date: 2023-06-27 13:37+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -140,14 +140,14 @@ msgstr "Privates Profil von %(name)s"
 msgid "Profile settings"
 msgstr "Profileinstellungen"
 
-#: app/profile/templates/team_profile.jinja2:3
-#: app/profile/templates/team_profile.jinja2:6
+#: app/profile/templates/team_profile.jinja2:5
+#: app/profile/templates/team_profile.jinja2:8
 #, python-format
 msgid "Public team profile of %(name)s"
 msgstr "Öffentliches Team-Profil von %(name)s"
 
-#: app/profile/templates/team_profile.jinja2:8
-#: app/settings/templates/team_settings.jinja2:62
+#: app/profile/templates/team_profile.jinja2:10
+#: app/settings/templates/team_settings.jinja2:64
 #, python-format
 msgid "Team logo of %(team_name)s"
 msgstr "Team-Logo von %(team_name)s"
@@ -182,48 +182,65 @@ msgstr "Datei hochladen"
 msgid "Only images are allowed!"
 msgstr "Es sind nur Bilder erlaubt!"
 
-#: app/settings/views.py:40 app/settings/views.py:97
+#: app/settings/forms.py:28
+msgid "Team accent color"
+msgstr "Team-Akzentfarbe"
+
+#: app/settings/views.py:40 app/settings/views.py:104
 msgid "No file provided!"
 msgstr "Keine Datei angegeben!"
 
-#: app/settings/views.py:52 app/settings/views.py:111
-msgid "Profile picture updated!"
-msgstr "Profilbild aktualisiert!"
-
-#: app/settings/views.py:61
-msgid "You don't have a profile picture!"
-msgstr "Du hast kein Profilbild!"
-
-#: app/settings/views.py:69 app/settings/views.py:126
-msgid "Profile picture deleted!"
-msgstr "Profilbild gelöscht!"
-
-#: app/settings/views.py:78
-msgid "You are not part of a team!"
-msgstr "Du bist keinem Team zugewiesen!"
-
-#: app/settings/views.py:120
-msgid "Your team does not have a profile picture!"
-msgstr "Dein Team hat kein Profilbild!"
-
-#: app/settings/views.py:149 app/settings/views.py:187
-#: app/settings/views.py:216
+#: app/settings/views.py:44 app/settings/views.py:108 app/settings/views.py:150
+#: app/settings/views.py:194 app/settings/views.py:232
+#: app/settings/views.py:261
 msgid "Invalid form data!"
 msgstr "Ungültige Formulardaten!"
 
-#: app/settings/views.py:153 app/settings/views.py:220
+#: app/settings/views.py:56 app/settings/views.py:122
+msgid "Profile picture updated!"
+msgstr "Profilbild aktualisiert!"
+
+#: app/settings/views.py:65
+msgid "You don't have a profile picture!"
+msgstr "Du hast kein Profilbild!"
+
+#: app/settings/views.py:73 app/settings/views.py:137
+msgid "Profile picture deleted!"
+msgstr "Profilbild gelöscht!"
+
+#: app/settings/views.py:82
+msgid "You are not part of a team!"
+msgstr "Du bist keinem Team zugewiesen!"
+
+#: app/settings/views.py:131
+msgid "Your team does not have a profile picture!"
+msgstr "Dein Team hat kein Profilbild!"
+
+#: app/settings/views.py:155
+msgid "Updated team accent color!"
+msgstr "Team-Akzentfarbe aktualisiert!"
+
+#: app/settings/views.py:166
+msgid "Your team does not have an accent color!"
+msgstr "Dein Team hat keine Akzentfarbe!"
+
+#: app/settings/views.py:171
+msgid "Deleted team accent color!"
+msgstr "Team-Akzentfarbe gelöscht!"
+
+#: app/settings/views.py:198 app/settings/views.py:265
 msgid "Unknown item type!"
 msgstr "Unbekannter Itemtyp!"
 
-#: app/settings/views.py:167 app/settings/views.py:234
+#: app/settings/views.py:212 app/settings/views.py:279
 msgid "Item not found!"
 msgstr "Item wurde nicht gefunden!"
 
-#: app/settings/views.py:182
+#: app/settings/views.py:227
 msgid "Postion updated!"
 msgstr "Position aktualisiert!"
 
-#: app/settings/views.py:247
+#: app/settings/views.py:292
 msgid "Postion deleted!"
 msgstr "Position gelöscht!"
 
@@ -247,36 +264,44 @@ msgstr "Standort löschen"
 msgid "Update team map position"
 msgstr "Standort auf der Team-Karte aktualisieren"
 
-#: app/settings/templates/team_settings.jinja2:3
+#: app/settings/templates/team_settings.jinja2:5
 #: app/team/templates/team_dashboard.jinja2:10
 msgid "Team profile settings"
 msgstr "Team-Profileinstellungen"
 
-#: app/settings/templates/team_settings.jinja2:56
+#: app/settings/templates/team_settings.jinja2:58
 #: app/settings/templates/user_settings.jinja2:56
 #, python-format
 msgid "Settings for %(username)s"
 msgstr "Einstellungen für %(username)s"
 
-#: app/settings/templates/team_settings.jinja2:72
+#: app/settings/templates/team_settings.jinja2:74
 #: app/settings/templates/user_settings.jinja2:71
 msgid "Update picture"
 msgstr "Bild aktualisieren"
 
-#: app/settings/templates/team_settings.jinja2:73
+#: app/settings/templates/team_settings.jinja2:75
 #: app/settings/templates/user_settings.jinja2:72
 msgid "Delete picture"
 msgstr "Bild löschen"
 
-#: app/settings/templates/team_settings.jinja2:120
+#: app/settings/templates/team_settings.jinja2:132
+msgid "Update accent color"
+msgstr "Akzentfarbe aktualisieren"
+
+#: app/settings/templates/team_settings.jinja2:133
+msgid "Delete accent color"
+msgstr "Akzentfarbe löschen"
+
+#: app/settings/templates/team_settings.jinja2:137
 msgid "Edit team location on the camp map"
 msgstr "Team-Standort auf Camp-Karte bearbeiten"
 
-#: app/settings/templates/team_settings.jinja2:123
+#: app/settings/templates/team_settings.jinja2:140
 msgid "Edit team location on the team map"
 msgstr "Team-Standort auf Team-Karte bearbeiten"
 
-#: app/settings/templates/team_settings.jinja2:126
+#: app/settings/templates/team_settings.jinja2:143
 msgid "View public team profile"
 msgstr "Öffentliches Team-Profil anschauen"
 
