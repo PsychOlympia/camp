@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask_babel import gettext as _
 from flask_login import login_required
 from sqlalchemy import desc, func
 
@@ -17,6 +18,7 @@ bp_scoreboard = Blueprint(
 @login_required
 @team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 def index():
+    flash(_('EXPERIMENTAL SITE!'), 'danger')
     latest_scoreboard = db.session.query(Scoreboard).order_by(desc(Scoreboard.round)).first()
     add_points_form = AddPointsForm()
     add_points_form.team.choices = [(team.id, team.name) for team in db.session.query(Team).all()]
@@ -45,7 +47,7 @@ def new():
     db.session.add(scoreboard)
     db.session.commit()
     flash(f'New scoreboard (round {scoreboard.round})')
-    return redirect(url_for('helper.index'))
+    return redirect(url_for('.index'))
 
 
 @bp_scoreboard.route('/fill')
@@ -83,4 +85,4 @@ def add_points():
     entry.score += add_points_form.points.data
     db.session.commit()
     flash(f'Added {add_points_form.points.data} -> {entry.score} (round {entry.round})')
-    return redirect(url_for('helper.index'))
+    return redirect(url_for('.index'))
