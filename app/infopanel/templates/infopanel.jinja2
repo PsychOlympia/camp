@@ -115,7 +115,7 @@
 {% block content %}
 <div style="display: flex; height: 100dvh; flex-direction: row;">
     <div class="menu-container">
-        <div class="menu-item" data-time="3000" onclick="stopAndSwitchTab(0);">
+        <div class="menu-item" data-time="70000" onclick="stopAndSwitchTab(0);"> {# TODO fix data-time (should not be for next tab) #}
             <span class="material-symbols-outlined">camping</span>
             <span class="desktop-visible menu-item-title">{{ _('Camp map') }}</span>
         </div>
@@ -145,7 +145,8 @@
             </div>
             <div class="tab" style="background-color: green">
                 <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                    <span style="color: var(--light); font-size: 2em;">{{ _('Weather') }}</span>
+                    <iframe id="weather-frame" src="{{ url_for('infopanel.weather') }}" style="height: 100%; width: 100%">
+                    </iframe>
                 </div>
             </div>
             <div class="tab" style="background-color: orange">
@@ -154,13 +155,11 @@
                 </div>
             </div>
             <div class="tab" style="background-color: red">
-
                 <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
                     <span style="color: var(--light); font-size: 2em;">{{ _('Sponsored content') }}</span>
                 </div>
             </div>
             <div class="tab" style="background-color: gray">
-
                 <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
                     <span style="color: var(--light); font-size: 2em;">{{ _('Scoreboard') }}</span>
                 </div>
@@ -175,7 +174,8 @@
         const tabs = document.querySelectorAll('.tab');
         const tabFunctions = {0: refreshCampMap, 1: refreshWeather, 2: refreshSchedule, 3: refreshSponsoredContent, 4: refreshScoreboard};
         let activeTabIndex = menuItems.length - 1;
-        tabFunctions[0](menuItems[0]);
+
+        tabFunctions[0](menuItems[0]);  // refresh first tab
 
         function switchTabs() {
             switchTab((activeTabIndex + 1) % menuItems.length);
@@ -187,7 +187,9 @@
 
         function refreshCampMap(item) {}
 
-        function refreshWeather(item) {}
+        function refreshWeather(item) {
+            document.getElementById('weather-frame').contentWindow.location.reload()
+        }
 
         function refreshSchedule(item) {}
 
@@ -217,13 +219,13 @@
                 });
             }, 1000);
 
-            tabFunctions[nextTabIndex](nextTab);
+            tabFunctions[nextTabIndex](nextTab);  // refresh next tab
         }
 
         function stopAndSwitchTab(index) {
             clearTimeout(scheduleId);
             document.getElementById('resume-button').style.display = 'flex';
-            tabFunctions[index](tabs[index]);
+            tabFunctions[index](tabs[index]);  // refresh clicked tab
             if (index === activeTabIndex) {
                 return
             }
