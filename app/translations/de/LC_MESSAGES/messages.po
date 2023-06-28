@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-28 18:56+0200\n"
+"POT-Creation-Date: 2023-06-28 20:05+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -18,9 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: app/__init__.py:117
+#: app/__init__.py:121
 msgid "This file is too large!"
 msgstr "Diese Datei ist zu groß!"
+
+#: app/development.py:10
+msgid "EXPERIMENTAL SITE!"
+msgstr "EXPERIMENTELLE SEITE!"
 
 #: app/auth/__init__.py:21
 msgid "Please log in to visit this site!"
@@ -59,6 +63,11 @@ msgstr "Das PsychOlympia Logo"
 #: app/auth/templates/login.jinja2:37
 msgid "Login"
 msgstr "Anmelden"
+
+#: app/demo/views.py:17
+#, python-format
+msgid "Not an error code: %(error_code)s"
+msgstr "Kein Errorcode: %(error_code)s"
 
 #: app/feedback/forms.py:12 app/feedback/forms.py:32
 msgid "User ID"
@@ -168,9 +177,13 @@ msgstr "Webseiten-Feedback"
 msgid "WiFi feedback"
 msgstr "WLAN-Feedback"
 
-#: app/helper/templates/helper_dashboard.jinja2:5
-#: app/orga/templates/orga_dashboard.jinja2:5
-#: app/team/templates/team_dashboard.jinja2:5
+#: app/helper/templates/helper_dashboard.jinja2:3
+msgid "Helper dashboard"
+msgstr "Helfer-Dashboard"
+
+#: app/helper/templates/helper_dashboard.jinja2:7
+#: app/orga/templates/orga_dashboard.jinja2:7
+#: app/team/templates/team_dashboard.jinja2:7
 #, python-format
 msgid "Hello %(username)s!"
 msgstr "Hallo %(username)s!"
@@ -206,7 +219,7 @@ msgstr "Gesponsorter Inhalt"
 #: app/scoreboard/templates/scoreboard.jinja2:3
 #: app/scoreboard/templates/scoreboard.jinja2:7
 #: app/scoreboard/templates/scoreboard.jinja2:10
-#: app/team/templates/team_dashboard.jinja2:14
+#: app/team/templates/team_dashboard.jinja2:16
 msgid "Scoreboard"
 msgstr "Bestenliste"
 
@@ -228,6 +241,10 @@ msgstr "Startseite"
 #: app/main/templates/team_map.jinja2:3 app/main/templates/team_map.jinja2:20
 msgid "Team map"
 msgstr "Team-Karte"
+
+#: app/orga/templates/orga_dashboard.jinja2:3
+msgid "Orga dashboard"
+msgstr "Orga-Dashboard"
 
 #: app/profile/views.py:26
 msgid "No name provided!"
@@ -266,10 +283,6 @@ msgstr "Team-Logo von %(team_name)s"
 #, python-format
 msgid "Public profile of %(name)s"
 msgstr "Öffentliches Profil von %(name)s"
-
-#: app/scoreboard/views.py:21
-msgid "EXPERIMENTAL SITE!"
-msgstr "EXPERIMENTELLE SEITE!"
 
 #: app/scoreboard/templates/scoreboard.jinja2:32
 msgid "#"
@@ -378,7 +391,7 @@ msgid "Update team map position"
 msgstr "Standort auf der Team-Karte aktualisieren"
 
 #: app/settings/templates/team_settings.jinja2:5
-#: app/team/templates/team_dashboard.jinja2:10
+#: app/team/templates/team_dashboard.jinja2:12
 msgid "Team profile settings"
 msgstr "Team-Profileinstellungen"
 
@@ -424,6 +437,15 @@ msgstr "Öffentliches Team-Profil anschauen"
 msgid "Profile picture of %(name)s"
 msgstr "Profilbild von %(name)s"
 
+#: app/team/templates/my_team_events.jinja2:3
+#: app/team/templates/team_dashboard.jinja2:20
+msgid "My next events"
+msgstr "Meine nächsten Termine"
+
+#: app/team/templates/team_dashboard.jinja2:3
+msgid "Team dashboard"
+msgstr "Team-Dashboard"
+
 #: app/templates/map.jinja2:8
 #, python-format
 msgid "Logo of %(item_name)s"
@@ -447,7 +469,7 @@ msgstr ""
 "Es sieht so aus, als wären du und diese Seite einfach nicht füreinander "
 "bestimmt... 💔"
 
-#: app/templates/errors/401.jinja2:10
+#: app/templates/errors/401.jinja2:10 app/templates/errors/500.jinja2:12
 msgid "Go back home"
 msgstr "Zurück zur Startseite"
 
@@ -458,6 +480,22 @@ msgstr "oder"
 #: app/templates/errors/401.jinja2:13
 msgid "log in with an account that has access to this page."
 msgstr "melde dich mit einem Account an, der Zugriff auf diese Seite hat."
+
+#: app/templates/errors/500.jinja2:3 app/templates/errors/500.jinja2:7
+msgid "Internal server error"
+msgstr "Interner Serverfehler"
+
+#: app/templates/errors/500.jinja2:8
+msgid "This should not have happened ..."
+msgstr "Das hätte nicht passieren dürfen ..."
+
+#: app/templates/errors/500.jinja2:9
+msgid "The server encountered an error while processing your request!"
+msgstr "Der Server ist einem Fehler begegnet, während er deine Anfrage verarbeitet hat!"
+
+#: app/templates/errors/500.jinja2:10
+msgid "Don't worry, the error was logged and will be investigated later."
+msgstr "Keine Sorge, der Fehler wurde protokolliert und wird später begutachtet."
 
 #: app/translations/additional_lazy_translations.jinja2:5
 msgid "team"
