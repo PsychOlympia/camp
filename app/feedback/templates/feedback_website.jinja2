@@ -49,6 +49,10 @@
             .referrer {
                 flex-direction: column;
             }
+
+            #feedback-form {
+                width: 100%;
+            }
         }
     </style>
 {% endblock %}
@@ -68,12 +72,12 @@
                     {{ website_feedback_form.remove() }}
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 5px;">
-                    {{ website_feedback_form.further_notes.label }}
-                    {{ website_feedback_form.further_notes() }}
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 5px;">
                     {{ website_feedback_form.add.label }}
                     {{ website_feedback_form.add() }}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    {{ website_feedback_form.further_notes.label }}
+                    {{ website_feedback_form.further_notes() }}
                 </div>
             </div>
             <button type="submit" style="align-self: center;">{{ _('Submit feedback') if not feedback_exists else _('Submit edited feedback') }}</button>
