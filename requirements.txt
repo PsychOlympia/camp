@@ -9,6 +9,8 @@ flask-babel>=3.1.0
 python-dotenv>=1.0.0
 # psycopg2>=2.9.6
 psycopg2-binary>=2.9.6
+requests~=2.31.0
+urllib3<=1.26.16
 
 # Implicit (will be installed through one of the above)
 click>=8.1.3

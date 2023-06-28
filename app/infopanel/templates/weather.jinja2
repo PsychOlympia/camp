@@ -1,0 +1,287 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}{{ _('Weather') }} - {{ super() }}{% endblock %}
+
+
+{% block head %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/libs/Chart.js/4.3.0/chart.umd.js') }}"></script>
+    <style>
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1), color 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.night {
+            background-color: var(--dark); /*#021018;*/
+            color: var(--light);
+        }
+
+        .weather-container, .icon-container {
+            position: relative;
+        }
+
+        .weather-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 0 auto;
+            height: 400px;
+            overflow: visible; /* TODO: overflow: hidden? */
+        }
+
+        .weather-card, .icon-card {
+            position: absolute;
+            opacity: 0;
+            text-align: center;
+        }
+
+        .icon-card {
+            transition:
+                    opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                    top 1s cubic-bezier(0.68, -0.55, 0.27, 1.5);
+            top: -100px;
+        }
+
+        .weather-card {
+            background-color: #eeeeee;
+            left: 300px;
+            transition:
+                    opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                    left 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            border-radius: 15px;
+            /*border: 1px solid black;*/
+            min-width: 20%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .weather-card.night {
+            background-color: #031623;
+        }
+
+        .show {
+            opacity: 1;
+            left: 0;
+            top: 0;
+        }
+
+        .hide {
+            opacity: 0;
+            left: -300px;
+        }
+
+        .weather-card img {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .weather-card span {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .single {
+            max-width: fit-content;
+            padding-right: 20px;
+        }
+
+        .single > div > div:nth-child(1) > img {
+            height: 150px;
+            width: 150px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
+        <div style="display: flex; flex-direction: row; gap: 10px; align-items: center; justify-content: center;">
+            <h1>{{ _('Weather in %(location)s', location=config.CAMP_LOCATION_NAME) }}</h1>
+            <div class="icon-container" style="width: 5rem; height: 5rem;">
+                <img class="icon-card" src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                <img class="icon-card" src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                <img class="icon-card" src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                <img class="icon-card" src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                <img class="icon-card" src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                <img class="icon-card" src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                <img class="icon-card" src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+            </div>
+        </div>
+        <div class="weather-container">
+            <div class="weather-card single" id="weather-now">
+                <h3>{{ _('Now') }}</h3>
+                <div style="display: flex; flex-direction: row; gap: 10px; align-items: center; margin-right: 20px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <div style="display: flex; flex-direction: row; gap: 5px; align-items: center;">
+                            <img src="{{ url_for('static', filename='icons/meteocons/fill/thermometer-celsius.svg') }}">
+                            <span></span>
+                        </div>
+                        <div style="display: flex; flex-direction: row; gap: 5px; align-items: center;">
+                            <img src="{{ url_for('static', filename='icons/meteocons/fill/humidity.svg') }}">
+                            <span></span>
+                        </div>
+                        <div style="display: flex; flex-direction: row; gap: 5px; align-items: center;">
+                            <img src="{{ url_for('static', filename='icons/meteocons/fill/not-available.svg') }}">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% with items = (
+                ('weather-today', _('Today')),
+                ('weather-tonight', _('Tonight')),
+                ('weather-in-1-day', _('Tomorrow')),
+                ('weather-in-1-night', _('Tomorrow night')),
+                ('weather-in-2-day', _('In 2 days')),
+                ('weather-in-2-night', _('In 2 days night'))
+            ) %}
+                {% for card_id, name in items %}
+                <div class="weather-card stack" id="{{ card_id }}">
+                    <h3>{{ name }}</h3>
+                    <div style="display: flex; flex-direction: row; align-items: center; gap: 10px; justify-content: center; margin-right: 10px;">
+                        <div style="display: flex; flex-direction: row; align-items: center;">
+                            <img src="{{ url_for('static', filename='icons/meteocons/fill/thermometer-colder.svg') }}">
+                            <span style="font-weight: bold;"></span>
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: center;">
+                            <img src="{{ url_for('static', filename='icons/meteocons/fill/thermometer-warmer.svg') }}">
+                            <span style="font-weight: bold;"></span>
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: center;">
+                            <img src="{{ url_for('static', filename='icons/meteocons/fill/humidity.svg') }}">
+                            <span style="font-weight: bold;"></span>
+                        </div>
+                    </div>
+                    <div class="diagram">
+                        <canvas width="300" height="100"></canvas>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+    <script>
+        const weatherCardNow = document.getElementById('weather-now')
+        fetch('{{ url_for('api.weather.nowcast') }}').then(response => {
+            return response.json();
+        }).then(data => {
+            weatherCardNow.querySelector('div > div:nth-child(1) > img').src = `{{ url_for('static', filename='icons/meteocons/fill') }}/${data.icon}.svg`
+            document.querySelector('.icon-container > .icon-card:nth-of-type(1)').src = `{{ url_for('static', filename='icons/meteocons/fill') }}/${data.icon}.svg`
+
+            weatherCardNow.querySelector('div > div:nth-child(2) > div:nth-child(1) > span').innerText = `${data.temperature}°C`
+            weatherCardNow.querySelector('div > div:nth-child(2) > div:nth-child(2) > span').innerText = `${data.precipitation_60 / 60}%`
+            let windCardNow = weatherCardNow.querySelector('div > div:nth-child(2) > div:nth-child(3)')
+            windCardNow.querySelector('span').innerText = `${data.wind_speed_10}km/h`
+            if (data.wind_speed_10 == null || data.wind_speed_10 < 10) {
+                windCardNow.querySelector('img').src = `{{ url_for('static', filename='icons/meteocons/fill/windsock-weak.svg') }}`
+            } else {
+                windCardNow.querySelector('img').src = `{{ url_for('static', filename='icons/meteocons/fill/windsock.svg') }}`
+            }
+        })
+
+        const cards = document.querySelectorAll('.weather-container > .weather-card.stack')
+        fetch(`{{ url_for('api.weather.forecast') }}?days=${Math.ceil(cards.length / 2)}`).then(response => {
+            return response.json()
+        }).then(data => {
+            data = data.slice(9)
+            for (let i = 0; i < cards.length; i++) {
+                let section = data.slice(i*12, (i+1)*12)
+
+                let rainProbabilityData = [];
+                let temperatureData = [];
+                let labels = [];
+                let icons = [];
+                for (let element of section) {
+                    labels.push(new Date(element.timestamp).getHours());
+                    let temperature = element.temperature;
+                    temperatureData.push(temperature == null ? 0 : temperature);
+                    let rainProbability = element.precipitation_probability;
+                    rainProbabilityData.push(rainProbability == null ? 0 : rainProbability);
+                    icons.push(`{{ url_for('static', filename='icons/meteocons/fill') }}/${element.icon}.svg`)
+                }
+
+                let tempHigh = Math.max(...temperatureData);
+                let tempLow = Math.min(...temperatureData);
+                let rainProbability = Math.max(...rainProbabilityData);
+                let mostCommonIcon = icons.sort((a,b) =>
+                    icons.filter(v => v===a).length
+                    - icons.filter(v => v===b).length
+                ).pop();
+                document.querySelector(`.icon-container > .icon-card:nth-of-type(${2+i})`).src = mostCommonIcon
+                cards[i].querySelector('div:nth-of-type(1) > div:nth-of-type(1) > span').innerText = `${tempLow}°C`
+                cards[i].querySelector('div:nth-of-type(1) > div:nth-of-type(2) > span').innerText = `${tempHigh}°C`
+                cards[i].querySelector('div:nth-of-type(1) > div:nth-of-type(3) > span').innerText = `${rainProbability}%`
+
+                let ctx = cards[i].querySelector('.diagram > canvas').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '{{ _('Temperature') }}',
+                            data: temperatureData,
+                            fill: false,
+                            borderColor: 'rgba(255,0,0,0.5)',
+                            backgroundColor: 'red',
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: 'red',
+                            pointHoverBackgroundColor: 'red',
+                        },
+                        {
+                            label: '{{ _('Rain probability') }}',
+                            data: rainProbabilityData,
+                            fill: false,
+                            borderColor: 'rgba(0,0,255,0.5)',
+                            backgroundColor: 'blue',
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: 'blue',
+                            pointHoverBackgroundColor: 'blue',
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                suggestedMax: 30
+                            }
+                        },
+                    }
+                });
+            }
+        })
+
+        window.onload = function() {
+            const divs = document.querySelectorAll('.weather-container > .weather-card');
+            const icons = document.querySelectorAll('.icon-container > .icon-card');
+            let currentIndex = 0;
+
+            divs[currentIndex].classList.toggle('show');
+            icons[currentIndex].classList.toggle('show');
+
+            setInterval(function() {
+                if (currentIndex !== 0) {
+                    document.body.classList.toggle('night')
+                    if (document.body.classList.contains('night')) {
+                        divs[(currentIndex + 1) % divs.length].classList.add('night')
+                    }
+                }
+                icons[currentIndex].classList.toggle('show');
+                divs[currentIndex].classList.toggle('show');
+                icons[(currentIndex + 1) % divs.length].classList.toggle('show');
+                divs[(currentIndex + 1) % divs.length].classList.toggle('show');
+                currentIndex = (currentIndex + 1) % divs.length;
+            }, 10000);
+        };
+    </script>
+{% endblock %}

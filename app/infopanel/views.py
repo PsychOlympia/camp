@@ -13,7 +13,15 @@ bp_infopanel = Blueprint(
 
 @bp_infopanel.route('/', methods=['GET'], endpoint='index')
 @login_required
-@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)  # TODO who should have access?
+@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)  # TODO who should have access (can view camp?)
 @experimental
 def index():
     return render_template('infopanel.jinja2')
+
+
+@bp_infopanel.route('/weather', methods=['GET'], endpoint='weather')
+@login_required
+@guest_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+@experimental
+def weather():
+    return render_template('weather.jinja2')
