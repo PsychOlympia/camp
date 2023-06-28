@@ -61,42 +61,44 @@ def configure(app: Flask, test_config: Mapping) -> None:
 
 def register_blueprints(app: Flask) -> None:
     from .auth.views import bp_auth
+    from .feedback.views import bp_feedback
+    from .helper.views import bp_helper
+    from .infopanel.views import bp_infopanel
     from .main.views import bp_main
     from .orga.views import bp_orga
-    from .helper.views import bp_helper
-    from .team.views import bp_team
-    from .infopanel.views import bp_infopanel
     from .profile.views import bp_profile
-    from .settings.views import bp_profile_settings
     from .scoreboard.views import bp_scoreboard
+    from .settings.views import bp_profile_settings
+    from .sponsored.views import bp_sponsored
+    from .team.views import bp_team
     from .uploads.views import bp_uploads
-    from .feedback.views import bp_feedback
 
-    app.register_blueprint(bp_main)
     app.register_blueprint(bp_auth)
-    app.register_blueprint(bp_orga)
-    app.register_blueprint(bp_helper)
-    app.register_blueprint(bp_team)
-    app.register_blueprint(bp_infopanel)
-    app.register_blueprint(bp_profile)
-    app.register_blueprint(bp_profile_settings)
-    app.register_blueprint(bp_scoreboard)
-    app.register_blueprint(bp_uploads)
     app.register_blueprint(bp_feedback)
+    app.register_blueprint(bp_helper)
+    app.register_blueprint(bp_infopanel)
+    app.register_blueprint(bp_main)
+    app.register_blueprint(bp_orga)
+    app.register_blueprint(bp_profile)
+    app.register_blueprint(bp_scoreboard)
+    app.register_blueprint(bp_profile_settings)
+    app.register_blueprint(bp_sponsored)
+    app.register_blueprint(bp_team)
+    app.register_blueprint(bp_uploads)
 
 
 def initialize_extensions(app: Flask) -> None:
-    from .models import db, migrate
     from .auth import login_manager, csrf, bcrypt, principal
     from .i18n import babel, locale_selector, timezone_selector
+    from .models import db, migrate
 
-    db.init_app(app)
-    migrate.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
     bcrypt.init_app(app)
     principal.init_app(app)
     babel.init_app(app, locale_selector=locale_selector, timezone_selector=timezone_selector)
+    db.init_app(app)
+    migrate.init_app(app)
 
     with app.app_context():
         db.create_all()
@@ -113,6 +115,6 @@ def register_error_handlers(app: Flask) -> None:
         return render_template('errors/401.jinja2')
 
     @app.errorhandler(HTTPStatus.REQUEST_ENTITY_TOO_LARGE)
-    def too_large(e):
+    def handle_413(error):
         flash(_('This file is too large!'), 'danger')
         return redirect(url_for(request.endpoint))
