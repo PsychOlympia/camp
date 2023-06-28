@@ -1,12 +1,12 @@
 from http import HTTPStatus
 
 from flask import Blueprint, render_template, flash, redirect, url_for, request
-from flask_babel import gettext as _
 from flask_login import login_required
 from sqlalchemy import desc, func
 
 from .forms import AddPointsForm
 from ..auth import team_permission
+from ..development import experimental
 from ..models import db, Scoreboard, ScoreboardEntry, Team
 
 bp_scoreboard = Blueprint(
@@ -17,8 +17,8 @@ bp_scoreboard = Blueprint(
 @bp_scoreboard.route('/', methods=['GET'], endpoint='index')
 @login_required
 @team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
+@experimental
 def index():
-    flash(_('EXPERIMENTAL SITE!'), 'danger')
     latest_scoreboard = db.session.query(Scoreboard).order_by(desc(Scoreboard.round)).first()
     add_points_form = AddPointsForm()
     add_points_form.team.choices = [(team.id, team.name) for team in db.session.query(Team).all()]
