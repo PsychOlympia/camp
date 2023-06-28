@@ -59,6 +59,12 @@ def get_dashboard_url():
     return url_for('main.index')
 
 
+@principal.identity_loader
+def load_identity_when_session_expires():
+    if current_user.is_authenticated:
+        return Identity(current_user.id)
+
+
 @identity_loaded.connect
 def on_identity_loaded(sender: Flask, identity: Identity):
     if current_user.is_authenticated:
