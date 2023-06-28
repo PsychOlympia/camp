@@ -61,6 +61,7 @@ def configure(app: Flask, test_config: Mapping) -> None:
 
 def register_blueprints(app: Flask) -> None:
     from .auth.views import bp_auth
+    from .demo.views import bp_demo
     from .feedback.views import bp_feedback
     from .helper.views import bp_helper
     from .infopanel.views import bp_infopanel
@@ -74,6 +75,7 @@ def register_blueprints(app: Flask) -> None:
     from .uploads.views import bp_uploads
 
     app.register_blueprint(bp_auth)
+    app.register_blueprint(bp_demo)
     app.register_blueprint(bp_feedback)
     app.register_blueprint(bp_helper)
     app.register_blueprint(bp_infopanel)
@@ -118,3 +120,7 @@ def register_error_handlers(app: Flask) -> None:
     def handle_413(error):
         flash(_('This file is too large!'), 'danger')
         return redirect(url_for(request.endpoint))
+
+    @app.errorhandler(HTTPStatus.INTERNAL_SERVER_ERROR)
+    def handle_500(error):
+        return render_template('errors/500.jinja2')

@@ -1,0 +1,15 @@
+{% extends 'error.jinja2' %}
+
+{% block title %}{{ _('Internal server error') }} - {{ super() }}{% endblock %}
+
+{% block error_message %}
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h1>500 - {{ _('Internal server error') }}</h1>
+        <p>{{ _('This should not have happened ...') }}</p>
+        <span>{{ _('The server encountered an error while processing your request!') }}</span>
+        <span>{{ _("Don't worry, the error was logged and will be investigated later.") }}</span>
+        <p>
+            <a href="{{ url_for('main.index') }}">{{ _('Go back home') }}</a>
+        </p>
+    </div>
+{% endblock %}
