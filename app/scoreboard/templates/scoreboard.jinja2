@@ -5,6 +5,25 @@
 {% block content %}
 <div style="display: flex; flex-direction: column; align-items: center;">
     <h3>{{ _('Scoreboard') }}</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 5px;">
+        <h4>{{ _('Scoreboard') }}</h4>
+        <a href="{{ url_for('.fill') }}">Teams erstellen (nur nach DB reset!)</a>
+        <div>
+            <form action="{{ url_for('scoreboard.new') }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit">Neues Scoreboard</button>
+            </form>
+            <form action="{{ url_for('scoreboard.add_points') }}" method="post">
+                {{ add_points_form.hidden_tag() }}
+                {{ add_points_form.team() }}
+                {{ add_points_form.points() }}
+                {{ add_points_form.round() }}
+                <button type="submit">+1 Punkt</button>
+            </form>
+        </div>
+    </div>
+
     {% if scoreboard is not none %}
         <span>Round {{ scoreboard.round }}</span>
         <table>
