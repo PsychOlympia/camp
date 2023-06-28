@@ -1,0 +1,17 @@
+{% extends 'base.jinja2' %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div style="display: flex; align-items: center; justify-content: center; height: 100dvh; width: 100dvw;">
+        {% block content %}
+        {% endblock %}
+    </div>
+{% endblock %}
