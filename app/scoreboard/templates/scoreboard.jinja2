@@ -5,23 +5,26 @@
 {% block content %}
 <div style="display: flex; flex-direction: column; align-items: center;">
     <h3>{{ _('Scoreboard') }}</h3>
-    {% if entries | length > 0 %}
+    {% if scoreboard is not none %}
+        <span>Round {{ scoreboard.round }}</span>
         <table>
             <thead>
                 <tr>
-                    <td>{{ _('#') }}</td>
-                    <td>{{ _('Score') }}</td>
-                    <td>{{ _('Team name') }}</td>
+                    <td style="text-align: center;">{{ _('#') }}</td>
+                    <td style="text-align: center;">{{ _('Score') }}</td>
+                    <td style="text-align: center;">{{ _('Team name') }}</td>
                 </tr>
             </thead>
             <tbody>
-            {% for entry in entries %}
-                {% set trend_class = {'up': 'success', 'flat': '', 'down': 'danger'}.get(entry.trend, '') %}
-                {% set trend_icon = {'up': 'arrow_drop_up', 'flat': 'check_intermediate_small', 'down': 'arrow_drop_down'}.get(entry.trend, '') %}
-                {% set trend_icon = {'up': 'arrow_drop_up', 'flat': 'check_intermediate_small', 'down': 'arrow_drop_down'}.get(entry.trend, '') %}
+            {% for entry in scoreboard.entries | sort(attribute='score', reverse=true) %}
+                {% set trend_class = {'up': 'success', 'flat': '', 'down': 'danger'}.get(entry.trend.value, '') %}
+                {% set trend_icon = {'up': 'arrow_drop_up', 'flat': 'check_indeterminate_small', 'down': 'arrow_drop_down'}.get(entry.trend.value, 'check_indeterminate_small') %}
                 <tr>
-                    <td>{{ loop.index }}<span class="material-symbols-outlined {{ trend_class }}">{{ trend_icon }}</span></td>
-                    <td>{{ entry.score }}</td>
+                    <td style="display: flex; gap: 5px; align-items: center;">
+                        <span class="material-symbols-outlined {{ trend_class }}">{{ trend_icon }}</span>
+                        <span>{{ loop.index }}</span>
+                    </td>
+                    <td style="text-align: center;">{{ entry.score }}</td>
                     <td>{{ entry.team.name }}</td>
                 </tr>
             {% endfor %}
