@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-27 13:37+0200\n"
+"POT-Creation-Date: 2023-06-28 18:56+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: app/__init__.py:115
+#: app/__init__.py:117
 msgid "This file is too large!"
 msgstr "Diese Datei ist zu groß!"
 
@@ -60,6 +60,114 @@ msgstr "Das PsychOlympia Logo"
 msgid "Login"
 msgstr "Anmelden"
 
+#: app/feedback/forms.py:12 app/feedback/forms.py:32
+msgid "User ID"
+msgstr "Benutzer-ID"
+
+#: app/feedback/forms.py:13
+msgid "My WiFi connection was"
+msgstr "Meine WLAN-Verbindung war"
+
+#: app/feedback/forms.py:14
+msgid "Nowhere to be seen"
+msgstr "Leider nicht vorhanden"
+
+#: app/feedback/forms.py:15
+msgid "Poor"
+msgstr "Schlecht"
+
+#: app/feedback/forms.py:16
+msgid "Variable"
+msgstr "Wechselhaft"
+
+#: app/feedback/forms.py:17
+msgid "Good"
+msgstr "Gut"
+
+#: app/feedback/forms.py:18
+msgid "Perfect"
+msgstr "Perfekt"
+
+#: app/feedback/forms.py:20
+msgid "The coverage should be improved here"
+msgstr "Die Abdeckung sollte hier verbessert werden"
+
+#: app/feedback/forms.py:21
+msgid "Camp"
+msgstr "Camp"
+
+#: app/feedback/forms.py:22
+msgid "Arena"
+msgstr "Arena"
+
+#: app/feedback/forms.py:23
+msgid "Sanitary facilities"
+msgstr "Sanitäranlagen"
+
+#: app/feedback/forms.py:24
+msgid "Infopoint"
+msgstr "Infostand"
+
+#: app/feedback/forms.py:25
+msgid "Stations besides camp"
+msgstr "Stationen neben dem Camp"
+
+#: app/feedback/forms.py:26
+msgid "Stations behind the forest"
+msgstr "Stationen hinter dem Wald"
+
+#: app/feedback/forms.py:28 app/feedback/forms.py:36
+msgid "Further notes"
+msgstr "Weitere Anmerkungen"
+
+#: app/feedback/forms.py:33
+msgid "Keep this"
+msgstr "Auf jeden Fall behalten"
+
+#: app/feedback/forms.py:34
+msgid "Remove this"
+msgstr "Das kann weg"
+
+#: app/feedback/forms.py:35
+msgid "Add this"
+msgstr "Ideen für Neues"
+
+#: app/feedback/views.py:21 app/feedback/views.py:47
+msgid "Thank you for your feedback!"
+msgstr "Danke für dein Feedback!"
+
+#: app/feedback/templates/feedback_website.jinja2:3
+#: app/feedback/templates/feedback_website.jinja2:62
+#: app/main/templates/index.jinja2:14
+msgid "Website feedback"
+msgstr "Webseiten-Feedback"
+
+#: app/feedback/templates/feedback_website.jinja2:83
+#: app/feedback/templates/feedback_wifi.jinja2:79
+msgid "Submit feedback"
+msgstr "Feedback absenden"
+
+#: app/feedback/templates/feedback_website.jinja2:83
+#: app/feedback/templates/feedback_wifi.jinja2:79
+msgid "Submit edited feedback"
+msgstr "Bearbeitetes Feedback absenden"
+
+#: app/feedback/templates/feedback_website.jinja2:87
+#: app/feedback/templates/feedback_wifi.jinja2:83
+msgid "You are welcome to also visit:"
+msgstr "Gerne darfst du auch besuchen:"
+
+#: app/feedback/templates/feedback_website.jinja2:88
+#: app/feedback/templates/feedback_wifi.jinja2:84
+msgid "website feedback"
+msgstr "Webseiten-Feedback"
+
+#: app/feedback/templates/feedback_wifi.jinja2:3
+#: app/feedback/templates/feedback_wifi.jinja2:62
+#: app/main/templates/index.jinja2:13
+msgid "WiFi feedback"
+msgstr "WLAN-Feedback"
+
 #: app/helper/templates/helper_dashboard.jinja2:5
 #: app/orga/templates/orga_dashboard.jinja2:5
 #: app/team/templates/team_dashboard.jinja2:5
@@ -97,6 +205,7 @@ msgstr "Gesponsorter Inhalt"
 #: app/infopanel/templates/infopanel.jinja2:165
 #: app/scoreboard/templates/scoreboard.jinja2:3
 #: app/scoreboard/templates/scoreboard.jinja2:7
+#: app/scoreboard/templates/scoreboard.jinja2:10
 #: app/team/templates/team_dashboard.jinja2:14
 msgid "Scoreboard"
 msgstr "Bestenliste"
@@ -147,7 +256,7 @@ msgid "Public team profile of %(name)s"
 msgstr "Öffentliches Team-Profil von %(name)s"
 
 #: app/profile/templates/team_profile.jinja2:10
-#: app/settings/templates/team_settings.jinja2:64
+#: app/settings/templates/team_settings.jinja2:66
 #, python-format
 msgid "Team logo of %(team_name)s"
 msgstr "Team-Logo von %(team_name)s"
@@ -158,31 +267,35 @@ msgstr "Team-Logo von %(team_name)s"
 msgid "Public profile of %(name)s"
 msgstr "Öffentliches Profil von %(name)s"
 
-#: app/scoreboard/templates/scoreboard.jinja2:12
+#: app/scoreboard/views.py:21
+msgid "EXPERIMENTAL SITE!"
+msgstr "EXPERIMENTELLE SEITE!"
+
+#: app/scoreboard/templates/scoreboard.jinja2:32
 msgid "#"
 msgstr "#"
 
-#: app/scoreboard/templates/scoreboard.jinja2:13
+#: app/scoreboard/templates/scoreboard.jinja2:33
 msgid "Score"
 msgstr "Punkte"
 
-#: app/scoreboard/templates/scoreboard.jinja2:14
+#: app/scoreboard/templates/scoreboard.jinja2:34
 msgid "Team name"
 msgstr "Teamname"
 
-#: app/scoreboard/templates/scoreboard.jinja2:31
+#: app/scoreboard/templates/scoreboard.jinja2:53
 msgid "No active Scoreboard!"
 msgstr "Keine aktive Bestenliste!"
 
-#: app/settings/forms.py:21
+#: app/settings/forms.py:24
 msgid "Upload file"
 msgstr "Datei hochladen"
 
-#: app/settings/forms.py:23
+#: app/settings/forms.py:26
 msgid "Only images are allowed!"
 msgstr "Es sind nur Bilder erlaubt!"
 
-#: app/settings/forms.py:28
+#: app/settings/forms.py:31
 msgid "Team accent color"
 msgstr "Team-Akzentfarbe"
 
@@ -269,44 +382,44 @@ msgstr "Standort auf der Team-Karte aktualisieren"
 msgid "Team profile settings"
 msgstr "Team-Profileinstellungen"
 
-#: app/settings/templates/team_settings.jinja2:58
+#: app/settings/templates/team_settings.jinja2:60
 #: app/settings/templates/user_settings.jinja2:56
 #, python-format
 msgid "Settings for %(username)s"
 msgstr "Einstellungen für %(username)s"
 
-#: app/settings/templates/team_settings.jinja2:74
+#: app/settings/templates/team_settings.jinja2:76
 #: app/settings/templates/user_settings.jinja2:71
 msgid "Update picture"
 msgstr "Bild aktualisieren"
 
-#: app/settings/templates/team_settings.jinja2:75
+#: app/settings/templates/team_settings.jinja2:79
 #: app/settings/templates/user_settings.jinja2:72
 msgid "Delete picture"
 msgstr "Bild löschen"
 
-#: app/settings/templates/team_settings.jinja2:132
+#: app/settings/templates/team_settings.jinja2:139
 msgid "Update accent color"
 msgstr "Akzentfarbe aktualisieren"
 
-#: app/settings/templates/team_settings.jinja2:133
+#: app/settings/templates/team_settings.jinja2:142
 msgid "Delete accent color"
 msgstr "Akzentfarbe löschen"
 
-#: app/settings/templates/team_settings.jinja2:137
+#: app/settings/templates/team_settings.jinja2:168
 msgid "Edit team location on the camp map"
 msgstr "Team-Standort auf Camp-Karte bearbeiten"
 
-#: app/settings/templates/team_settings.jinja2:140
+#: app/settings/templates/team_settings.jinja2:171
 msgid "Edit team location on the team map"
 msgstr "Team-Standort auf Team-Karte bearbeiten"
 
-#: app/settings/templates/team_settings.jinja2:143
+#: app/settings/templates/team_settings.jinja2:174
 msgid "View public team profile"
 msgstr "Öffentliches Team-Profil anschauen"
 
 #: app/settings/templates/user_settings.jinja2:61
-#: app/templates/dashboard.jinja2:15 app/templates/dashboard.jinja2:34
+#: app/templates/dashboard.jinja2:70 app/templates/dashboard.jinja2:94
 #, python-format
 msgid "Profile picture of %(name)s"
 msgstr "Profilbild von %(name)s"
