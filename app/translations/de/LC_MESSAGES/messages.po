@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-28 20:05+0200\n"
+"POT-Creation-Date: 2023-06-28 21:03+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -200,12 +200,12 @@ msgid "Camp map"
 msgstr "Camp-Karte"
 
 #: app/infopanel/templates/infopanel.jinja2:124
-#: app/infopanel/templates/infopanel.jinja2:148
+#: app/infopanel/templates/weather.jinja2:3
 msgid "Weather"
 msgstr "Wetter"
 
 #: app/infopanel/templates/infopanel.jinja2:128
-#: app/infopanel/templates/infopanel.jinja2:153
+#: app/infopanel/templates/infopanel.jinja2:154
 msgid "Upcoming events"
 msgstr "Nächste Termine"
 
@@ -215,7 +215,7 @@ msgid "Sponsored content"
 msgstr "Gesponsorter Inhalt"
 
 #: app/infopanel/templates/infopanel.jinja2:136
-#: app/infopanel/templates/infopanel.jinja2:165
+#: app/infopanel/templates/infopanel.jinja2:164
 #: app/scoreboard/templates/scoreboard.jinja2:3
 #: app/scoreboard/templates/scoreboard.jinja2:7
 #: app/scoreboard/templates/scoreboard.jinja2:10
@@ -223,9 +223,50 @@ msgstr "Gesponsorter Inhalt"
 msgid "Scoreboard"
 msgstr "Bestenliste"
 
-#: app/infopanel/templates/infopanel.jinja2:171
+#: app/infopanel/templates/infopanel.jinja2:170
 msgid "Resume auto switching"
 msgstr "Automatischen Wechsel fortsetzen"
+
+#: app/infopanel/templates/weather.jinja2:105
+#, python-format
+msgid "Weather in %(location)s"
+msgstr "Wetter in %(location)s"
+
+#: app/infopanel/templates/weather.jinja2:118
+msgid "Now"
+msgstr "Jetzt"
+
+#: app/infopanel/templates/weather.jinja2:140
+msgid "Today"
+msgstr "Heute"
+
+#: app/infopanel/templates/weather.jinja2:141
+msgid "Tonight"
+msgstr "Heute Nacht"
+
+#: app/infopanel/templates/weather.jinja2:142
+msgid "Tomorrow"
+msgstr "Morgen"
+
+#: app/infopanel/templates/weather.jinja2:143
+msgid "Tomorrow night"
+msgstr "Morgen Nacht"
+
+#: app/infopanel/templates/weather.jinja2:144
+msgid "In 2 days"
+msgstr "Übermorgen"
+
+#: app/infopanel/templates/weather.jinja2:145
+msgid "In 2 days night"
+msgstr "Übermorgen Nacht"
+
+#: app/infopanel/templates/weather.jinja2:230
+msgid "Temperature"
+msgstr "Temperatur"
+
+#: app/infopanel/templates/weather.jinja2:241
+msgid "Rain probability"
+msgstr "Regenwahrscheinlichkeit"
 
 #: app/main/templates/camp_map.jinja2:8 app/main/templates/team_map.jinja2:44
 #: app/settings/templates/set_camp_location_map.jinja2:63
@@ -491,7 +532,9 @@ msgstr "Das hätte nicht passieren dürfen ..."
 
 #: app/templates/errors/500.jinja2:9
 msgid "The server encountered an error while processing your request!"
-msgstr "Der Server ist einem Fehler begegnet, während er deine Anfrage verarbeitet hat!"
+msgstr ""
+"Der Server ist einem Fehler begegnet, während er deine Anfrage "
+"verarbeitet hat!"
 
 #: app/templates/errors/500.jinja2:10
 msgid "Don't worry, the error was logged and will be investigated later."
