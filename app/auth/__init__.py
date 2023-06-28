@@ -3,7 +3,7 @@ from __future__ import annotations
 from urllib.parse import urlparse
 from enum import Enum, unique
 
-from flask import request, current_app, Flask, url_for, flash
+from flask import request, current_app, Flask, url_for
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
 from flask_principal import Principal, Permission, RoleNeed, identity_loaded, Identity

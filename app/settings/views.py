@@ -161,7 +161,7 @@ def update_team_accent_color():
 )
 @login_required
 @team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
-def update_team_accent_color():
+def delete_team_accent_color():
     if current_user.team.color is None:
         flash(_('Your team does not have an accent color!'), 'danger')
         return redirect(url_for('.team'))

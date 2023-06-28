@@ -20,5 +20,5 @@ def index():
 @login_required
 @team_permission.require(http_exception=HTTPStatus.UNAUTHORIZED)
 @experimental
-def index():
+def my_events():
     return render_template('my_team_events.jinja2')

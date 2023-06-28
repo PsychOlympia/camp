@@ -38,7 +38,7 @@ def website():
 
 @bp_feedback.route('/wifi', methods=['GET', 'POST'], endpoint='wifi')
 @login_required
-def website():
+def wifi():
     feedback_exists = False
     wifi_feedback_form = WiFiFeedbackForm()
     existing_feedback = db.session.query(WiFiFeedback).where(WiFiFeedback.user == current_user).first()

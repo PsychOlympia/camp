@@ -37,8 +37,12 @@ def index():
         scoreboard = db.session.query(Scoreboard).where(Scoreboard.round == int(round_number)).first()
     if scoreboard is None:
         flash('Scoreboard not available!')  # TODO handle
-    return render_template('scoreboard.jinja2', scoreboard=scoreboard, latest_scoreboard=latest_scoreboard,
-        add_points_form=add_points_form)
+    return render_template(
+        'scoreboard.jinja2',
+        scoreboard=scoreboard,
+        latest_scoreboard=latest_scoreboard,
+        add_points_form=add_points_form
+    )
 
 
 @bp_scoreboard.route('/new', methods=['POST'], endpoint='new')
