@@ -40,7 +40,6 @@ def init(ctx: Context):
         name='PsychOlympia',
         _camp_location=None,
         _country_location=camp_location,
-        logo='psycholympia.png',
         linkable=False
     ))
     try:
@@ -56,7 +55,6 @@ def init(ctx: Context):
             float(current_app.config['INFO_LOCATION_LAT']), float(current_app.config['INFO_LOCATION_LON'])
         )),
         _country_location=None,
-        logo='psycholympia.png',
         linkable=False
     ))
     try:
