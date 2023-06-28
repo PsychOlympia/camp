@@ -3,7 +3,10 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import HiddenField, FloatField, StringField
 from wtforms.validators import DataRequired, NumberRange
 from flask_babel import lazy_gettext as _l
-from wtforms.widgets import HiddenInput, ColorInput
+from wtforms.widgets import HiddenInput
+
+
+IMAGES = ['bmp', 'dng', 'gif', 'heic', 'heif', 'jpeg', 'jpg', 'png', 'raw', 'svg', 'tiff', 'webp']
 
 
 class HiddenFloatField(FloatField):
@@ -20,7 +23,7 @@ class MapLocationForm(FlaskForm):
 class FileUploadForm(FlaskForm):
     file_upload = FileField(_l('Upload file'), validators=[
         FileRequired(),
-        FileAllowed(['image/*'], _l('Only images are allowed!'))
+        FileAllowed(IMAGES, _l('Only images are allowed!'))
     ])
 
 
