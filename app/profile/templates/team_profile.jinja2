@@ -7,6 +7,6 @@
 {% block content %}
 <h2>{{ _('Public team profile of %(name)s', name=team.name) }}</h2>
 <div style="width: 128px; height: 128px; border: 1px solid {{ accent_color }}; border-radius: 16px;">
-    <img src="{{ url_for('upload.team', filename=team.logo) if team.logo is not none else url_for('static', filename='img/missing.png') }}" alt="{{ _('Team logo of %(team_name)s', team_name=team.name) }}" style="border-radius: 16px;">
+    <img src="{{ url_for('upload.team', filename=team.logo) if team.logo is not none else url_for('static', filename='img/missing.png') }}" alt="{{ _('Team logo of %(team_name)s', team_name=team.name) }}" style="border-radius: 16px; height: 100%; width: 100%;">
 </div>
 {% endblock %}
