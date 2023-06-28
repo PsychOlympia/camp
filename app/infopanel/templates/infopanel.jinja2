@@ -143,8 +143,9 @@
                     <span style="color: var(--light); font-size: 2em;">{{ _('Camp map') }}</span>
                 </div>
             </div>
-            <div class="tab" style="background-color: green">
+            <div class="tab">
                 <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                    {# {% include 'weather.jinja2' %} TODO include weather directly #}
                     <iframe id="weather-frame" src="{{ url_for('infopanel.weather') }}" style="height: 100%; width: 100%">
                     </iframe>
                 </div>
