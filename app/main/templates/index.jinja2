@@ -9,5 +9,9 @@
             <a href="{{ url_for('main.team_map') }}" style="display: flex; gap: 5px; align-items: center; text-decoration: none;"><span class="material-symbols-outlined">public</span>Teamkarte</a>
             <a href="{{ url_for('main.camp_map') }}" style="display: flex; gap: 5px; align-items: center; text-decoration: none;"><span class="material-symbols-outlined">camping</span>Campkarte</a>
         </div>
+        <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
+            <a href="{{ url_for('feedback.wifi') }}">{{ _('WiFi feedback') }}</a>
+            <a href="{{ url_for('feedback.website') }}">{{ _('Website feedback') }}</a>
+        </div>
     </div>
 {% endblock %}

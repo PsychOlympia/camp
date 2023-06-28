@@ -1,0 +1,90 @@
+{% extends 'dashboard.jinja2' %}
+
+{% block title %}{{ _('Website feedback') }} - {{ super() }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        ul {
+            margin: 0;
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        #feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 30%;
+        }
+
+        .animated-weight {
+            font-weight: 700;
+            animation: forwards weight 1s ease infinite;
+        }
+
+        @keyframes weight {
+            0% { font-weight: 400; }
+            50% { font-weight: 600; }
+            100% { font-weight: 400; }
+        }
+
+        .referrer {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        @media (max-width: 767px) {
+            .referrer {
+                flex-direction: column;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;">
+        <h3>{{ _('Website feedback') }}</h3>
+        <form id="feedback-form" action="{{ url_for('feedback.website') }}" method="post">
+            {{ website_feedback_form.hidden_tag() }}
+            <div style="display: flex; flex-direction: column; gap: 50px; padding: 5px; border: 1px solid var(--dark); border-radius: 5px;">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    {{ website_feedback_form.keep.label }}
+                    {{ website_feedback_form.keep() }}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    {{ website_feedback_form.remove.label }}
+                    {{ website_feedback_form.remove() }}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    {{ website_feedback_form.further_notes.label }}
+                    {{ website_feedback_form.further_notes() }}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    {{ website_feedback_form.add.label }}
+                    {{ website_feedback_form.add() }}
+                </div>
+            </div>
+            <button type="submit" style="align-self: center;">{{ _('Submit feedback') if not feedback_exists else _('Submit edited feedback') }}</button>
+        </form>
+        {% if feedback_exists %}
+        <div class="referrer">
+            <span>{{ _('You are welcome to also visit:') }}</span>
+            <a href="{{ url_for('feedback.wifi') }}">{{ _('website feedback') }}</a>
+            <span class="material-symbols-rounded animated-weight" style="color: red">favorite</span>
+        </div>
+        {% endif %}
+        <div style="margin-bottom: 50px;"></div>
+    </div>
+{% endblock %}

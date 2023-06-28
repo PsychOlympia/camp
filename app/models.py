@@ -7,7 +7,7 @@ from typing import Union, Protocol
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from sqlalchemy import ForeignKey, Column, Integer
+from sqlalchemy import ForeignKey, Column, Integer, desc
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -95,7 +95,7 @@ class PointOfInterest(db.Model):
     name: Mapped[str] = mapped_column(unique=True)
     _camp_location: Mapped[Union[str, None]] = mapped_column()
     _country_location: Mapped[Union[str, None]] = mapped_column()
-    logo: Mapped[Union[str, None]] = mapped_column()
+    logo: Mapped[Union[str, None]] = mapped_column(default='default.png')
     color: Mapped[Union[str, None]] = mapped_column()
     linkable: Mapped[bool] = mapped_column(default=False)
     category: Mapped[str] = mapped_column(default=Category.POINT_OF_INTEREST.value)
@@ -157,17 +157,52 @@ class Team(db.Model):
 
 class ScoreboardEntry(db.Model):
     __tablename__ = 'scoreboard_entries'
+
     id: Mapped[int] = mapped_column(primary_key=True)
     team_id: Mapped[int] = mapped_column(ForeignKey('teams.id'))
     team: Mapped[Team] = relationship(foreign_keys=[team_id])
     score: Mapped[int] = mapped_column(default=0)
-    trend: Mapped[Trend] = mapped_column(default=Trend.FLAT)
+    round: Mapped[int] = mapped_column(ForeignKey('scoreboard.round'))
+
+    @property
+    def trend(self) -> Trend:
+        previous_entry = db.session.query(ScoreboardEntry).where(
+            ScoreboardEntry.team == self.team and ScoreboardEntry.round == self.round - 1
+        ).first()
+        if previous_entry is None:
+            return Trend.FLAT
+
+        current_position = self.position
+        previous_position = previous_entry.position
+
+        if current_position == previous_position:
+            return Trend.FLAT
+        elif current_position > previous_position:
+            return Trend.UP
+        else:
+            return Trend.DOWN
+
+    @property
+    def position(self) -> int:
+        return db.session.query(ScoreboardEntry).order_by(desc(ScoreboardEntry.score)).all().index(self)
 
 
 class Scoreboard(db.Model):
     __tablename__ = 'scoreboard'
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    round: Mapped[int] = mapped_column()
-    entry_id: Mapped[int] = mapped_column(ForeignKey('scoreboard_entries.id'))
-    entries: Mapped[list['ScoreboardEntry']] = relationship(foreign_keys=[entry_id], uselist=True)
+    round: Mapped[int] = mapped_column(primary_key=True)
+    entries: Mapped[list['ScoreboardEntry']] = relationship('ScoreboardEntry', uselist=True, backref='scoreboard')  # TODO
+
+
+class WebsiteFeedback(db.Model):
+    __tablename__ = 'website_feedback'
+
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), primary_key=True)
+    user: Mapped[User] = relationship('User', foreign_keys=[user_id])
+
+
+class WiFiFeedback(db.Model):
+    __tablename__ = 'wifi_feedback'
+
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), primary_key=True)
+    user: Mapped[User] = relationship('User', foreign_keys=[user_id])
