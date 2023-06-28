@@ -1,9 +1,10 @@
 {% extends 'dashboard.jinja2' %}
 
+{% block title %}{{ _('Orga dashboard') }} - {{ super() }}{% endblock %}
+
 {% block content %}
 <div style="display: flex; flex-direction: column; align-items: center;">
     <h3>{{ _('Hello %(username)s!', username=current_user.username) }}</h3>
-    <h4>Orga-Dashboard</h4>
 
     <a href="">manage POIs (todo)</a>
     <a href="">manage scoreboard (todo)</a>

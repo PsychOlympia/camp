@@ -1,5 +1,7 @@
 {% extends 'dashboard.jinja2' %}
 
+{% block title %}{{ _('Team dashboard') }} - {{ super() }}{% endblock %}
+
 {% block content %}
 <div style="display: flex; flex-direction: column; align-items: center;">
     <h3>{{ _('Hello %(username)s!', username=current_user.username) }}</h3>
@@ -7,11 +9,15 @@
 
     <a href="{{ url_for('settings.team') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
         <span class="material-symbols-outlined">settings</span>
-        {{ _('Team profile settings') }}
+        <span>{{ _('Team profile settings') }}</span>
     </a>
     <a href="{{ url_for('scoreboard.index') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
         <span class="material-symbols-outlined">scoreboard</span>
-        {{ _('Scoreboard') }}
+        <span>{{ _('Scoreboard') }}</span>
+    </a>
+    <a href="{{ url_for('team.my_events') }}" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>{{ _('My next events') }}</span>
     </a>
 </div>
 {% endblock %}
