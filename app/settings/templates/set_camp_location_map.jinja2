@@ -73,6 +73,8 @@
 
         map.on('click', (e) => {
             marker.setLatLng(e.latlng)
+            document.getElementById('location-form').latitude.value = e.latlng.lat
+            document.getElementById('location-form').longitude.value = e.latlng.lng
         })
 
         document.getElementById('location-form').latitude.value = {{ item.camp_location[0] | default(config.CAMP_LOCATION_LAT) }};
