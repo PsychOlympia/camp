@@ -76,8 +76,16 @@
                     {{ wifi_feedback_form.further_notes() }}
                 </div>
             </div>
-            <button type="submit" style="align-self: center;">{{ _('Submit feedback') if not feedback_exists else _('Submit edited feedback') }}</button>
         </form>
+        <div style="align-self: center; display: flex; gap: 5px;">
+            <button onclick="document.getElementById('feedback-form').submit()">{{ _('Submit feedback') if not feedback_exists else _('Submit edited feedback') }}</button>
+            {% if feedback_exists %}
+            <form action="{{ url_for('feedback.wifi_revoke') }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="delete-button">{{ _('Delete my feedback') }}</button>
+            </form>
+            {% endif %}
+        </div>
         {% if feedback_exists %}
         <div class="referrer">
             <span>{{ _('You are welcome to also visit:') }}</span>
