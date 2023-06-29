@@ -133,6 +133,10 @@ a, a:visited {
     }
 }
 
+.delete-button:hover {
+    border-color: var(--danger);
+}
+
 .invisible-button {
     border-color: transparent;
     background-color: transparent;
