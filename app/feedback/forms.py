@@ -30,7 +30,7 @@ class WiFiFeedbackForm(FlaskForm):
 
 class WebsiteFeedbackForm(FlaskForm):
     user = HiddenField(_l('User ID'))
-    keep = TextAreaField(_l('Keep this'), render_kw={'rows': 5})
-    remove = TextAreaField(_l('Remove this'), render_kw={'rows': 5})
-    add = TextAreaField(_l('Add this'), render_kw={'rows': 5})
+    keep = TextAreaField(_l('This was good'), render_kw={'rows': 5})
+    remove = TextAreaField(_l('This was unnecessary'), render_kw={'rows': 5})
+    add = TextAreaField(_l('I wish there was'), render_kw={'rows': 5})
     further_notes = TextAreaField(_l('Further notes'), render_kw={'rows': 5})

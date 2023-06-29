@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-28 21:03+0200\n"
+"POT-Creation-Date: 2023-06-29 17:03+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -130,15 +130,15 @@ msgid "Further notes"
 msgstr "Weitere Anmerkungen"
 
 #: app/feedback/forms.py:33
-msgid "Keep this"
-msgstr "Auf jeden Fall behalten"
+msgid "This was good"
+msgstr "Das hat mir gefallen"
 
 #: app/feedback/forms.py:34
-msgid "Remove this"
+msgid "This was unnecessary"
 msgstr "Das kann weg"
 
 #: app/feedback/forms.py:35
-msgid "Add this"
+msgid "I wish there was"
 msgstr "Ideen für Neues"
 
 #: app/feedback/views.py:21 app/feedback/views.py:47
@@ -205,17 +205,17 @@ msgid "Weather"
 msgstr "Wetter"
 
 #: app/infopanel/templates/infopanel.jinja2:128
-#: app/infopanel/templates/infopanel.jinja2:154
+#: app/infopanel/templates/infopanel.jinja2:155
 msgid "Upcoming events"
 msgstr "Nächste Termine"
 
 #: app/infopanel/templates/infopanel.jinja2:132
-#: app/infopanel/templates/infopanel.jinja2:159
+#: app/infopanel/templates/infopanel.jinja2:160
 msgid "Sponsored content"
 msgstr "Gesponsorter Inhalt"
 
 #: app/infopanel/templates/infopanel.jinja2:136
-#: app/infopanel/templates/infopanel.jinja2:164
+#: app/infopanel/templates/infopanel.jinja2:165
 #: app/scoreboard/templates/scoreboard.jinja2:3
 #: app/scoreboard/templates/scoreboard.jinja2:7
 #: app/scoreboard/templates/scoreboard.jinja2:10
@@ -223,7 +223,7 @@ msgstr "Gesponsorter Inhalt"
 msgid "Scoreboard"
 msgstr "Bestenliste"
 
-#: app/infopanel/templates/infopanel.jinja2:170
+#: app/infopanel/templates/infopanel.jinja2:171
 msgid "Resume auto switching"
 msgstr "Automatischen Wechsel fortsetzen"
 
