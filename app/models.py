@@ -199,6 +199,10 @@ class WebsiteFeedback(db.Model):
 
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), primary_key=True)
     user: Mapped[User] = relationship('User', foreign_keys=[user_id])
+    keep: Mapped[str] = mapped_column()
+    remove: Mapped[str] = mapped_column()
+    add: Mapped[str] = mapped_column()
+    further_notes: Mapped[str] = mapped_column()
 
 
 class WiFiFeedback(db.Model):
@@ -206,3 +210,14 @@ class WiFiFeedback(db.Model):
 
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), primary_key=True)
     user: Mapped[User] = relationship('User', foreign_keys=[user_id])
+    quality: Mapped[int] = mapped_column()
+    _coverage: Mapped[str] = mapped_column()
+    further_notes: Mapped[str] = mapped_column()
+
+    @hybrid_property
+    def coverage(self) -> list[int]:
+        return list(map(int, self._coverage.split(',')))
+
+    @coverage.setter
+    def coverage(self, value: list[int]) -> None:
+        self._coverage = ','.join(map(str, value))

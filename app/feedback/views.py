@@ -20,20 +20,49 @@ def website():
     if request.method == 'POST':
         flash(_('Thank you for your feedback!'), 'success')
         if existing_feedback is None:
-            existing_feedback = WebsiteFeedback(user=current_user)  # TODO save feedback
+            existing_feedback = WebsiteFeedback(
+                user=current_user,
+                keep=form.keep.data,
+                remove=form.remove.data,
+                add=form.add.data,
+                further_notes=form.further_notes.data
+            )
             db.session.add(existing_feedback)
-            db.session.commit()
+        else:
+            existing_feedback.keep = form.keep.data
+            existing_feedback.remove = form.remove.data
+            existing_feedback.add = form.add.data
+            existing_feedback.further_notes = form.further_notes.data
+        db.session.commit()
         return redirect(url_for('.website'))
 
     form.user.data = current_user.id
     if existing_feedback is not None:
         feedback_exists = True
+        form.keep.data = existing_feedback.keep
+        form.remove.data = existing_feedback.remove
+        form.add.data = existing_feedback.add
+        form.further_notes.data = existing_feedback.further_notes
 
     return render_template(
         'feedback_website.jinja2',
         website_feedback_form=form,
         feedback_exists=feedback_exists
     )
+
+
+@bp_feedback.route('/website/revoke', methods=['POST'], endpoint='website_revoke')
+@login_required
+def revoke_website():
+    existing_feedback = db.session.query(WebsiteFeedback).where(WebsiteFeedback.user == current_user).first()
+    if existing_feedback is None:
+        flash(_('You have not submitted a feedback yet!'), 'danger')
+        return redirect(url_for('.website'))
+
+    db.session.delete(existing_feedback)
+    db.session.commit()
+    flash(_('Your feedback has been deleted!'), 'success')
+    return redirect(url_for('.website'))
 
 
 @bp_feedback.route('/wifi', methods=['GET', 'POST'], endpoint='wifi')
@@ -60,3 +89,17 @@ def wifi():
         wifi_feedback_form=wifi_feedback_form,
         feedback_exists=feedback_exists
     )
+
+
+@bp_feedback.route('/wifi/revoke', methods=['POST'], endpoint='wifi_revoke')
+@login_required
+def revoke_wifi():
+    existing_feedback = db.session.query(WiFiFeedback).where(WiFiFeedback.user == current_user).first()
+    if existing_feedback is None:
+        flash(_('You have not submitted a feedback yet!'), 'danger')
+        return redirect(url_for('.wifi'))
+
+    db.session.delete(existing_feedback)
+    db.session.commit()
+    flash(_('Your feedback has been deleted!'), 'success')
+    return redirect(url_for('.wifi'))
