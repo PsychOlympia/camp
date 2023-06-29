@@ -19,7 +19,9 @@ class Weather(object):
         lat, lon = location or self.location
         return self._get('/current_weather', params={'lat': lat, 'lon': lon})
 
-    def forecast(self, start: datetime | date, end: datetime | date = None, location: tuple[float, float] = None) -> dict:
+    def forecast(
+            self, start: datetime | date, end: datetime | date = None, location: tuple[float, float] = None
+    ) -> dict:
         start = (
             datetime.combine(start, datetime.min.time(), timezone(datetime.utcnow().astimezone().utcoffset()))
             if isinstance(start, date)
