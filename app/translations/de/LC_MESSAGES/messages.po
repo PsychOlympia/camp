@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.1.0\n"
 "Report-Msgid-Bugs-To: info@psycholympia.de\n"
-"POT-Creation-Date: 2023-06-29 17:03+0200\n"
+"POT-Creation-Date: 2023-06-29 17:47+0200\n"
 "PO-Revision-Date: 2023-06-19 00:43+0200\n"
 "Last-Translator: Felix Zenk <felix.zenk@web.de>\n"
 "Language: de\n"
@@ -141,9 +141,17 @@ msgstr "Das kann weg"
 msgid "I wish there was"
 msgstr "Ideen für Neues"
 
-#: app/feedback/views.py:21 app/feedback/views.py:47
+#: app/feedback/views.py:21 app/feedback/views.py:76
 msgid "Thank you for your feedback!"
 msgstr "Danke für dein Feedback!"
+
+#: app/feedback/views.py:59 app/feedback/views.py:111
+msgid "You have not submitted a feedback yet!"
+msgstr "Du hast bisher noch kein Feedback gegeben!"
+
+#: app/feedback/views.py:64 app/feedback/views.py:116
+msgid "Your feedback has been deleted!"
+msgstr "Dein Feedback wurde gelöscht!"
 
 #: app/feedback/templates/feedback_website.jinja2:3
 #: app/feedback/templates/feedback_website.jinja2:62
@@ -151,31 +159,36 @@ msgstr "Danke für dein Feedback!"
 msgid "Website feedback"
 msgstr "Webseiten-Feedback"
 
-#: app/feedback/templates/feedback_website.jinja2:83
-#: app/feedback/templates/feedback_wifi.jinja2:79
+#: app/feedback/templates/feedback_website.jinja2:85
+#: app/feedback/templates/feedback_wifi.jinja2:81
 msgid "Submit feedback"
 msgstr "Feedback absenden"
 
-#: app/feedback/templates/feedback_website.jinja2:83
-#: app/feedback/templates/feedback_wifi.jinja2:79
+#: app/feedback/templates/feedback_website.jinja2:85
+#: app/feedback/templates/feedback_wifi.jinja2:81
 msgid "Submit edited feedback"
 msgstr "Bearbeitetes Feedback absenden"
 
-#: app/feedback/templates/feedback_website.jinja2:87
-#: app/feedback/templates/feedback_wifi.jinja2:83
+#: app/feedback/templates/feedback_website.jinja2:89
+#: app/feedback/templates/feedback_wifi.jinja2:85
+msgid "Delete my feedback"
+msgstr "Mein Feedback löschen"
+
+#: app/feedback/templates/feedback_website.jinja2:95
+#: app/feedback/templates/feedback_wifi.jinja2:91
 msgid "You are welcome to also visit:"
 msgstr "Gerne darfst du auch besuchen:"
 
-#: app/feedback/templates/feedback_website.jinja2:88
-#: app/feedback/templates/feedback_wifi.jinja2:84
-msgid "website feedback"
-msgstr "Webseiten-Feedback"
-
+#: app/feedback/templates/feedback_website.jinja2:96
 #: app/feedback/templates/feedback_wifi.jinja2:3
 #: app/feedback/templates/feedback_wifi.jinja2:62
 #: app/main/templates/index.jinja2:13
 msgid "WiFi feedback"
 msgstr "WLAN-Feedback"
+
+#: app/feedback/templates/feedback_wifi.jinja2:92
+msgid "website feedback"
+msgstr "Webseiten-Feedback"
 
 #: app/helper/templates/helper_dashboard.jinja2:3
 msgid "Helper dashboard"
