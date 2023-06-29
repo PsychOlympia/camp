@@ -75,13 +75,25 @@ def wifi():
     if request.method == 'POST':
         flash(_('Thank you for your feedback!'), 'success')
         if existing_feedback is None:
-            existing_feedback = WiFiFeedback(user=current_user)  # TODO save feedback
+            existing_feedback = WiFiFeedback(
+                user=current_user,
+                quality=wifi_feedback_form.quality.data,
+                further_notes=wifi_feedback_form.further_notes.data
+            )
+            existing_feedback.coverage = wifi_feedback_form.coverage.data
             db.session.add(existing_feedback)
-            db.session.commit()
+        else:
+            existing_feedback.quality = wifi_feedback_form.quality.data
+            existing_feedback.further_notes = wifi_feedback_form.further_notes.data
+            existing_feedback.coverage = wifi_feedback_form.coverage.data
+        db.session.commit()
         return redirect(url_for('.wifi'))
 
     wifi_feedback_form.user.data = current_user.id
     if existing_feedback is not None:
+        wifi_feedback_form.quality.data = existing_feedback.quality
+        wifi_feedback_form.further_notes.data = existing_feedback.further_notes
+        wifi_feedback_form.coverage.data = existing_feedback.coverage
         feedback_exists = True
 
     return render_template(
